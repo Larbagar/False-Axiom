@@ -1,0 +1,38 @@
+Navigation:
+
+Starting points
+    Opens setup on start
+    Shortcut to help page
+
+Help page
+    Explains how everything is used
+    Has a link to the game
+
+Setup
+    Config menu
+        Opened by clicking blank space, pressing any key, holding on the touchscreen, or pressing a key on a controller
+        Has buttons to add keyboard, mouse, and controller players
+        When the game is listening for new keys to add, keys that have already been added won't be picked up and can be used for customization
+        Has a button to start the game
+
+
+    Touch controllers
+        Can be created by dragging fingers apart
+        Can be dragged around
+        Can be destroyed by dragging back together
+
+    Pressing back button or escape will open options menu
+
+    Left and Right movements is used to change ships
+    Dash is used to say that a player is ready
+    If all players are ready or the play button is pressed, the game will start
+
+Options menu
+    Volume options
+    Graphics options
+    Download
+    Terminate match / Quit
+
+
+Game
+    Back button or escape can be used to open menu
