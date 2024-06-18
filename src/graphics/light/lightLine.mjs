@@ -1,11 +1,14 @@
-import { rectGeometry, rectGeometryBuffer, rectIndexBuffer } from './rectBuffers.mjs'
-import { device } from './device.mjs'
+import { rectGeometry, rectGeometryBuffer, rectIndexBuffer } from '../rectBuffers.mjs'
+import { device } from '../device.mjs'
+import { transformMatrixBindGroupLayout } from "../transformMatrixBindGroupLayout.mjs"
 
 
 const shaderModule = device.createShaderModule({
   label: "light line shader module",
   code: `
-@group(0) @binding(0) var<uniform> minBrightness: f32;
+@group(0) @binding(0) var<uniform> camera: mat3x3f;
+@group(1) @binding(0) var<uniform> transform: mat3x3f;
+@group(2) @binding(0) var<uniform> minBrightness: f32;
 
 struct VertIn {
     @location(0) geometry: vec2f,
@@ -19,33 +22,49 @@ struct VertOut {
     @location(0) pos: vec2f,
     @location(1) len: f32,
     @location(2) col: vec3f,
+    @location(3) minBrightnessCoeff: f32,
 }
 
 @vertex
 fn vertex(in: VertIn) -> VertOut {
+    let a = (transform*vec3f(in.a, 1)).xy;
+    let b = (transform*vec3f(in.b, 1)).xy;
+    
     let diff = b - a;
     let len = length(diff);
     let dir = diff / len;
     let perp = vec2f(-dir.y, dir.x);
     
-    let relPos = vec2f((len-sqrt(len*len + 4*len/minBrightness))/2, )
-    let pos = (a + b + geometry.x * diff) / 2 + (geometry.x * dir + geometry.y * perp) / minBrightness;
+    let minBrightnessCoeff = minBrightness / max(max(in.col.r, in.col.g), in.col.b);
+    
+    let padding = vec2f((sqrt(len * len + 4 * len / minBrightnessCoeff) - len) / 2, sqrt(len / minBrightnessCoeff));
+    let pos = vec2f(len*(in.geometry.x + 1)/2, 0) + padding*in.geometry;
     
     
-    let out: VertOut;
-    out.pos = pos
-    out.screenPos = 
+    var out: VertOut;
+    out.screenPos = vec4f((camera*vec3(a + pos.x*dir + pos.y*perp, 1)).xy, 0, 1);
+    out.pos = pos;
+    out.len = len;
+    out.col = in.col;
+    out.minBrightnessCoeff = minBrightnessCoeff;
     
+    return out;
 }
 
 struct FragIn {
     @location(0) pos: vec2f,
-    @location(1) col: vec3f,
+    @location(1) len: f32,
+    @location(2) col: vec3f,
+    @location(3) minBrightnessCoeff: f32,
 }
 
 @fragment
 fn fragment(in: FragIn) -> @location(0) vec4f {
-    // TODO
+    let x = in.pos.x;
+    let y = in.pos.y;
+    let brightness = (atan((in.len - x) / y) + atan(x / y))/y - in.minBrightnessCoeff;
+    //return vec4f(brightness*max(max(in.col.r, in.col.g), in.col.b), step(max(0, brightness), 0), 1, 1);
+    return vec4f(max(0, brightness)*in.col, 1);
 }
 
   `,
@@ -75,7 +94,7 @@ const posVertexBufferLayout = {
       offset: 0*Float32Array.BYTES_PER_ELEMENT,
     },
     {
-      shaderLocation: 1,
+      shaderLocation: 2,
       format: "float32x2",
       offset: 2*Float32Array.BYTES_PER_ELEMENT,
     },
@@ -107,8 +126,9 @@ const minBrightnessBindGroupLayout = device.createBindGroupLayout({
 const pipelineLayout = device.createPipelineLayout({
   label: "radial light pipeline layout",
   bindGroupLayouts: [
-    minBrightnessBindGroupLayout
-    // transformMatrixBindGroupLayout,
+    transformMatrixBindGroupLayout,
+    transformMatrixBindGroupLayout,
+    minBrightnessBindGroupLayout,
   ],
 })
 
@@ -152,25 +172,29 @@ const pipeline = device.createRenderPipeline({
 
 /**
  * @param {GPUCommandEncoder} encoder
- * @param {GPUTextureView} view
+ * @param {GPUTextureView} out
  * @param {GPUBuffer} posBuffer
  * @param {GPUBuffer} colBuffer
+ * @param {GPUBindGroup} cameraBindGroup
+ * @param {GPUBindGroup} transformBindGroup
+ * @param {GPUBindGroup} minBrightnessBindGroup
  * @param {number} count
  */
-function drawLightLine(
+function lightLine(
   encoder,
-  view,
+  out,
   posBuffer,
   colBuffer,
-  // camera,
-  // minBrightness,
+  cameraBindGroup,
+  transformBindGroup,
+  minBrightnessBindGroup,
   count = 1,
 ){
   const pass = encoder.beginRenderPass({
     label: "light line render pass",
     colorAttachments: [
       {
-        view: view,
+        view: out,
         loadOp: "load",
         storeOp: "store",
       }
@@ -183,7 +207,14 @@ function drawLightLine(
   pass.setVertexBuffer(1, posBuffer)
   pass.setVertexBuffer(2, colBuffer)
 
-  pass.setIndexBuffer(rectIndexBuffer, "uint16")
+  pass.setBindGroup(0, cameraBindGroup)
+  pass.setBindGroup(1, transformBindGroup)
+  pass.setBindGroup(2, minBrightnessBindGroup)
 
+  pass.setIndexBuffer(rectIndexBuffer, "uint16")
   pass.drawIndexed(6, count)
+
+  pass.end()
 }
+
+export { lightLine, minBrightnessBindGroupLayout }

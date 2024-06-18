@@ -3,8 +3,8 @@ import { device } from './device.mjs'
 const rectGeometry = new Float32Array([
   -1, -1,
   -1, 1,
-  1, 1,
   1, -1,
+  1, 1,
 ])
 const rectGeometryBuffer = device.createBuffer({
   label: "rect geometry buffer",

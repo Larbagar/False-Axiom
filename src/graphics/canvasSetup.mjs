@@ -11,4 +11,4 @@ context.configure({
   format: canvasFormat,
 })
 
-export {context, canvasFormat}
+export {canvas, context, canvasFormat}
