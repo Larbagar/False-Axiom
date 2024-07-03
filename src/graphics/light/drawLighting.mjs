@@ -2,7 +2,7 @@ import { linearSamplerBindGroup } from "../samplers/linearSampler.mjs"
 import { samplerBindGroupLayout } from "../samplers/samplerBindGroupLayout.mjs"
 import { textureBindGroupLayout } from "../textureBindGroupLayout.mjs"
 import { device } from "../device.mjs"
-import { canvasFormat } from "../canvasSetup.mjs"
+import { canvasFormat } from "../textureHandler.mjs"
 
 const geometry = new Float32Array([
     -1, -1,

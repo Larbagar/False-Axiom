@@ -1,6 +1,7 @@
 import { rectGeometry, rectGeometryBuffer, rectIndexBuffer } from '../rectBuffers.mjs'
 import { device } from '../device.mjs'
 import { transformMatrixBindGroupLayout } from "../transformMatrixBindGroupLayout.mjs"
+import { minBrightnessBindGroupLayout } from "./minBrightnessBindGroupLayout.mjs"
 
 
 const shaderModule = device.createShaderModule({
@@ -114,17 +115,8 @@ const colVertexBufferLayout = {
   ],
 }
 
-const minBrightnessBindGroupLayout = device.createBindGroupLayout({
-  label: "min brightness bind group layout",
-  entries: [{
-    binding: 0,
-    visibility: GPUShaderStage.VERTEX | GPUShaderStage.FRAGMENT,
-    buffer: {},
-  }],
-})
-
 const pipelineLayout = device.createPipelineLayout({
-  label: "radial light pipeline layout",
+  label: "light line pipeline layout",
   bindGroupLayouts: [
     transformMatrixBindGroupLayout,
     transformMatrixBindGroupLayout,
@@ -173,22 +165,22 @@ const pipeline = device.createRenderPipeline({
 /**
  * @param {GPUCommandEncoder} encoder
  * @param {GPUTextureView} out
- * @param {GPUBuffer} posBuffer
- * @param {GPUBuffer} colBuffer
  * @param {GPUBindGroup} cameraBindGroup
  * @param {GPUBindGroup} transformBindGroup
+ * @param {GPUBuffer} posBuffer
+ * @param {GPUBuffer} colBuffer
  * @param {GPUBindGroup} minBrightnessBindGroup
  * @param {number} count
  */
 function lightLine(
-  encoder,
-  out,
-  posBuffer,
-  colBuffer,
-  cameraBindGroup,
-  transformBindGroup,
-  minBrightnessBindGroup,
-  count = 1,
+    encoder,
+    out,
+    cameraBindGroup,
+    transformBindGroup,
+    posBuffer,
+    colBuffer,
+    minBrightnessBindGroup,
+    count = 1,
 ){
   const pass = encoder.beginRenderPass({
     label: "light line render pass",
@@ -212,9 +204,10 @@ function lightLine(
   pass.setBindGroup(2, minBrightnessBindGroup)
 
   pass.setIndexBuffer(rectIndexBuffer, "uint16")
+
   pass.drawIndexed(6, count)
 
   pass.end()
 }
 
-export { lightLine, minBrightnessBindGroupLayout }
+export { lightLine }

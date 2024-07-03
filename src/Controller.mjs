@@ -4,5 +4,4 @@ export class Controller {
   dash = false
 
   dashEnd() {}
-  tick() {}
 }

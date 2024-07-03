@@ -99,13 +99,20 @@ export default class V2 {
     }
 
     get mag() {
-        return Math.sqrt(this.arr[0]*this.arr[0] + this.arr[1]*this.arr[1])
+        return Math.sqrt(this.arr[0]**2 + this.arr[1]**2)
     }
     get dir() {
         return Math.atan2(this.arr[1], this.arr[0])
     }
 
     //#endregion
+
+    /**
+     * @param {V2} vec
+     */
+    distance(vec) {
+        return Math.sqrt((this.arr[0] - vec.arr[0])**2 + (this.arr[1] - vec.arr[1])**2)
+    }
 
     //#region setters
 
@@ -136,33 +143,39 @@ export default class V2 {
      * @param {V2 | Iterable<number> | number} arg
      */
     set xy(arg) {
+        let x, y
         if(arg instanceof V2){
-            this.arr[0] = arg.arr[0]
-            this.arr[1] = arg.arr[1]
-        }
-        if(typeof arg == "object" && Symbol.iterator in arg){
+            x = arg.arr[0]
+            y = arg.arr[1]
+        }else if(typeof arg == "object" && Symbol.iterator in arg){
             const gen = arg[Symbol.iterator]()
-            this.arr[0] = gen.next().value ?? this.arr[0]
-            this.arr[1] = gen.next().value ?? this.arr[1]
+            x = gen.next().value ?? this.arr[0]
+            y = gen.next().value ?? this.arr[1]
+        }else{
+            x = arg
+            y = arg
         }
-        this.arr[0] = arg
-        this.arr[1] = arg
+        this.arr[0] = x
+        this.arr[1] = y
     }
     /**
      * @param {V2 | Iterable<number> | number} arg
      */
     set yx(arg) {
+        let y, x
         if(arg instanceof V2){
-            this.arr[1] = arg.arr[0]
-            this.arr[0] = arg.arr[1]
-        }
-        if(typeof arg == "object" && Symbol.iterator in arg){
+            y = arg.arr[0]
+            x = arg.arr[1]
+        }else if(typeof arg == "object" && Symbol.iterator in arg){
             const gen = arg[Symbol.iterator]()
-            this.arr[1] = gen.next().value ?? this.arr[1]
-            this.arr[0] = gen.next().value ?? this.arr[0]
+            y = gen.next().value ?? this.arr[0]
+            x = gen.next().value ?? this.arr[1]
+        }else{
+            y = arg
+            x = arg
         }
-        this.arr[1] = arg
-        this.arr[0] = arg
+        this.arr[1] = y
+        this.arr[0] = x
     }
 
     /**
@@ -231,7 +244,7 @@ export default class V2 {
      * @param {number} mag
      */
     set mag(mag) {
-        const factor = mag/Math.sqrt(this.arr[0]*this.arr[0] + this.arr[1]*this.arr[1])
+        const factor = mag/Math.sqrt(this.arr[0]**2 + this.arr[1]**2)
         this.arr[0] *= factor
         this.arr[1] *= factor
     }
@@ -239,7 +252,7 @@ export default class V2 {
      * @param {number} dir
      */
     set dir(dir) {
-        const mag = Math.sqrt(this.arr[0]*this.arr[0] + this.arr[1]*this.arr[1])
+        const mag = Math.sqrt(this.arr[0]**2 + this.arr[1]**2)
         this.arr[0] = mag*Math.sin(dir)
         this.arr[1] = mag*Math.cos(dir)
     }
@@ -247,6 +260,7 @@ export default class V2 {
     //#endregion
 
     /**
+     * @returns {V2}
      */
     copy() {
         const v2 = new V2()
@@ -543,6 +557,7 @@ export default class V2 {
      * @param {...(V2 | Iterable | number)} args
      */
     dot(...args){
+        /** @type{number} */
         let x, y
         if(args.length == 1){
             const arg = args[0]
@@ -579,6 +594,8 @@ export default class V2 {
         return this.arr[0]*x + this.arr[1]*y
     }
 
+    //#endregion
+
     /**
      * @param {M3} m3
      */
@@ -590,8 +607,6 @@ export default class V2 {
         this.arr[1] = m3.arr[1]*b0 + m3.arr[5]*b1 + m3.arr[9]
         return this
     }
-
-    //#endregion
 
     /**
      */
@@ -625,14 +640,16 @@ export default class V2 {
      */
     normalize() {
         const len = Math.sqrt(this.arr[0]**2 + this.arr[1]**2)
-        this.arr[0] /= len
-        this.arr[1] /= len
+        if(len !== 0) {
+            this.arr[0] /= len
+            this.arr[1] /= len
+        }
         return this
     }
     /**
      */
     toPolar() {
-        this.arr[0] = Math.sqrt(this.arr[0]*this.arr[0] + this.arr[1]*this.arr[1])
+        this.arr[0] = Math.sqrt(this.arr[0]**2 + this.arr[1]**2)
         this.arr[1] = Math.atan2(this.arr[1], this.arr[0])
         return this
     }
@@ -659,10 +676,11 @@ export default class V2 {
 
     /**
      */
-    normal() {
-        const normal = new V2()
-        normal.arr = new Float32Array(2)
-        return new V2(-this.arr[1], this.arr[0])
+    perp() {
+        const x = this.arr[0]
+        this.arr[0] = -this.arr[1]
+        this.arr[1] = x
+        return this
     }
 
     /**
@@ -687,4 +705,5 @@ export default class V2 {
     }
 }
 
-window["V2"] = V2
+const name = "V" + "2"
+window[name] = V2

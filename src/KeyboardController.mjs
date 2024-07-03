@@ -4,9 +4,10 @@ export class KeyboardController extends Controller {
     forwardKey = "ArrowUp"
     leftKey = "ArrowLeft"
     rightKey = "ArrowRight"
-    dashKey = "Space"
+    dashKey = "KeyZ"
 
     releaseTurn = 0
+    dashKeyPressed = false
 
     keydown(key) {
         if(key == this.forwardKey){
@@ -24,8 +25,9 @@ export class KeyboardController extends Controller {
             }
             this.turn = -1
         }
-        if(key == this.dashKey){
+        if(key == this.dashKey && !this.dashKeyPressed){
             this.dash = true
+            this.dashKeyPressed = true
         }
     }
     keyup(key) {
@@ -46,12 +48,14 @@ export class KeyboardController extends Controller {
         }
         if(key == this.dashKey){
             this.dash = false
+            this.dashKeyPressed = false
         }
     }
     blur() {
         this.forward = 0
         this.turn = 0
         this.releaseTurn = 0
+        this.dashKeyPressed = false
     }
     dashEnd() {
         this.dash = false

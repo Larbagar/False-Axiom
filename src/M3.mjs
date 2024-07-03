@@ -689,4 +689,5 @@ export default class M3 {
     }
 }
 
-window["M3"] = M3
+const name = "M" + "3"
+window[name] = M3
