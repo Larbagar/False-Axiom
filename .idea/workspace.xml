@@ -5,36 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/KeyboardControllerHandler.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Simulation.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/TouchControllerHandler.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Trail.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Wall.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/graphics/light/lightPoint.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/graphics/light/minBrightnessBindGroupLayout.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/graphics/textureHandler.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/manifest.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/physics.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/render.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/serviceWorkerSetup.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sw.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game.mjs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/KeyboardController.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/KeyboardController.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/M3.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/M3.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Ship.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Ship.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TouchController.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/TouchController.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/V2.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/V2.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphics/canvasSetup.mjs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphics/light/drawLighting.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/light/drawLighting.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphics/light/lightLine.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/light/lightLine.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphics/transformMatrixBindGroupLayout.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/transformMatrixBindGroupLayout.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shipGeometries.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/shipGeometries.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/start.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/start.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/manifest.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,7 +99,7 @@
       <workItem from="1720001485914" duration="676000" />
       <workItem from="1720002215332" duration="5591000" />
       <workItem from="1720007874126" duration="13000" />
-      <workItem from="1720007917531" duration="666000" />
+      <workItem from="1720007917531" duration="1346000" />
     </task>
     <servers />
   </component>

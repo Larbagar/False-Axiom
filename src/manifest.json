@@ -1,12 +1,16 @@
 {
-  "name": "name",
-  "short_name": "short_name",
+  "name": "False Axiom",
+  "short_name": "False Axiom",
   "start_url": "./index.html",
   "scope": "./",
   "display": "fullscreen",
   "orientation": "portrait-primary",
   "theme_color": "white",
   "background_color": "black",
+  "categories": [
+    "entertainment",
+    "games"
+  ],
   "icons": [{
     "src": "./icon.png",
     "sizes": "512x512"
