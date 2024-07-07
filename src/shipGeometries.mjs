@@ -29,7 +29,7 @@ class ShipGeometry {
 
         this.trailDescriptions = []
         for(const thruster of thrusters){
-            this.trailDescriptions.push(new TrailDescription(thruster.location.copy().multNum(scale), thruster.v0.copy().multNum(scale), thruster.col, thruster.dimSpeed, thruster.friction))
+            this.trailDescriptions.push(new TrailDescription(thruster.location.copy().multNum(scale), thruster.col, thruster.dimSpeed, thruster.v0.copy().multNum(scale), thruster.friction))
         }
     }
 }
@@ -48,12 +48,12 @@ class TrailDescription {
 
     /**
      * @param {V2} location
-     * @param {V2} v0
      * @param {Array<number>} col
      * @param {number} dimSpeed
+     * @param {V2} v0
      * @param {number} friction
      */
-    constructor(location, v0, col, dimSpeed, friction = 1){
+    constructor(location, col, dimSpeed, v0 = V2.zero(), friction = 1){
         this.location = location
         this.v0 = v0
         this.col = col
@@ -62,18 +62,127 @@ class TrailDescription {
     }
 }
 
+// Initial velocity of 0.02 and friction of 0.8 looks kinda good
+
 const shipGeometries = [
     new ShipGeometry([
         3, 0,
-        -1, -3,
-        -3, -2,
-        -1, 0,
-        -3, 2,
         -1, 3,
+        -3, 2,
+        -1, 0,
+        -3, -2,
+        -1, -3,
         3, 0,
     ], [
-        new TrailDescription(V2.fromVals(-3, -2), V2.fromVals(-0.02, 0), [0.0005, 0.00025, 0.002], 0.01, 0), // 0.8
-        new TrailDescription(V2.fromVals(-3, 2), V2.fromVals(-0.02, 0), [0.0005, 0.00025, 0.002], 0.01, 0),
+        new TrailDescription(V2.fromVals(-3, 2), [0.0005, 0.00025, 0.002], 0.01),
+        new TrailDescription(V2.fromVals(-3, -2), [0.0005, 0.00025, 0.002], 0.01),
+    ], 1/2),
+    new ShipGeometry([
+        3, 0,
+        -2, 3,
+        -1, 1,
+        1, 0,
+        -1, -1,
+        -2, -3,
+        3, 0,
+    ], [
+        new TrailDescription(V2.fromVals(-1, 1), [0.0005, 0.00025, 0.002], 0.01),
+        new TrailDescription(V2.fromVals(-1, -1), [0.0005, 0.00025, 0.002], 0.01),
+    ], 1/2),
+    new ShipGeometry([
+        2, 0,
+        -1, 3,
+        -2, 1,
+        0, 0,
+        -2, -1,
+        -1, -3,
+        2, 0,
+    ], [
+        new TrailDescription(V2.fromVals(-1, 3), [0.0005, 0.00025, 0.002], 0.01),
+        new TrailDescription(V2.fromVals(-1, -3), [0.0005, 0.00025, 0.002], 0.01),
+    ], 1/2),
+    new ShipGeometry([
+        1, 2,
+        -2, 4,
+        -1, 1,
+        -1, -1,
+        -2, -4,
+        1, -2,
+        1, 2,
+    ], [
+        new TrailDescription(V2.fromVals(-2, 4), [0.0005, 0.00025, 0.002], 0.01),
+        new TrailDescription(V2.fromVals(-2, -4), [0.0005, 0.00025, 0.002], 0.01),
+    ], 1/2),
+    new ShipGeometry([
+        1, 0,
+        2, 2,
+        -2, 4,
+        -1, 0,
+        -2, -4,
+        2, -2,
+        1, 0,
+    ], [
+        new TrailDescription(V2.fromVals(-2, 4), [0.0005, 0.00025, 0.002], 0.01),
+        new TrailDescription(V2.fromVals(-2, -4), [0.0005, 0.00025, 0.002], 0.01),
+    ], 1/2),
+    new ShipGeometry([
+        3, 0,
+        -1, 3,
+        0, 1,
+        -2, 0,
+        0, -1,
+        -1, -3,
+        3, 0,
+    ], [
+        new TrailDescription(V2.fromVals(-2, 0), [0.0005, 0.00025, 0.002], 0.01),
+        new TrailDescription(V2.fromVals(-1, 3), [0.0005, 0.00025, 0.002], 0.01),
+        new TrailDescription(V2.fromVals(-1, -3), [0.0005, 0.00025, 0.002], 0.01),
+    ], 1/2),
+    new ShipGeometry([
+        2, 0,
+        1, 1,
+        -2, 2,
+        0, 0,
+        -2, -2,
+        1, -1,
+        2, 0,
+    ], [
+        new TrailDescription(V2.fromVals(-2, 2), [0.0005, 0.00025, 0.002], 0.01),
+        new TrailDescription(V2.fromVals(-2, -2), [0.0005, 0.00025, 0.002], 0.01),
+    ], 1/2),
+    new ShipGeometry([
+        0, 0,
+        2, 1,
+        -1, 2,
+        -2, 0,
+        -1, -2,
+        2, -1,
+        0, 0,
+    ], [
+        new TrailDescription(V2.fromVals(-2, 0), [0.0005, 0.00025, 0.002], 0.01),
+    ], 1/2),
+    new ShipGeometry([
+        2, 0,
+        0, 3,
+        -1, 1,
+        -3, 0,
+        -1, -1,
+        0, -3,
+        2, 0,
+    ], [
+        new TrailDescription(V2.fromVals(-3, 0), [0.0005, 0.00025, 0.002], 0.01),
+    ], 1/2),
+    new ShipGeometry([
+        -1, 0,
+        -2, 3,
+        0, 1,
+        2, 0,
+        0, -1,
+        -2, -3,
+        -1, 0,
+    ], [
+        new TrailDescription(V2.fromVals(-2, 3), [0.0005, 0.00025, 0.002], 0.01),
+        new TrailDescription(V2.fromVals(-2, -3), [0.0005, 0.00025, 0.002], 0.01),
     ], 1/2),
 ]
 

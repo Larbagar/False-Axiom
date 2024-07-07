@@ -57,7 +57,7 @@ export class KeyboardController extends Controller {
         this.releaseTurn = 0
         this.dashKeyPressed = false
     }
-    dashEnd() {
+    startDash() {
         this.dash = false
     }
 }

@@ -66,7 +66,7 @@ fn map(x: vec3f) -> vec3f {
 fn fragment(in: fragIn) -> @location(0) vec4f {
     let background = vec3f(1);
 
-    let lightingSample = textureSample(lighting, linearSampler, in.texPos).rgb;
+    let lightingSample = max(vec3(0, 0, 0), textureSample(lighting, linearSampler, in.texPos).rgb);
     return vec4f(background*map(lightingSample), 1);
 }
     `
@@ -119,7 +119,7 @@ const pipeline = device.createRenderPipeline({
  */
 function drawLighting(encoder, out, lighting){
     const pass = encoder.beginRenderPass({
-        label: "apply lighting render pass",
+        label: "apply lighting draw pass",
         colorAttachments: [
             {
                 view: out,

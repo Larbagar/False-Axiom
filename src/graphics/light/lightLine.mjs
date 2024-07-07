@@ -36,7 +36,7 @@ fn vertex(in: VertIn) -> VertOut {
     let dir = diff / len;
     let perp = vec2f(-dir.y, dir.x);
     
-    let minBrightnessCoeff = minBrightness / max(max(in.col.r, in.col.g), in.col.b);
+    let minBrightnessCoeff = minBrightness / max(max(abs(in.col.r), abs(in.col.g)), abs(in.col.b));
     
     let padding = vec2f((sqrt(len * len + 4 * len / minBrightnessCoeff) - len) / 2, sqrt(len / minBrightnessCoeff));
     let pos = vec2f(len*(in.geometry.x + 1)/2, 0) + padding*in.geometry;
@@ -65,7 +65,7 @@ fn fragment(in: FragIn) -> @location(0) vec4f {
     let y = in.pos.y;
     let brightness = (atan((in.len - x) / y) + atan(x / y))/y - in.minBrightnessCoeff;
     //return vec4f(brightness*max(max(in.col.r, in.col.g), in.col.b), step(max(0, brightness), 0), 1, 1);
-    return vec4f(max(0, brightness)*in.col, 1);
+    return vec4f(brightness*in.col, 1);
 }
 
   `,
@@ -183,7 +183,7 @@ function lightLine(
     count = 1,
 ){
   const pass = encoder.beginRenderPass({
-    label: "light line render pass",
+    label: "light line draw pass",
     colorAttachments: [
       {
         view: out,

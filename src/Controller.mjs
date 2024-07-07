@@ -3,5 +3,5 @@ export class Controller {
   forward = 0
   dash = false
 
-  dashEnd() {}
+  startDash() {}
 }

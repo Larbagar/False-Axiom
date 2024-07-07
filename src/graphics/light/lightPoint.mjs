@@ -162,7 +162,7 @@ function lightPoint(
     count = 1,
 ){
     const pass = encoder.beginRenderPass({
-        label: "light point render pass",
+        label: "light point draw pass",
         colorAttachments: [
             {
                 view: out,

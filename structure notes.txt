@@ -34,5 +34,5 @@ Options menu
     Terminate match / Quit
 
 
-Game
+OldGame
     Back button or escape can be used to open menu

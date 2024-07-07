@@ -1,19 +1,17 @@
-import V2 from "./V2.mjs"
-import { shipGeometries } from "./shipGeometries.mjs"
-import { device } from "./graphics/device.mjs"
-import { lightLine } from "./graphics/light/lightLine.mjs"
-import { transformMatrixBindGroupLayout } from "./graphics/transformMatrixBindGroupLayout.mjs"
-import { Trail } from "./Trail.mjs"
-import M3 from "./M3.mjs"
+import V2 from "../V2.mjs"
+import { shipGeometries } from "../shipGeometries.mjs"
+import { device } from "../graphics/device.mjs"
+import { lightLine } from "../graphics/light/lightLine.mjs"
+import { transformMatrixBindGroupLayout } from "../graphics/transformMatrixBindGroupLayout.mjs"
+import { Trail } from "../graphics/Trail.mjs"
+import M3 from "../M3.mjs"
 import { Wall } from "./Wall.mjs"
-import { lightPoint } from "./graphics/light/lightPoint.mjs"
+import { lightPoint } from "../graphics/light/lightPoint.mjs"
 
 export class Ship {
   /** @type {V2} */
   pos
   vel = V2.zero()
-
-  time = 0
 
   /** @type {number} */
   dir
@@ -22,32 +20,9 @@ export class Ship {
   /** @type {Controller} */
   controller
 
-  /** @type {Iterable<number>} */
+  /** @type {Array<number>} */
   col
 
-  /*
-  turnSpeed = 0.1
-  turnFric = 0.3
-
-  speed = 0.02
-  forwardFric = 0.02
-  sideFric = 0.2
-
-  wallKnockback = 0.03
-  playerKnockback = 0.01
-
-  lowTraction = 0.01
-  lowTractionTime = 500
-
-  dashTime = 10
-  dashBuffer = 5
-  dashCooldown = 20
-
-  dashSpeed = 0.04
-
-  hpShowTime = 120
-  hpFadeTime = 20
-   */
 
   turnSpeed = 0.006
   turnFric = 0.02
@@ -58,6 +33,7 @@ export class Ship {
 
   wallKnockback = 0.0018
   playerKnockback = 0.0006
+  blastKnockback = 0.0018
 
   lowTraction = 0.0006
   lowTractionTime = 8000
@@ -67,6 +43,8 @@ export class Ship {
   dashCooldown = 300
 
   dashSpeed = 0.0024
+
+  blastVel = 0.005
 
   hpShowTime = 2000
   hpFadeTime = 300
@@ -93,8 +71,6 @@ export class Ship {
 
   dashDecay = 1
 
-  nextVel = V2.zero()
-
   hpHeight = 3
   hpDist = 2
 
@@ -109,14 +85,15 @@ export class Ship {
    * @param {number} dir
    * @param {Controller} controller
    * @param {Iterable<number>} col
+   * @param {ShipGeometry} geometry
    */
-  constructor(pos, dir, controller, col) {
+  constructor(pos, dir, controller, col, geometry) {
     this.pos = pos
     this.dir = dir
     this.controller = controller
     this.col = col
 
-    this.geometry = shipGeometries[0]
+    this.geometry = geometry
 
     const shipCol = new Float32Array(Array.from({length: this.geometry.edgeCount}, _ => this.col).flat())
 
@@ -189,10 +166,9 @@ export class Ship {
     }
   }
 
-  update(dt, simulation) {
+  update(dt, game) {
     if(this.dashProgress < this.dashTime && this.dashTime <= this.dashProgress + dt){
       // End the dash
-      this.controller.dashEnd()
       this.vel.mult(this.dashDecay)
     }else if(
         this.controller.dash &&
@@ -201,8 +177,10 @@ export class Ship {
       // Start the dash
       this.dashProgress = 0
       this.dashDir = this.dir
-      this.dashWall = new Wall(V2.fromPolar(-this.size, this.dir).add(this.pos), this.dir, this.dashSpeed * this.dashTime, 1/this.dashTime, this.col, this.time)
-      simulation.walls.add(this.dashWall)
+      this.dashWall = new Wall(V2.fromPolar(-this.size, this.dir).add(this.pos), this.dir, this.dashSpeed * this.dashTime, 1/this.dashTime, this.col)
+      game.walls.add(this.dashWall)
+      this.controller.startDash()
+      this.lowTractionProgress = this.lowTractionTime
       this.vel.xy = V2.fromPolar(this.dashSpeed, this.dashDir)
     }
     if(this.dashProgress + dt < this.dashTime){
@@ -239,72 +217,15 @@ export class Ship {
     this.hpDisplayProgress += dt
   }
 
-  /**
-   * @param {Set<Wall>} walls
-   * @param {Array<Ship>} ships
-   */
-  collide(walls, ships) {
-    let restart = true
-    let dashing = this.dashProgress < this.dashTime + this.dashBuffer
-    while(restart) {
-      restart = false
-      for(const ship of ships){
-        if(ship != this){
-          if(this.pos.copy().add(this.vel).distance(ship.pos.copy().add(ship.vel)) < this.size + ship.size){
-            navigator.vibrate(100)
-            const diff = this.vel.copy().sub(ship.vel)
-            const normalized = diff.copy().normalize()
-            const shipDashing = ship.dashProgress < ship.dashTime + ship.dashBuffer
-            if(dashing){
-            }
-            if(dashing && shipDashing){
-              this.vel.sub(diff.copy().mult(1/2)).sub(normalized.copy().mult(this.playerKnockback))
-              this.lowTractionProgress = 0
-              walls.delete(ship.dashWall)
-              ship.dashProgress = ship.dashTime + ship.dashBuffer
-
-              ship.vel.add(diff.copy().mult(1/2)).add(normalized.copy().mult(ship.playerKnockback))
-              ship.lowTractionProgress = 0
-              walls.delete(this.dashWall)
-              this.dashProgress = this.dashTime + this.dashBuffer
-            }else if(dashing){
-              walls.delete(this.dashWall)
-              this.dashProgress = this.dashTime + this.dashBuffer
-              ship.vel.add(diff).add(normalized.copy().mult(ship.playerKnockback))
-              ship.lowTractionProgress = 0
-              ship.hp --
-              ship.hpDisplayProgress = 0
-            }else if(shipDashing){
-              walls.delete(ship.dashWall)
-              ship.dashProgress = ship.dashTime + ship.dashBuffer
-              this.vel.sub(diff).sub(normalized.copy().mult(this.playerKnockback))
-              this.lowTractionProgress = 0
-              this.hp --
-              this.hpDisplayProgress = 0
-            }else{
-              this.vel.sub(diff.copy().mult(1/2)).sub(normalized.copy().mult(this.playerKnockback))
-              this.lowTractionProgress = 0
-              ship.vel.add(diff.copy().mult(1/2)).add(normalized.copy().mult(ship.playerKnockback))
-              ship.lowTractionProgress = 0
-            }
-          }
-        }
-      }
-    }
-  }
-
-  move(targetTime) {
-    const dt = targetTime - this.time
-    this.time = targetTime
-
+  move(dt) {
     this.pos.add(this.vel.copy().mult(dt))
     this.dir += this.angVel * dt
 
+    // #TODO should not be called on move
     const brightness = 0.2*this.controller.forward*(this.dashProgress >= this.dashTime)
     for(let i = 0; i < this.geometry.trailDescriptions.length; i++){
       this.trails[i].run(
           this.geometry.trailDescriptions[i].location.copy().mult(this.size).rotate(this.dir).add(this.pos),
-          this.geometry.trailDescriptions[i].v0.copy().rotate(this.dir),
           this.col.map(x => brightness*x),
       )
     }
@@ -315,7 +236,7 @@ export class Ship {
     device.queue.writeBuffer(this.shipTransformBuffer, 0, shipTransform.arr)
     lightLine(encoder, lightTex, cameraBindGroup, this.shipTransformBindGroup, this.geometry.buffer, this.shipColBuffer, minBrightnessBindGroup, this.geometry.edgeCount)
     for(const trail of this.trails){
-      trail.draw(encoder, cameraBindGroup, lightTex, minBrightnessBindGroup)
+      trail.draw(encoder, lightTex, cameraBindGroup, minBrightnessBindGroup)
     }
 
 

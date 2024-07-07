@@ -77,7 +77,7 @@ class TouchController extends Controller{
         }
     }
 
-    dashEnd() {
+    startDash() {
         this.dash = false
     }
 

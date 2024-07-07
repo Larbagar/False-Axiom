@@ -1,12 +1,12 @@
-import {device} from "./graphics/device.mjs";
-import {canvas, context, lightTex} from "./graphics/textureHandler.mjs";
-import M3 from "./M3.mjs";
-import {clear} from "./graphics/clear.mjs";
-import {drawLighting} from "./graphics/light/drawLighting.mjs";
-import {LightTex} from "./graphics/light/LightTex.mjs";
-import V2 from "./V2.mjs";
-import {minBrightnessBindGroupLayout} from "./graphics/light/minBrightnessBindGroupLayout.mjs";
-import {transformMatrixBindGroupLayout} from "./graphics/transformMatrixBindGroupLayout.mjs";
+import {device} from "./device.mjs";
+import {canvas, context, lightTex} from "./textureHandler.mjs";
+import M3 from "../M3.mjs";
+import {clear} from "./clear.mjs";
+import {drawLighting} from "./light/drawLighting.mjs";
+import {LightTex} from "./light/LightTex.mjs";
+import V2 from "../V2.mjs";
+import {minBrightnessBindGroupLayout} from "./light/minBrightnessBindGroupLayout.mjs";
+import {transformMatrixBindGroupLayout} from "./transformMatrixBindGroupLayout.mjs";
 
 
 const minBrightness = new Float32Array([0.002]) // Max 0.002
@@ -50,9 +50,9 @@ const cameraBindGroup = device.createBindGroup({
 })
 
 /**
- * @param {Simulation} simulation
+ * @param {Game} game
  */
-function render(simulation){
+function draw(game){
     const encoder = device.createCommandEncoder()
 
     const canvasView = context.getCurrentTexture().createView()
@@ -63,11 +63,17 @@ function render(simulation){
 
     clear(encoder, lightTex.view, [0, 0, 0, 1])
 
-    for(const ship of simulation.ships){
+    for(const ship of game.ships){
         ship.draw(encoder, lightTex.view, cameraBindGroup, minBrightnessBindGroup)
     }
-    for(const wall of simulation.walls){
+    for(const wall of game.walls){
         wall.draw(encoder, lightTex.view, cameraBindGroup, minBrightnessBindGroup)
+    }
+    for(const blast of game.blasts){
+        blast.draw(encoder, lightTex.view, cameraBindGroup, minBrightnessBindGroup)
+    }
+    for(const rubbleCluster of game.rubbleClusters){
+        rubbleCluster.draw(encoder, lightTex.view, cameraBindGroup, minBrightnessBindGroup)
     }
     drawLighting(encoder, canvasView, lightTex.bindGroup)
 
@@ -75,4 +81,4 @@ function render(simulation){
     device.queue.submit([commandBuffer])
 }
 
-export {render}
+export {draw}
