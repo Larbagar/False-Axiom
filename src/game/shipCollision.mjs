@@ -54,7 +54,7 @@ class ShipCollision extends Event{
             this.shipB.hp --
             this.shipB.hpDisplayProgress = 0
             if(this.shipB.hp <= 0){
-                const index = this.game.ships.indexOf(this.ship);
+                const index = this.game.ships.indexOf(this.shipB);
                 if (index > -1) {
                     this.game.ships.splice(index, 1);
                 }
@@ -69,7 +69,7 @@ class ShipCollision extends Event{
             this.shipA.hp --
             this.shipA.hpDisplayProgress = 0
             if(this.shipA.hp <= 0){
-                const index = this.game.ships.indexOf(this.ship);
+                const index = this.game.ships.indexOf(this.shipA);
                 if (index > -1) {
                     this.game.ships.splice(index, 1);
                 }
