@@ -1,6 +1,4 @@
 import {Event} from "./Event.mjs"
-import V2 from "../V2.mjs"
-import {WallCollision} from "./wallCollision.mjs"
 import {move} from "./mover.mjs"
 import {recalculateShipEvents} from "./eventHelpers.mjs"
 
@@ -36,6 +34,12 @@ class BlastCollision extends Event {
         this.ship.lowTractionProgress = 0
         this.ship.hp--
         this.ship.hpDisplayProgress = 0
+        if(this.ship.hp <= 0){
+            const index = this.game.ships.indexOf(this.ship);
+            if (index > -1) {
+                this.game.ships.splice(index, 1);
+            }
+        }
         this.blast.playersHit.add(this.ship)
         recalculateShipEvents(this.sim, this.game, this.ship)
     }

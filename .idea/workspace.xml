@@ -4,34 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="">
+    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="New ships, players face each other to start, wall hit animation, basic blast">
       <change afterPath="$PROJECT_DIR$/src/LineTrail.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/RubbleCluster.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/Blast.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/Event.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/Game.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/Simulation.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/UpdateEvent.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/blastCollision.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/eventHelpers.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/mover.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/wallCollision.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/KeyboardController.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/KeyboardController.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Ship.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Ship.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Simulation.mjs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TouchController.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/TouchController.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Trail.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/Trail.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Wall.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Wall.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphics/light/drawLighting.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/light/drawLighting.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphics/light/lightLine.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/light/lightLine.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphics/light/lightPoint.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/light/lightPoint.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/physics.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/shipCollision.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/render.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/draw.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shipGeometries.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/shipGeometries.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/start.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/start.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/structure notes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/structure notes.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/wallCollision.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/wallCollision.mjs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,8 +122,17 @@
       <workItem from="1720212194917" duration="15195000" />
       <workItem from="1720308452401" duration="230000" />
       <workItem from="1720354925185" duration="1174000" />
-      <workItem from="1720356123623" duration="3628000" />
+      <workItem from="1720356123623" duration="4251000" />
     </task>
+    <task id="LOCAL-00001" summary="New ships, players face each other to start, wall hit animation, basic blast">
+      <option name="closed" value="true" />
+      <created>1720364014716</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1720364014716</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -163,5 +148,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="New ships, players face each other to start, wall hit animation, basic blast" />
+    <option name="LAST_COMMIT_MESSAGE" value="New ships, players face each other to start, wall hit animation, basic blast" />
   </component>
 </project>
