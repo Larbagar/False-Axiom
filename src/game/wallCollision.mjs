@@ -108,7 +108,8 @@ class WallCollision extends Event {
         if (dashing && !this.wall.persists) {
             const vel = this.wall.p1.copy().sub(this.wall.p0).perp()
             vel.mag = this.ship.blastVel * Math.sign(this.perpVel)
-            this.game.blasts.add(new Blast(this.wall.p0.copy(), this.wall.p1.copy(), vel, this.wall.colArray))
+            const newBlast = new Blast(this.wall.p0.copy(), this.wall.p1.copy(), vel, this.wall.colArray)
+            this.game.blasts.add(newBlast)
         }
 
         recalculateShipEvents(this.sim, this.game, this.ship)

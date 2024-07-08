@@ -19,7 +19,7 @@ class UpdateEvent extends Event {
             ship.update(this.game.updateSpacing, this.game)
         }
         for(const blast of this.game.blasts){
-            blast.update(this.game)
+            blast.update(this.game.updateSpacing, this.game)
         }
         for(const rubbleCluster of this.game.rubbleClusters){
             rubbleCluster.update(this.game.updateSpacing)

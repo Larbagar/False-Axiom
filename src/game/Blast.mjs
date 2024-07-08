@@ -3,6 +3,7 @@ import V2 from "../V2.mjs"
 import {lightLine} from "../graphics/light/lightLine.mjs"
 import {identityBindGroup} from "../graphics/transformMatrixBindGroupLayout.mjs"
 import {Trail} from "../graphics/Trail.mjs"
+import {LineTrail} from "../LineTrail.mjs"
 
 class Blast {
     /** @type {V2} */
@@ -20,6 +21,16 @@ class Blast {
 
     trail0 = new Trail(0.01)
     trail1 = new Trail(0.01)
+    lineTrail = new LineTrail(12, 500, (i, dt, pos, vel, col) => {
+        vel[2*i + 0] *= 0.99 ** dt
+        vel[2*i + 1] *= 0.99 ** dt
+        col[3*i + 0] -= this.colArray[0]/500 * dt
+        col[3*i + 1] -= this.colArray[1]/500 * dt
+        col[3*i + 2] -= this.colArray[2]/500 * dt
+        col[3*i + 0] = Math.max(0, col[3*i + 0])
+        col[3*i + 1] = Math.max(0, col[3*i + 1])
+        col[3*i + 2] = Math.max(0, col[3*i + 2])
+    })
 
     constructor(p0, p1, vel, col) {
         this.vel = vel
@@ -44,7 +55,8 @@ class Blast {
         })
         device.queue.writeBuffer(this.colBuffer, 0, this.colArray)
     }
-    update(game){
+    update(dt, game){
+        this.lineTrail.update(this.p0, this.p1, this.vel, this.colArray, dt)
         // #TODO temporary deletion mechanism
         if(this.p0.mag > 10){
             game.blasts.delete(this)
@@ -58,6 +70,7 @@ class Blast {
 
         this.trail0.run(this.p0, this.colArray)
         this.trail1.run(this.p1, this.colArray)
+        this.lineTrail.move(dt)
     }
     draw(encoder, lightTex, cameraBindGroup, minBrightnessBindGroup) {
         if(this.moved) {
@@ -68,6 +81,7 @@ class Blast {
 
         this.trail0.draw(encoder, lightTex, cameraBindGroup, minBrightnessBindGroup)
         this.trail1.draw(encoder, lightTex, cameraBindGroup, minBrightnessBindGroup)
+        this.lineTrail.draw(encoder, lightTex, cameraBindGroup, minBrightnessBindGroup)
     }
 }
 

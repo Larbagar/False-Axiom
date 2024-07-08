@@ -63,6 +63,7 @@ class Trail {
         const newPos = pos.copy()
 
         if(this.lastPos) {
+            // console.log(`Removed at brightness ${this.colArray[this.replaceIndex * 3 + 0]}, ${this.colArray[this.replaceIndex * 3 + 1]}, ${this.colArray[this.replaceIndex * 3 + 2]}`)
             this.colArray[this.replaceIndex * 3 + 0] = col[0]
             this.colArray[this.replaceIndex * 3 + 1] = col[1]
             this.colArray[this.replaceIndex * 3 + 2] = col[2]
