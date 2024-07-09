@@ -34,12 +34,6 @@ class BlastCollision extends Event {
         this.ship.lowTractionProgress = 0
         this.ship.hp--
         this.ship.hpDisplayProgress = 0
-        if(this.ship.hp <= 0){
-            const index = this.game.ships.indexOf(this.ship);
-            if (index > -1) {
-                this.game.ships.splice(index, 1);
-            }
-        }
         this.blast.playersHit.add(this.ship)
         recalculateShipEvents(this.sim, this.game, this.ship)
     }

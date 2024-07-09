@@ -53,12 +53,6 @@ class ShipCollision extends Event{
             this.shipA.vel.add(diff.xy.mult(0)).add(normalized.xy.mult(this.shipA.playerKnockback))
             this.shipB.hp --
             this.shipB.hpDisplayProgress = 0
-            if(this.shipB.hp <= 0){
-                const index = this.game.ships.indexOf(this.shipB);
-                if (index > -1) {
-                    this.game.ships.splice(index, 1);
-                }
-            }
         }else if(bDashing){
             this.shipA.vel.add(diff.xy.mult(1)).add(normalized.xy.mult(this.shipA.playerKnockback))
             this.shipA.lowTractionProgress = 0
@@ -68,12 +62,6 @@ class ShipCollision extends Event{
             this.shipB.vel.sub(diff.xy.mult(0)).sub(normalized.xy.mult(this.shipB.playerKnockback))
             this.shipA.hp --
             this.shipA.hpDisplayProgress = 0
-            if(this.shipA.hp <= 0){
-                const index = this.game.ships.indexOf(this.shipA);
-                if (index > -1) {
-                    this.game.ships.splice(index, 1);
-                }
-            }
         }else{
             this.shipA.vel.add(diff.xy.mult(1/2)).add(normalized.xy.mult(this.shipA.playerKnockback))
             this.shipA.lowTractionProgress = 0

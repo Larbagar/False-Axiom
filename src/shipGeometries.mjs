@@ -2,24 +2,43 @@ import { device } from "./graphics/device.mjs"
 import V2 from "./V2.mjs"
 
 class ShipGeometry {
+    /** @type {number[]} */
+    geometry
+    /** @type {number} */
+    edgeCount
+    /** @type {Float32Array} */
+    arr
+    /** @type {GPUBuffer} */
+    buffer
     /** @type {Array<TrailDescription>} */
     trailDescriptions
+    /** @type {number} */
+    totalLength
+
 
     /**
      * @param {Array<number>} geometry
-     * @param {Array<TrailDescription>} thrusters
+     * @param {Array<TrailDescription>} trailDescriptions
      * @param {number} scale
      */
-    constructor(geometry, thrusters = [], scale = 1) {
+    constructor(geometry, trailDescriptions = [], scale = 1) {
         this.geometry = geometry
         this.edgeCount = this.geometry.length/2 - 1
         this.arr = new Float32Array(this.edgeCount*4)
+        this.totalLength = 0
         for(let i = 0; i < this.edgeCount; i ++){
             this.arr[4*i + 0] = this.geometry[i*2 + 0]*scale
             this.arr[4*i + 1] = this.geometry[i*2 + 1]*scale
             this.arr[4*i + 2] = this.geometry[i*2 + 2]*scale
             this.arr[4*i + 3] = this.geometry[i*2 + 3]*scale
+            this.totalLength +=
+                (
+                    (this.geometry[4*i + 2] - this.geometry[4*i + 0])**2 +
+                    (this.geometry[4*i + 3] - this.geometry[4*i + 1])**2
+                )**0.5
         }
+        this.totalLength /= scale
+
         this.buffer = device.createBuffer({
             label: "light pos buffer",
             size: this.arr.byteLength,
@@ -28,8 +47,8 @@ class ShipGeometry {
         device.queue.writeBuffer(this.buffer, 0, this.arr)
 
         this.trailDescriptions = []
-        for(const thruster of thrusters){
-            this.trailDescriptions.push(new TrailDescription(thruster.location.copy().multNum(scale), thruster.col, thruster.dimSpeed, thruster.v0.copy().multNum(scale), thruster.friction))
+        for(const trailDescription of trailDescriptions){
+            this.trailDescriptions.push(new TrailDescription(trailDescription.location.copy().multNum(scale), trailDescription.col, trailDescription.dimSpeed, trailDescription.v0.copy().multNum(scale), trailDescription.friction))
         }
     }
 }

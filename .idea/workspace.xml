@@ -4,13 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Actually fixed the death hack">
-      <change afterPath="$PROJECT_DIR$/src/LineTrail.mjs" afterDir="false" />
+    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Improved blast animation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Blast.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Blast.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/UpdateEvent.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UpdateEvent.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Ship.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Ship.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/blastCollision.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/blastCollision.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/shipCollision.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/shipCollision.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/wallCollision.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/wallCollision.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphics/Trail.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/Trail.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shipGeometries.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/shipGeometries.mjs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,18 +27,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Larbagar"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Larbagar&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Larbagar/False-Axiom.git",
-    "accountId": "0fa0f409-b495-4d83-b388-17b213474efe"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Larbagar/False-Axiom.git&quot;,
+    &quot;accountId&quot;: &quot;0fa0f409-b495-4d83-b388-17b213474efe&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 1
@@ -48,24 +48,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "JavaScript Debug.Chrome.executor": "Run",
-    "JavaScript Debug.Edge.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/darcy/Programming/False-Axiom",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2024.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JavaScript Debug.Chrome.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.Edge.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/darcy/Programming/False-Axiom&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm 2024.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\darcy\Programming\False-Axiom\src" />
@@ -125,7 +125,8 @@
       <workItem from="1720212194917" duration="15195000" />
       <workItem from="1720308452401" duration="230000" />
       <workItem from="1720354925185" duration="1174000" />
-      <workItem from="1720356123623" duration="10223000" />
+      <workItem from="1720356123623" duration="12019000" />
+      <workItem from="1720449326056" duration="3711000" />
     </task>
     <task id="LOCAL-00001" summary="New ships, players face each other to start, wall hit animation, basic blast">
       <option name="closed" value="true" />
@@ -159,7 +160,23 @@
       <option name="project" value="LOCAL" />
       <updated>1720371924548</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Improved blast animation">
+      <option name="closed" value="true" />
+      <created>1720408491807</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1720408491807</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Improved blast animation">
+      <option name="closed" value="true" />
+      <created>1720408647871</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1720408647871</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -181,6 +198,7 @@
     <MESSAGE value="Hacked in death" />
     <MESSAGE value="Fixed the death hack" />
     <MESSAGE value="Actually fixed the death hack" />
-    <option name="LAST_COMMIT_MESSAGE" value="Actually fixed the death hack" />
+    <MESSAGE value="Improved blast animation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improved blast animation" />
   </component>
 </project>

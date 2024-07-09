@@ -9,20 +9,6 @@ import { Wall } from "./Wall.mjs"
 import { lightPoint } from "../graphics/light/lightPoint.mjs"
 
 export class Ship {
-  /** @type {V2} */
-  pos
-  vel = V2.zero()
-
-  /** @type {number} */
-  dir
-  angVel = 0
-
-  /** @type {Controller} */
-  controller
-
-  /** @type {Array<number>} */
-  col
-
 
   turnSpeed = 0.006
   turnFric = 0.02
@@ -41,21 +27,58 @@ export class Ship {
   dashTime = 170
   dashBuffer = 80
   dashCooldown = 300
-
+  dashDecay = 1
   dashSpeed = 0.0024
 
   blastVel = 0.005
 
   hpShowTime = 2000
   hpFadeTime = 300
+  hpHeight = 3
+  hpDist = 2
 
   size = 0.03
+
+  deathSpeed = 0.001
+
+
+  /** @type {V2} */
+  pos
+  vel = V2.zero()
+
+  /** @type {number} */
+  dir
+  angVel = 0
+
+  maxHp = 5
+
+  /** @type {Controller} */
+  controller
+
+  /** @type {Array<number>} */
+  col
 
 
   /** @type {ShipGeometry} */
   geometry
+  /** @type {Float32Array} */
+  shipColArr
   /** @type {GPUBuffer} */
   shipColBuffer
+  /** @type {GPUBuffer} */
+  shipTransformBuffer
+  /** @type {GPUBindGroup} */
+  shipTransformBindGroup
+  /** @type {GPUBuffer} */
+  hpPosBuffer
+  /** @type {Float32Array} */
+  hpCol
+  /** @type {GPUBuffer} */
+  hpColBuffer
+  /** @type {GPUBuffer} */
+  hpTransformBuffer
+  /** @type {GPUBindGroup} */
+  hpTransformBindGroup
 
   lowTractionProgress = this.lowTractionTime
 
@@ -69,22 +92,21 @@ export class Ship {
   dashWall
 
 
-  dashDecay = 1
-
-  hpHeight = 3
-  hpDist = 2
 
   hpDisplayProgress = 0
 
-  maxHp = 5
   hp = this.maxHp
+
+  deathProgress = 0
+  /** @type {number} */
+  usedSize = this.size
 
 
   /**
    * @param {V2} pos
    * @param {number} dir
    * @param {Controller} controller
-   * @param {Iterable<number>} col
+   * @param {Array<number>} col
    * @param {ShipGeometry} geometry
    */
   constructor(pos, dir, controller, col, geometry) {
@@ -95,14 +117,14 @@ export class Ship {
 
     this.geometry = geometry
 
-    const shipCol = new Float32Array(Array.from({length: this.geometry.edgeCount}, _ => this.col).flat())
+    this.shipColArr = new Float32Array(Array.from({length: this.geometry.edgeCount}, _ => this.col).flat())
 
     this.shipColBuffer = device.createBuffer({
       label: "light col buffer",
-      size: shipCol.byteLength,
+      size: this.shipColArr.byteLength,
       usage: GPUBufferUsage.COPY_DST | GPUBufferUsage.VERTEX,
     })
-    device.queue.writeBuffer(this.shipColBuffer, 0, shipCol)
+    device.queue.writeBuffer(this.shipColBuffer, 0, this.shipColArr)
 
     this.shipTransformBuffer = device.createBuffer({
       label: "ship transform buffer",
@@ -159,10 +181,9 @@ export class Ship {
       ],
     })
 
-    /** @type {Array<Trail>} */
     this.trails = []
     for(const description of this.geometry.trailDescriptions){
-      this.trails.push(new Trail(description.dimSpeed, {col: description.col, friction: description.friction}))
+      this.trails.push(new Trail(description.dimSpeed))
     }
   }
 
@@ -221,6 +242,16 @@ export class Ship {
     this.pos.add(this.vel.copy().mult(dt))
     this.dir += this.angVel * dt
 
+    if(this.hp <= 0){
+      this.deathProgress += this.deathSpeed * dt
+      this.deathProgress = Math.max(0, this.deathProgress)
+      this.usedSize = this.size * (1 - this.deathProgress)
+
+      const currentCol = this.col.map(x => x/(1 - this.deathProgress))
+      this.shipColArr = new Float32Array(Array.from({length: this.geometry.edgeCount}, _ => currentCol).flat())
+      device.queue.writeBuffer(this.shipColBuffer, 0, this.shipColArr)
+    }
+
     // #TODO should not be called on move
     const brightness = 0.2*this.controller.forward*(this.dashProgress >= this.dashTime)
     for(let i = 0; i < this.geometry.trailDescriptions.length; i++){
@@ -232,7 +263,7 @@ export class Ship {
   }
 
   draw(encoder, lightTex, cameraBindGroup, minBrightnessBindGroup) {
-    const shipTransform = M3.identity().rotate(this.dir).scaleS(this.size).translate(this.pos)
+    const shipTransform = M3.identity().rotate(this.dir).scaleS(this.usedSize).translate(this.pos)
     device.queue.writeBuffer(this.shipTransformBuffer, 0, shipTransform.arr)
     lightLine(encoder, lightTex, cameraBindGroup, this.shipTransformBindGroup, this.geometry.buffer, this.shipColBuffer, minBrightnessBindGroup, this.geometry.edgeCount)
     for(const trail of this.trails){

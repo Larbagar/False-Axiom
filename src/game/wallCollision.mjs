@@ -97,12 +97,6 @@ class WallCollision extends Event {
         } else {
             this.ship.hp--
             this.ship.hpDisplayProgress = 0
-            if(this.ship.hp <= 0){
-                const index = this.game.ships.indexOf(this.ship);
-                if (index > -1) {
-                    this.game.ships.splice(index, 1);
-                }
-            }
         }
 
         if (dashing && !this.wall.persists) {
