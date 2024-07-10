@@ -39,7 +39,7 @@ export class Ship {
 
   size = 0.03
 
-  deathSpeed = 0.001
+  deathSpeed = 0.004
 
 
   /** @type {V2} */
@@ -101,6 +101,8 @@ export class Ship {
   /** @type {number} */
   usedSize = this.size
 
+  updateColBuffer = false
+
 
   /**
    * @param {V2} pos
@@ -117,7 +119,7 @@ export class Ship {
 
     this.geometry = geometry
 
-    this.shipColArr = new Float32Array(Array.from({length: this.geometry.edgeCount}, _ => this.col).flat())
+    this.shipColArr = new Float32Array(new Array(this.geometry.edgeCount).fill(this.col).flat())
 
     this.shipColBuffer = device.createBuffer({
       label: "light col buffer",
@@ -188,54 +190,56 @@ export class Ship {
   }
 
   update(dt, game) {
-    if(this.dashProgress < this.dashTime && this.dashTime <= this.dashProgress + dt){
-      // End the dash
-      this.vel.mult(this.dashDecay)
-    }else if(
-        this.controller.dash &&
-        this.dashTime + this.dashBuffer + this.dashCooldown <= this.dashProgress + dt
-    ){
-      // Start the dash
-      this.dashProgress = 0
-      this.dashDir = this.dir
-      this.dashWall = new Wall(V2.fromPolar(-this.size, this.dir).add(this.pos), this.dir, this.dashSpeed * this.dashTime, 1/this.dashTime, this.col)
-      game.walls.add(this.dashWall)
-      this.controller.startDash()
-      this.lowTractionProgress = this.lowTractionTime
-      this.vel.xy = V2.fromPolar(this.dashSpeed, this.dashDir)
-    }
-    if(this.dashProgress + dt < this.dashTime){
-
-      // Dashing
-
-      this.angVel += (this.turnSpeed * this.controller.turn - this.angVel) * (1 - (1 - this.turnFric)**dt)
-
-    }else{
-
-      // Normal movement
-
-      this.angVel += (this.turnSpeed * this.controller.turn - this.angVel) * (1 - (1 - this.turnFric)**dt)
-
-
-      this.vel.rotate(-this.dir)
-
-      let traction = Math.min(1, this.lowTractionProgress / this.lowTractionTime)
-
-      let sideFric = (this.sideFric * traction + this.lowTraction * (1 - traction))
-      let fric
-
-      if (this.vel.x >= 0) {
-        fric = this.forwardFric
-      } else {
-        fric = sideFric
+    if(this.hp > 0) {
+      if (this.dashProgress < this.dashTime && this.dashTime <= this.dashProgress + dt) {
+        // End the dash
+        this.vel.mult(this.dashDecay)
+      } else if (
+          this.controller.dash &&
+          this.dashTime + this.dashBuffer + this.dashCooldown <= this.dashProgress + dt
+      ) {
+        // Start the dash
+        this.dashProgress = 0
+        this.dashDir = this.dir
+        this.dashWall = new Wall(V2.fromPolar(-this.size, this.dir).add(this.pos), this.dir, this.dashSpeed * this.dashTime, 1 / this.dashTime, this.col)
+        game.walls.add(this.dashWall)
+        this.controller.startDash()
+        this.lowTractionProgress = this.lowTractionTime
+        this.vel.xy = V2.fromPolar(this.dashSpeed, this.dashDir)
       }
-      this.vel.x += (this.speed * this.controller.forward - this.vel.x) * (1 - (1 - fric)**dt)
-      this.vel.y -= this.vel.y * (1 - (1 - sideFric)**dt)
-      this.vel.rotate(this.dir)
+      if (this.dashProgress + dt < this.dashTime) {
+
+        // Dashing
+
+        this.angVel += (this.turnSpeed * this.controller.turn - this.angVel) * (1 - (1 - this.turnFric) ** dt)
+
+      } else {
+
+        // Normal movement
+
+        this.angVel += (this.turnSpeed * this.controller.turn - this.angVel) * (1 - (1 - this.turnFric) ** dt)
+
+
+        this.vel.rotate(-this.dir)
+
+        let traction = Math.min(1, this.lowTractionProgress / this.lowTractionTime)
+
+        let sideFric = (this.sideFric * traction + this.lowTraction * (1 - traction))
+        let fric
+
+        if (this.vel.x >= 0) {
+          fric = this.forwardFric
+        } else {
+          fric = sideFric
+        }
+        this.vel.x += (this.speed * this.controller.forward - this.vel.x) * (1 - (1 - fric) ** dt)
+        this.vel.y -= this.vel.y * (1 - (1 - sideFric) ** dt)
+        this.vel.rotate(this.dir)
+      }
+      this.dashProgress += dt
+      this.lowTractionProgress += dt
+      this.hpDisplayProgress += dt
     }
-    this.dashProgress += dt
-    this.lowTractionProgress += dt
-    this.hpDisplayProgress += dt
   }
 
   move(dt) {
@@ -247,9 +251,7 @@ export class Ship {
       this.deathProgress = Math.max(0, this.deathProgress)
       this.usedSize = this.size * (1 - this.deathProgress)
 
-      const currentCol = this.col.map(x => x/(1 - this.deathProgress))
-      this.shipColArr = new Float32Array(Array.from({length: this.geometry.edgeCount}, _ => currentCol).flat())
-      device.queue.writeBuffer(this.shipColBuffer, 0, this.shipColArr)
+      this.updateColBuffer = true
     }
 
     // #TODO should not be called on move
@@ -263,6 +265,12 @@ export class Ship {
   }
 
   draw(encoder, lightTex, cameraBindGroup, minBrightnessBindGroup) {
+    if(this.updateColBuffer){
+      const currentCol = this.col.map(x => Math.max(0, x/(1 - this.deathProgress)))
+      this.shipColArr = new Float32Array(new Float32Array(new Array(this.geometry.edgeCount).fill(currentCol).flat()))
+      device.queue.writeBuffer(this.shipColBuffer, 0, this.shipColArr)
+    }
+
     const shipTransform = M3.identity().rotate(this.dir).scaleS(this.usedSize).translate(this.pos)
     device.queue.writeBuffer(this.shipTransformBuffer, 0, shipTransform.arr)
     lightLine(encoder, lightTex, cameraBindGroup, this.shipTransformBindGroup, this.geometry.buffer, this.shipColBuffer, minBrightnessBindGroup, this.geometry.edgeCount)

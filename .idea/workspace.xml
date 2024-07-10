@@ -5,12 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Improved blast animation">
+      <change afterPath="$PROJECT_DIR$/src/Explosion.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Ship.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Ship.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/blastCollision.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/blastCollision.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/shipCollision.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/shipCollision.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/wallCollision.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/wallCollision.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shipGeometries.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/shipGeometries.mjs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,6 +124,7 @@
       <workItem from="1720354925185" duration="1174000" />
       <workItem from="1720356123623" duration="12019000" />
       <workItem from="1720449326056" duration="3711000" />
+      <workItem from="1720604073404" duration="3439000" />
     </task>
     <task id="LOCAL-00001" summary="New ships, players face each other to start, wall hit animation, basic blast">
       <option name="closed" value="true" />
