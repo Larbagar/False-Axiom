@@ -5,7 +5,7 @@ const transformMatrixBindGroupLayout = device.createBindGroupLayout({
   entries: [
     {
       binding: 0,
-      visibility: GPUShaderStage.VERTEX,
+      visibility: GPUShaderStage.VERTEX | GPUShaderStage.FRAGMENT,
       buffer: {},
     }
   ]

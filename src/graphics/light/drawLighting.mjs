@@ -3,6 +3,7 @@ import { samplerBindGroupLayout } from "../samplers/samplerBindGroupLayout.mjs"
 import { textureBindGroupLayout } from "../textureBindGroupLayout.mjs"
 import { device } from "../device.mjs"
 import { canvasFormat } from "../textureHandler.mjs"
+import {transformMatrixBindGroupLayout} from "../transformMatrixBindGroupLayout.mjs"
 
 const geometry = new Float32Array([
     -1, -1,
@@ -34,6 +35,8 @@ const shaderModule = device.createShaderModule({
 
 @group(0) @binding(0) var linearSampler: sampler;
 @group(1) @binding(0) var lighting: texture_2d<f32>;
+@group(2) @binding(0) var<uniform> camera: mat3x3<f32>;
+@group(3) @binding(0) var distortion: texture_2d<f32>;
 
 struct VertIn {
     @location(0) geometry: vec2f,
@@ -66,8 +69,9 @@ fn map(x: vec3f) -> vec3f {
 fn fragment(in: fragIn) -> @location(0) vec4f {
     let background = vec3f(1);
 
-    let lightingSample = max(vec3(0, 0, 0), textureSample(lighting, linearSampler, in.texPos).rgb);
-    return vec4f(background*map(lightingSample), 1);
+    let samplePos = (camera*vec3(textureSample(distortion, linearSampler, in.texPos).rg, 1)).xy;
+    let brightness = max(vec3(0, 0, 0), textureSample(lighting, linearSampler, samplePos).rgb);
+    return vec4f(background*map(brightness), 1);
 }
     `
 })
@@ -86,7 +90,13 @@ const geometryVertexBufferLayout = {
 const pipelineLayout = device.createPipelineLayout({
     label: "apply lighting pipeline layout",
     bindGroupLayouts: [
+        // Sampler
         samplerBindGroupLayout,
+        // Lighting
+        textureBindGroupLayout,
+        // Camera
+        transformMatrixBindGroupLayout,
+        // Distortion
         textureBindGroupLayout,
     ],
 })
@@ -116,8 +126,10 @@ const pipeline = device.createRenderPipeline({
  * @param {GPUCommandEncoder} encoder
  * @param {GPUTextureView} out
  * @param {GPUBindGroup} lighting
+ * @param {GPUBindGroup} camera
+ * @param {GPUBindGroup} distortion
  */
-function drawLighting(encoder, out, lighting){
+function drawLighting(encoder, out, lighting, camera, distortion){
     const pass = encoder.beginRenderPass({
         label: "apply lighting draw pass",
         colorAttachments: [
@@ -132,6 +144,8 @@ function drawLighting(encoder, out, lighting){
     pass.setPipeline(pipeline)
     pass.setBindGroup(0, linearSamplerBindGroup)
     pass.setBindGroup(1, lighting)
+    pass.setBindGroup(2, camera)
+    pass.setBindGroup(3, distortion)
     pass.setVertexBuffer(0, geometryBuffer)
     pass.setIndexBuffer(indexBuffer, "uint16")
 

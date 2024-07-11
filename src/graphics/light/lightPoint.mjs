@@ -168,7 +168,7 @@ function lightPoint(
                 view: out,
                 loadOp: "load",
                 storeOp: "store",
-            }
+            },
         ],
     })
 

@@ -1,15 +1,25 @@
 import {LightTex} from "./light/LightTex.mjs"
 import V2 from "../V2.mjs"
 import {device} from "./device.mjs"
+import {DistortionTex} from "./light/DistortionTex.mjs"
 
-let canvas, context, lightTex
+let
+    /** @type {HTMLCanvasElement} */
+    canvas,
+    /** @type {GPUCanvasContext} */
+    context,
+    /** @type {LightTex} */
+    lightTex,
+    /** @type {DistortionTex} */
+    distortionTex
 
 const canvasFormat = navigator.gpu.getPreferredCanvasFormat()
 
 function resize() {
-    lightTex = new LightTex(V2.fromVals(innerWidth, innerHeight))
-    canvas.width = innerWidth
-    canvas.height = innerHeight
+    const res = V2.fromVals(innerWidth, innerHeight)
+    lightTex = new LightTex(res)
+    distortionTex = new DistortionTex(res);
+    [canvas.width, canvas.height] = res
 }
 
 function setupTexutres(){
@@ -27,4 +37,4 @@ function setupTexutres(){
 }
 
 
-export {lightTex, canvas, canvasFormat, context, setupTexutres}
+export {lightTex, distortionTex, canvas, canvasFormat, context, setupTexutres}

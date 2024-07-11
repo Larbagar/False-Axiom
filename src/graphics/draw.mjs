@@ -1,15 +1,14 @@
-import {device} from "./device.mjs";
-import {canvas, context, lightTex} from "./textureHandler.mjs";
-import M3 from "../M3.mjs";
-import {clear} from "./clear.mjs";
-import {drawLighting} from "./light/drawLighting.mjs";
-import {LightTex} from "./light/LightTex.mjs";
-import V2 from "../V2.mjs";
-import {minBrightnessBindGroupLayout} from "./light/minBrightnessBindGroupLayout.mjs";
-import {transformMatrixBindGroupLayout} from "./transformMatrixBindGroupLayout.mjs";
+import {device} from "./device.mjs"
+import {context, distortionTex, lightTex} from "./textureHandler.mjs"
+import M3 from "../M3.mjs"
+import {clear} from "./clear.mjs"
+import {drawLighting} from "./light/drawLighting.mjs"
+import {minBrightnessBindGroupLayout} from "./light/minBrightnessBindGroupLayout.mjs"
+import {transformMatrixBindGroupLayout} from "./transformMatrixBindGroupLayout.mjs"
+import {resetDistortion} from "./light/resetDistortion.mjs"
 
 
-const minBrightness = new Float32Array([0.0002]) // Max 0.002
+const minBrightness = new Float32Array([0.002]) // Max 0.002
 const minBrightnessBuffer = device.createBuffer({
     label: "min brightness buffer",
     size: minBrightness.byteLength,
@@ -49,6 +48,24 @@ const cameraBindGroup = device.createBindGroup({
     ],
 })
 
+const inverseCameraBuffer = device.createBuffer({
+    label: "ship transform buffer",
+    size: M3.BYTE_LENGTH,
+    usage: GPUBufferUsage.COPY_DST | GPUBufferUsage.UNIFORM,
+})
+const inverseCameraBindGroup = device.createBindGroup({
+    label: "ship transform bind group",
+    layout: transformMatrixBindGroupLayout,
+    entries: [
+        {
+            binding: 0,
+            resource: {
+                buffer: cameraBuffer,
+            },
+        },
+    ],
+})
+
 /**
  * @param {Game} game
  */
@@ -60,6 +77,8 @@ function draw(game){
 
     const camera = M3.scaleV(Math.min(1, innerHeight/innerWidth), Math.min(1, innerWidth/innerHeight))
     device.queue.writeBuffer(cameraBuffer, 0, camera.arr)
+    const inverseCamera = camera.inverse()
+    device.queue.writeBuffer(inverseCameraBuffer, 0, inverseCamera.arr)
 
     clear(encoder, lightTex.view, [0, 0, 0, 1])
 
@@ -78,7 +97,8 @@ function draw(game){
     for(const explosion of game.explosions){
         explosion.draw(encoder, lightTex.view, cameraBindGroup, minBrightnessBindGroup)
     }
-    drawLighting(encoder, canvasView, lightTex.bindGroup)
+    resetDistortion(encoder, distortionTex.view, inverseCameraBindGroup)
+    drawLighting(encoder, canvasView, lightTex.bindGroup, cameraBindGroup, distortionTex.bindGroup)
 
     const commandBuffer = encoder.finish()
     device.queue.submit([commandBuffer])

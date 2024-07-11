@@ -1,5 +1,8 @@
 import M3 from "./M3.mjs"
 
+/**
+ * @implements {Iterable}
+ */
 export default class V2 {
     /** @type {Float32Array} */
     arr
