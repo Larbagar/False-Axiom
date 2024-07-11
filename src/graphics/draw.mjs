@@ -75,6 +75,9 @@ function draw(game){
     for(const rubbleCluster of game.rubbleClusters){
         rubbleCluster.draw(encoder, lightTex.view, cameraBindGroup, minBrightnessBindGroup)
     }
+    for(const explosion of game.explosions){
+        explosion.draw(encoder, lightTex.view, cameraBindGroup, minBrightnessBindGroup)
+    }
     drawLighting(encoder, canvasView, lightTex.bindGroup)
 
     const commandBuffer = encoder.finish()

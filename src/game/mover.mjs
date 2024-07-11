@@ -1,3 +1,7 @@
+/**
+ * @param {Game} game
+ * @param {number} newTime
+ */
 function move(game, newTime){
     const dt = newTime - game.time
     game.time = newTime
@@ -12,6 +16,9 @@ function move(game, newTime){
     }
     for(const rubbleCluster of game.rubbleClusters){
         rubbleCluster.move(dt)
+    }
+    for(const explosion of game.explosions){
+        explosion.move(dt)
     }
 }
 

@@ -17,7 +17,7 @@ class Blast {
     moved = true
 
     /** @type {Set<Ship>} */
-    playersHit = new Set()
+    shipsHit = new Set()
 
     trail0 = new Trail(0.01)
     trail1 = new Trail(0.01)

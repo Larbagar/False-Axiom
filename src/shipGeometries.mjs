@@ -33,8 +33,8 @@ class ShipGeometry {
             this.arr[4*i + 3] = this.geometry[i*2 + 3]*scale
             this.totalLength +=
                 (
-                    (this.geometry[4*i + 2] - this.geometry[4*i + 0])**2 +
-                    (this.geometry[4*i + 3] - this.geometry[4*i + 1])**2
+                    (this.geometry[2*i + 2] - this.geometry[2*i + 0])**2 +
+                    (this.geometry[2*i + 3] - this.geometry[2*i + 1])**2
                 )**0.5
         }
         this.totalLength /= scale

@@ -34,7 +34,7 @@ class BlastCollision extends Event {
         this.ship.lowTractionProgress = 0
         this.ship.hp--
         this.ship.hpDisplayProgress = 0
-        this.blast.playersHit.add(this.ship)
+        this.blast.shipsHit.add(this.ship)
         recalculateShipEvents(this.sim, this.game, this.ship)
     }
 }
@@ -57,7 +57,7 @@ function checkBlastCollision(sim, game, ship, blast){
         time = sim.time + dt,
         len = lenVec.mag,
         tanDist = tan.dot(diff.xy.add(ship.vel.xy.mult(dt)))
-    if (0 < tanDist && tanDist < len && !blast.playersHit.has(ship)) {
+    if (0 < tanDist && tanDist < len && !blast.shipsHit.has(ship)) {
         sim.events.add(new BlastCollision(time, sim, game, ship, blast, perp, perpVel))
     }
 }

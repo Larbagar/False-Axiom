@@ -31,14 +31,18 @@ function removeShipEvents(sim, ship){
  */
 function recalculateShipEvents(sim, game, ship){
     removeShipEvents(sim, ship)
-    for(const otherShip of game.ships){
-        checkShipCollision(sim, game, ship, otherShip)
-    }
-    for(const wall of game.walls){
-        checkWallCollision(sim, game, ship, wall)
-    }
-    for(const blast of game.blasts){
-        checkBlastCollision(sim, game, ship, blast)
+    if(!ship.exploded) {
+        for (const otherShip of game.ships) {
+            if (!otherShip.exploded) {
+                checkShipCollision(sim, game, ship, otherShip)
+            }
+        }
+        for (const wall of game.walls) {
+            checkWallCollision(sim, game, ship, wall)
+        }
+        for (const blast of game.blasts) {
+            checkBlastCollision(sim, game, ship, blast)
+        }
     }
 }
 /**
@@ -66,8 +70,10 @@ function recalculateAllEvents(sim, game){
         }
     }
     for(const ship of game.ships){
-        for(const wall of game.walls){
-            checkWallCollision(sim, game, ship, wall)
+        if(!ship.exploded) {
+            for (const wall of game.walls) {
+                checkWallCollision(sim, game, ship, wall)
+            }
         }
     }
     for(const ship of game.ships){

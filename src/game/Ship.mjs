@@ -7,6 +7,7 @@ import { Trail } from "../graphics/Trail.mjs"
 import M3 from "../M3.mjs"
 import { Wall } from "./Wall.mjs"
 import { lightPoint } from "../graphics/light/lightPoint.mjs"
+import {Explosion} from "../Explosion.mjs"
 
 export class Ship {
 
@@ -18,7 +19,7 @@ export class Ship {
   sideFric = 0.012
 
   wallKnockback = 0.0018
-  playerKnockback = 0.0006
+  shipKnockback = 0.0006
   blastKnockback = 0.0018
 
   lowTraction = 0.0006
@@ -32,6 +33,8 @@ export class Ship {
 
   blastVel = 0.005
 
+  maxHp = 5
+
   hpShowTime = 2000
   hpFadeTime = 300
   hpHeight = 3
@@ -39,7 +42,8 @@ export class Ship {
 
   size = 0.03
 
-  deathSpeed = 0.004
+  deathSpeed = 0.0015
+  finalBrightness = 200
 
 
   /** @type {V2} */
@@ -50,13 +54,13 @@ export class Ship {
   dir
   angVel = 0
 
-  maxHp = 5
 
   /** @type {Controller} */
   controller
 
   /** @type {Array<number>} */
   col
+
 
 
   /** @type {ShipGeometry} */
@@ -102,6 +106,8 @@ export class Ship {
   usedSize = this.size
 
   updateColBuffer = false
+
+  exploded = false
 
 
   /**
@@ -239,6 +245,12 @@ export class Ship {
       this.dashProgress += dt
       this.lowTractionProgress += dt
       this.hpDisplayProgress += dt
+    }else if(this.deathProgress >= 1 && !this.exploded){
+      /** @type {Array<number>} */
+      const finalCol = this.col.map(x => {return x*this.finalBrightness/this.geometry.totalLength})
+      game.explosions.add(new Explosion(100, finalCol, this.pos, 0.001, 0.0002))
+      this.exploded = true
+      game.ship
     }
   }
 
@@ -248,14 +260,14 @@ export class Ship {
 
     if(this.hp <= 0){
       this.deathProgress += this.deathSpeed * dt
-      this.deathProgress = Math.max(0, this.deathProgress)
+      this.deathProgress = Math.min(1, this.deathProgress)
       this.usedSize = this.size * (1 - this.deathProgress)
 
       this.updateColBuffer = true
     }
 
     // #TODO should not be called on move
-    const brightness = 0.2*this.controller.forward*(this.dashProgress >= this.dashTime)
+    const brightness = 0.2*(this.deathProgress === 0)*this.controller.forward*(this.dashProgress >= this.dashTime)
     for(let i = 0; i < this.geometry.trailDescriptions.length; i++){
       this.trails[i].run(
           this.geometry.trailDescriptions[i].location.copy().mult(this.size).rotate(this.dir).add(this.pos),
@@ -266,7 +278,7 @@ export class Ship {
 
   draw(encoder, lightTex, cameraBindGroup, minBrightnessBindGroup) {
     if(this.updateColBuffer){
-      const currentCol = this.col.map(x => Math.max(0, x/(1 - this.deathProgress)))
+      const currentCol = this.col.map(x => Math.max(0, x*(1 - this.deathProgress + this.deathProgress*this.finalBrightness/this.geometry.totalLength)/(1 - this.deathProgress)))
       this.shipColArr = new Float32Array(new Float32Array(new Array(this.geometry.edgeCount).fill(currentCol).flat()))
       device.queue.writeBuffer(this.shipColBuffer, 0, this.shipColArr)
     }
