@@ -42,8 +42,11 @@ export class Ship {
 
   size = 0.03
 
-  deathSpeed = 0.0015
+  deathFriction = 0.99
+  deathSpeed = 0.001
   finalBrightness = 200
+  deathExplosionCount = 100
+  deathExplosionPow = 0.002
 
 
   /** @type {V2} */
@@ -247,10 +250,12 @@ export class Ship {
       this.hpDisplayProgress += dt
     }else if(this.deathProgress >= 1 && !this.exploded){
       /** @type {Array<number>} */
-      const finalCol = this.col.map(x => {return x*this.finalBrightness/this.geometry.totalLength})
-      game.explosions.add(new Explosion(100, finalCol, this.pos, 0.001, 0.0002))
+      const finalCol = this.col.map(x => {return x*this.finalBrightness*this.size})
+      game.explosions.add(new Explosion(this.deathExplosionCount, finalCol, this.pos, this.deathExplosionPow, this.vel, 0.0002))
       this.exploded = true
-      game.ship
+      game.ships.splice(game.ships.indexOf(this), 1)
+    }else{
+      this.vel.mult(this.deathFriction)
     }
   }
 

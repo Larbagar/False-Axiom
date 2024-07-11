@@ -9,7 +9,7 @@ import {minBrightnessBindGroupLayout} from "./light/minBrightnessBindGroupLayout
 import {transformMatrixBindGroupLayout} from "./transformMatrixBindGroupLayout.mjs";
 
 
-const minBrightness = new Float32Array([0.002]) // Max 0.002
+const minBrightness = new Float32Array([0.0002]) // Max 0.002
 const minBrightnessBuffer = device.createBuffer({
     label: "min brightness buffer",
     size: minBrightness.byteLength,

@@ -37,7 +37,7 @@ class ShipGeometry {
                     (this.geometry[2*i + 3] - this.geometry[2*i + 1])**2
                 )**0.5
         }
-        this.totalLength /= scale
+        this.totalLength *= scale
 
         this.buffer = device.createBuffer({
             label: "light pos buffer",

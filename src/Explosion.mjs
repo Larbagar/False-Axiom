@@ -25,10 +25,10 @@ class Explosion {
      * @param {number} count
      * @param {Array<number>} col
      * @param {V2} pos
-     * @param {number} avgVel
+     * @param {number} outVel
      * @param {number} fadeSpeed
      */
-    constructor(count, col, pos, avgVel, fadeSpeed = 0) {
+    constructor(count, col, pos, outVel, avgVel = V2.fromVals(0, 0), fadeSpeed = 0) {
         this.count = count
         this.col = col
         this.fadeSpeed = col.map(x => x*fadeSpeed/this.count)
@@ -44,9 +44,9 @@ class Explosion {
             this.posArr[2*i + 0] = pos.x
             this.posArr[2*i + 1] = pos.y
             const angle = Math.random()*2*Math.PI
-            const vel = 2*Math.acos(1 - 2*Math.random())/Math.PI*avgVel
-            this.velArr[2*i + 0] = vel*Math.cos(angle)
-            this.velArr[2*i + 1] = vel*Math.sin(angle)
+            const vel = 2*Math.acos(1 - 2*Math.random())/Math.PI*outVel
+            this.velArr[2*i + 0] = avgVel.x + vel*Math.cos(angle)
+            this.velArr[2*i + 1] = avgVel.y + vel*Math.sin(angle)
             tot += brightness
         }
         for(let i = 0; i < this.colArr.length; i++){
