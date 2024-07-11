@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Added explosion class, minor modification to how repeating color arrays are generated.">
+    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Players now explode upon death, players are deader after dying.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Explosion.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Explosion.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Game.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Game.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Ship.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Ship.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/eventHelpers.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/eventHelpers.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/mover.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/mover.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/graphics/draw.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/draw.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/shipGeometries.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/shipGeometries.mjs" afterDir="false" />
     </list>
@@ -129,7 +126,7 @@
       <workItem from="1720354925185" duration="1174000" />
       <workItem from="1720356123623" duration="12019000" />
       <workItem from="1720449326056" duration="3711000" />
-      <workItem from="1720604073404" duration="5589000" />
+      <workItem from="1720604073404" duration="11795000" />
     </task>
     <task id="LOCAL-00001" summary="New ships, players face each other to start, wall hit animation, basic blast">
       <option name="closed" value="true" />
@@ -187,7 +184,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720651943705</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Players now explode upon death, players are deader after dying.">
+      <option name="closed" value="true" />
+      <created>1720686819348</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1720686819348</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -211,6 +216,7 @@
     <MESSAGE value="Actually fixed the death hack" />
     <MESSAGE value="Improved blast animation" />
     <MESSAGE value="Added explosion class, minor modification to how repeating color arrays are generated." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added explosion class, minor modification to how repeating color arrays are generated." />
+    <MESSAGE value="Players now explode upon death, players are deader after dying." />
+    <option name="LAST_COMMIT_MESSAGE" value="Players now explode upon death, players are deader after dying." />
   </component>
 </project>
