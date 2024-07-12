@@ -5,14 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Players now explode upon death, players are deader after dying.">
-      <change afterPath="$PROJECT_DIR$/src/graphics/light/DistortionTex.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/graphics/light/resetDistortion.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/V2.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/V2.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphics/draw.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/draw.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/graphics/light/drawLighting.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/light/drawLighting.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphics/light/lightPoint.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/light/lightPoint.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphics/textureHandler.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/textureHandler.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/graphics/light/resetDistortion.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/light/resetDistortion.mjs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,6 +126,7 @@
       <workItem from="1720449326056" duration="3711000" />
       <workItem from="1720604073404" duration="11795000" />
       <workItem from="1720732786151" duration="4825000" />
+      <workItem from="1720819336244" duration="1472000" />
     </task>
     <task id="LOCAL-00001" summary="New ships, players face each other to start, wall hit animation, basic blast">
       <option name="closed" value="true" />

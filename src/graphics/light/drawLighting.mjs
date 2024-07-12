@@ -69,8 +69,9 @@ fn map(x: vec3f) -> vec3f {
 fn fragment(in: fragIn) -> @location(0) vec4f {
     let background = vec3f(1);
 
-    let samplePos = (camera*vec3(textureSample(distortion, linearSampler, in.texPos).rg, 1)).xy;
+    let samplePos = ((camera*vec3(textureSample(distortion, linearSampler, in.texPos).rg, 1)).xy*vec2f(1, -1) + 1)/2;
     let brightness = max(vec3(0, 0, 0), textureSample(lighting, linearSampler, samplePos).rgb);
+    //return vec4f(step(samplePos.xyy, vec3f(0.9)), 1);
     return vec4f(background*map(brightness), 1);
 }
     `

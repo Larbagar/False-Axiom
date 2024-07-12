@@ -60,7 +60,7 @@ const inverseCameraBindGroup = device.createBindGroup({
         {
             binding: 0,
             resource: {
-                buffer: cameraBuffer,
+                buffer: inverseCameraBuffer,
             },
         },
     ],
