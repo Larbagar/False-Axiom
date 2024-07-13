@@ -33,7 +33,7 @@ fn vertex(in: VertIn) -> VertOut {
     out.position = in.geometry*(in.progress + in.width);
     out.width = in.width;
     out.growDist = in.growDist;
-    out.intensity = in.width*in.intensity;
+    out.intensity = in.intensity;
     out.progress = in.progress;
     
     return out;

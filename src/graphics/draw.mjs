@@ -68,7 +68,7 @@ const inverseCameraBindGroup = device.createBindGroup({
 })
 
 // pos, width, growDist, intensity
-const shockwaveDescription = new Float32Array([0, 0, 0.2, 0.1, 1])
+const shockwaveDescription = new Float32Array([0, 0, 0.2, 0.1, 0.1])
 const shockwaveDescriptionBuffer = device.createBuffer({
     label: "shockwave description buffer",
     size: shockwaveDescription.byteLength,
