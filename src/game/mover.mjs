@@ -20,6 +20,9 @@ function move(game, newTime){
     for(const explosion of game.explosions){
         explosion.move(dt)
     }
+    for(const shockwave of game.shockwaves){
+        shockwave.move(dt)
+    }
 }
 
 export {move}

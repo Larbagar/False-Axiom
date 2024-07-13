@@ -13,6 +13,7 @@ import {UpdateEvent} from "./game/UpdateEvent.mjs"
 import {Game} from "./game/Game.mjs"
 import {move} from "./game/mover.mjs"
 import {RubbleCluster} from "./RubbleCluster.mjs"
+import {Shockwave} from "./Shockwave.mjs"
 
 
 setupTexutres()
@@ -33,6 +34,8 @@ if ("serviceWorker" in navigator) {
 const game = new Game()
 const simulation = new Simulation()
 simulation.events.add(new UpdateEvent(game, simulation, 0))
+
+// game.shockwaves.add(new Shockwave(V2.zero(), 0.2, 0.1, 0.1, 0.002))
 
 const kc0 = new KeyboardController()
 // kc0.dashKey = "KeyM"
@@ -95,9 +98,6 @@ function updateBoundary(){
 addEventListener("resize", updateBoundary)
 updateBoundary()
 
-// const simulation = new OldGame(ships, walls, touchControllerHandler)
-// simulation.update() // Generates events
-// window.simulation = simulation
 
 
 window.gameSpeed = 1
@@ -142,7 +142,9 @@ function startTouch() {
 }
 function startKeyboard() {
     removeListeners()
-    game.ships.push(new Ship(V2.fromVals(-0.5, 0), 0, kc0, orange, shipGeometries[2]))
+    const shipA = new Ship(V2.fromVals(-0.5, 0), 0, kc0, orange, shipGeometries[2])
+    addEventListener("keydown", e => {if(e.code === "KeyQ"){shipA.hp = 0}})
+    game.ships.push(shipA)
     game.ships.push(new Ship(V2.fromVals(0.5, 0), Math.PI, kc1, cyan, shipGeometries[4]))
     requestAnimationFrame(loop)
 }

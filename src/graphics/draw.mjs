@@ -99,7 +99,6 @@ function draw(game){
     device.queue.writeBuffer(inverseCameraBuffer, 0, inverseCamera.arr)
 
     clear(encoder, lightTex.view, [0, 0, 0, 1])
-
     for(const ship of game.ships){
         ship.draw(encoder, lightTex.view, cameraBindGroup, minBrightnessBindGroup)
     }
@@ -115,8 +114,12 @@ function draw(game){
     for(const explosion of game.explosions){
         explosion.draw(encoder, lightTex.view, cameraBindGroup, minBrightnessBindGroup)
     }
+
     resetDistortion(encoder, distortionTex.view, inverseCameraBindGroup)
-    shockwave(encoder, distortionTex.view, cameraBindGroup, shockwaveDescriptionBuffer, shockwaveProgressBuffer)
+    for(const shockwave of game.shockwaves){
+        shockwave.draw(encoder, distortionTex.view, cameraBindGroup)
+    }
+
     drawLighting(encoder, canvasView, lightTex.bindGroup, cameraBindGroup, distortionTex.bindGroup)
 
     const commandBuffer = encoder.finish()
