@@ -94,7 +94,7 @@ fn cenDist(pos: vec2f) -> f32 {
 @fragment
 fn fragment(in: fragIn) -> @location(0) vec4f {
 
-    let pos = (camera*vec3(textureSample(distortion, linearSampler, in.texPos).rg, 1)).xy;
+    let pos = textureSample(distortion, linearSampler, in.texPos).rg;
     
     let freq = 16.;
     let hex = smoothstep(0.9, 0.95, hexDist(freq*pos));
@@ -102,7 +102,7 @@ fn fragment(in: fragIn) -> @location(0) vec4f {
     let background = 0.5 + max(hex, cen);
     
     
-    let brightness = max(vec3(0, 0, 0), textureSample(lighting, linearSampler, (pos*vec2f(1, -1) + 1)/2).rgb);
+    let brightness = max(vec3(0, 0, 0), textureSample(lighting, linearSampler, ((camera*vec3(pos, 1)).xy*vec2f(1, -1) + 1)/2).rgb);
     //return vec4f(step(vec3f(0.9), background*brightness), 1);
     return vec4f(map(background*brightness), 1);
 }
