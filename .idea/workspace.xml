@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Players now explode upon death, players are deader after dying.">
-      <change afterPath="$PROJECT_DIR$/src/graphics/light/shockwave.mjs" afterDir="false" />
+    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Started work on shockwave program">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/graphics/light/shockwave.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/light/shockwave.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/graphics/samplers/linearSampler.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/samplers/linearSampler.mjs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +126,7 @@
       <workItem from="1720449326056" duration="3711000" />
       <workItem from="1720604073404" duration="11795000" />
       <workItem from="1720732786151" duration="4825000" />
-      <workItem from="1720819336244" duration="6491000" />
+      <workItem from="1720819336244" duration="12584000" />
     </task>
     <task id="LOCAL-00001" summary="New ships, players face each other to start, wall hit animation, basic blast">
       <option name="closed" value="true" />
@@ -191,7 +192,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720686819348</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Started work on shockwave program">
+      <option name="closed" value="true" />
+      <created>1720835124833</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1720835124833</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -216,6 +225,7 @@
     <MESSAGE value="Improved blast animation" />
     <MESSAGE value="Added explosion class, minor modification to how repeating color arrays are generated." />
     <MESSAGE value="Players now explode upon death, players are deader after dying." />
-    <option name="LAST_COMMIT_MESSAGE" value="Players now explode upon death, players are deader after dying." />
+    <MESSAGE value="Started work on shockwave program" />
+    <option name="LAST_COMMIT_MESSAGE" value="Started work on shockwave program" />
   </component>
 </project>
