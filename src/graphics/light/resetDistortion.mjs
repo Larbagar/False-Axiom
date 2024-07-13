@@ -1,11 +1,12 @@
 import {device} from "../device.mjs"
 import {rectGeometry, rectGeometryBuffer, rectIndexBuffer} from "../rectBuffers.mjs"
 import {transformMatrixBindGroupLayout} from "../transformMatrixBindGroupLayout.mjs"
+import {cameraBindGroupLayout} from "../cameraBindGroupLayout.mjs"
 
 const shaderModule = device.createShaderModule({
     label: "clear distortion shader module",
     code: `
-@group(0) @binding(0) var<uniform> inverseCamera: mat3x3f;
+@group(0) @binding(1) var<uniform> inverseCamera: mat3x3f;
 
 struct VertIn {
     @location(0) geometry: vec2f,
@@ -53,7 +54,7 @@ const pipelineLayout = device.createPipelineLayout({
     label: "light point pipeline layout",
     bindGroupLayouts: [
         // Inverse camera
-        transformMatrixBindGroupLayout,
+        cameraBindGroupLayout,
     ],
 })
 
@@ -81,7 +82,7 @@ const pipeline = device.createRenderPipeline({
 function resetDistortion(
     encoder,
     out,
-    inverseCameraBindGroup,
+    cameraBindGroup,
 ){
     const pass = encoder.beginRenderPass({
         label: "",
@@ -98,7 +99,7 @@ function resetDistortion(
 
     pass.setVertexBuffer(0, rectGeometryBuffer)
 
-    pass.setBindGroup(0, inverseCameraBindGroup)
+    pass.setBindGroup(0, cameraBindGroup)
 
     pass.setIndexBuffer(rectIndexBuffer, "uint16")
 

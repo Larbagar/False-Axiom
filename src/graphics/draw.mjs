@@ -4,9 +4,8 @@ import M3 from "../M3.mjs"
 import {clear} from "./clear.mjs"
 import {drawLighting} from "./light/drawLighting.mjs"
 import {minBrightnessBindGroupLayout} from "./light/minBrightnessBindGroupLayout.mjs"
-import {transformMatrixBindGroupLayout} from "./transformMatrixBindGroupLayout.mjs"
 import {resetDistortion} from "./light/resetDistortion.mjs"
-import {shockwave} from "./light/shockwave.mjs"
+import {cameraBindGroupLayout} from "./cameraBindGroupLayout.mjs"
 
 
 const minBrightness = new Float32Array([0.002]) // Max 0.002
@@ -36,9 +35,14 @@ const cameraBuffer = device.createBuffer({
     size: M3.BYTE_LENGTH,
     usage: GPUBufferUsage.COPY_DST | GPUBufferUsage.UNIFORM,
 })
+const inverseCameraBuffer = device.createBuffer({
+    label: "inverse camera buffer",
+    size: M3.BYTE_LENGTH,
+    usage: GPUBufferUsage.COPY_DST | GPUBufferUsage.UNIFORM,
+})
 const cameraBindGroup = device.createBindGroup({
     label: "camera bind group",
-    layout: transformMatrixBindGroupLayout,
+    layout: cameraBindGroupLayout,
     entries: [
         {
             binding: 0,
@@ -46,20 +50,8 @@ const cameraBindGroup = device.createBindGroup({
                 buffer: cameraBuffer,
             },
         },
-    ],
-})
-
-const inverseCameraBuffer = device.createBuffer({
-    label: "inverse camera buffer",
-    size: M3.BYTE_LENGTH,
-    usage: GPUBufferUsage.COPY_DST | GPUBufferUsage.UNIFORM,
-})
-const inverseCameraBindGroup = device.createBindGroup({
-    label: "inverse camera bind group",
-    layout: transformMatrixBindGroupLayout,
-    entries: [
         {
-            binding: 0,
+            binding: 1,
             resource: {
                 buffer: inverseCameraBuffer,
             },
@@ -115,7 +107,7 @@ function draw(game){
         explosion.draw(encoder, lightTex.view, cameraBindGroup, minBrightnessBindGroup)
     }
 
-    resetDistortion(encoder, distortionTex.view, inverseCameraBindGroup)
+    resetDistortion(encoder, distortionTex.view, cameraBindGroup)
     for(const shockwave of game.shockwaves){
         shockwave.draw(encoder, distortionTex.view, cameraBindGroup)
     }

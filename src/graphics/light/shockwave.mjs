@@ -2,6 +2,7 @@ import {device} from "../device.mjs"
 import {rectGeometry, rectGeometryBuffer, rectIndexBuffer} from "../rectBuffers.mjs"
 import {transformMatrixBindGroupLayout} from "../transformMatrixBindGroupLayout.mjs"
 import {minBrightnessBindGroupLayout} from "./minBrightnessBindGroupLayout.mjs"
+import {cameraBindGroupLayout} from "../cameraBindGroupLayout.mjs"
 
 const shaderModule = device.createShaderModule({
     label: "shockwave shader module",
@@ -62,7 +63,7 @@ fn fragment(in: FragIn) -> @location(0) vec2f {
 const pipelineLayout = device.createPipelineLayout({
     label: "shockwave pipeline layout",
     bindGroupLayouts: [
-        transformMatrixBindGroupLayout,
+        cameraBindGroupLayout,
     ],
 })
 

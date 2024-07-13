@@ -3,7 +3,7 @@ import { samplerBindGroupLayout } from "../samplers/samplerBindGroupLayout.mjs"
 import { textureBindGroupLayout } from "../textureBindGroupLayout.mjs"
 import { device } from "../device.mjs"
 import { canvasFormat } from "../textureHandler.mjs"
-import {transformMatrixBindGroupLayout} from "../transformMatrixBindGroupLayout.mjs"
+import {cameraBindGroupLayout} from "../cameraBindGroupLayout.mjs"
 
 const geometry = new Float32Array([
     -1, -1,
@@ -65,14 +65,46 @@ fn map(x: vec3f) -> vec3f {
     return x/(x+1);
 }
 
+fn gridDist(pos: vec2f) -> vec2f {
+    let grid = vec2f(2.*sqrt(3), 2);
+    return vec2f(
+        abs(pos - round(pos/grid)*grid)
+    );
+}
+
+fn hexDist(pos: vec2f) -> f32 {
+    let d1 = gridDist(pos);
+    let d2 = gridDist(pos - vec2(sqrt(3), 1));
+    
+    let apothem = vec2(sqrt(3)/2, 0.5);
+    
+    return min(
+        max(d1.y, dot(d1, apothem)),
+        max(d2.y, dot(d2, apothem))
+    );
+}
+
+fn cenDist(pos: vec2f) -> f32 {
+    return min(
+        length(gridDist(pos)),
+        length(gridDist(pos - vec2f(sqrt(3), 1)))
+    );
+}
+
 @fragment
 fn fragment(in: fragIn) -> @location(0) vec4f {
-    let background = vec3f(1);
 
-    let samplePos = ((camera*vec3(textureSample(distortion, linearSampler, in.texPos).rg, 1)).xy*vec2f(1, -1) + 1)/2;
-    let brightness = max(vec3(0, 0, 0), textureSample(lighting, linearSampler, samplePos).rgb);
-    //return vec4f(step(samplePos.xyy, vec3f(0.9)), 1);
-    return vec4f(background*map(brightness), 1);
+    let pos = (camera*vec3(textureSample(distortion, linearSampler, in.texPos).rg, 1)).xy;
+    
+    let freq = 16.;
+    let hex = smoothstep(0.9, 0.95, hexDist(freq*pos));
+    let cen = smoothstep(2, 0, cenDist(freq*pos));
+    let background = 0.5 + max(hex, cen);
+    
+    
+    let brightness = max(vec3(0, 0, 0), textureSample(lighting, linearSampler, (pos*vec2f(1, -1) + 1)/2).rgb);
+    //return vec4f(step(vec3f(0.9), background*brightness), 1);
+    return vec4f(map(background*brightness), 1);
 }
     `
 })
@@ -96,7 +128,7 @@ const pipelineLayout = device.createPipelineLayout({
         // Lighting
         textureBindGroupLayout,
         // Camera
-        transformMatrixBindGroupLayout,
+        cameraBindGroupLayout,
         // Distortion
         textureBindGroupLayout,
     ],
@@ -130,7 +162,12 @@ const pipeline = device.createRenderPipeline({
  * @param {GPUBindGroup} camera
  * @param {GPUBindGroup} distortion
  */
-function drawLighting(encoder, out, lighting, camera, distortion){
+function drawLighting(
+    encoder,
+    out,
+    lighting,
+    camera,
+    distortion){
     const pass = encoder.beginRenderPass({
         label: "apply lighting draw pass",
         colorAttachments: [
@@ -144,9 +181,11 @@ function drawLighting(encoder, out, lighting, camera, distortion){
 
     pass.setPipeline(pipeline)
     pass.setBindGroup(0, linearSamplerBindGroup)
+
     pass.setBindGroup(1, lighting)
     pass.setBindGroup(2, camera)
     pass.setBindGroup(3, distortion)
+
     pass.setVertexBuffer(0, geometryBuffer)
     pass.setIndexBuffer(indexBuffer, "uint16")
 

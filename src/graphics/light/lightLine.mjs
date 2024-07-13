@@ -2,6 +2,7 @@ import { rectGeometry, rectGeometryBuffer, rectIndexBuffer } from '../rectBuffer
 import { device } from '../device.mjs'
 import { transformMatrixBindGroupLayout } from "../transformMatrixBindGroupLayout.mjs"
 import { minBrightnessBindGroupLayout } from "./minBrightnessBindGroupLayout.mjs"
+import {cameraBindGroupLayout} from "../cameraBindGroupLayout.mjs"
 
 
 const shaderModule = device.createShaderModule({
@@ -118,7 +119,7 @@ const colVertexBufferLayout = {
 const pipelineLayout = device.createPipelineLayout({
   label: "light line pipeline layout",
   bindGroupLayouts: [
-    transformMatrixBindGroupLayout,
+    cameraBindGroupLayout,
     transformMatrixBindGroupLayout,
     minBrightnessBindGroupLayout,
   ],

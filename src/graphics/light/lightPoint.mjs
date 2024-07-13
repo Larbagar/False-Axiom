@@ -2,6 +2,7 @@ import { device } from "../device.mjs"
 import { rectGeometry, rectGeometryBuffer, rectIndexBuffer } from "../rectBuffers.mjs"
 import { transformMatrixBindGroupLayout } from "../transformMatrixBindGroupLayout.mjs"
 import { minBrightnessBindGroupLayout } from "./minBrightnessBindGroupLayout.mjs"
+import {cameraBindGroupLayout} from "../cameraBindGroupLayout.mjs"
 
 const shaderModule = device.createShaderModule({
     label: "light point shader module",
@@ -97,7 +98,7 @@ const colVertexBufferLayout = {
 const pipelineLayout = device.createPipelineLayout({
     label: "light point pipeline layout",
     bindGroupLayouts: [
-        transformMatrixBindGroupLayout,
+        cameraBindGroupLayout,
         transformMatrixBindGroupLayout,
         minBrightnessBindGroupLayout,
     ],

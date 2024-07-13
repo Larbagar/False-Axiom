@@ -4,14 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Fixed a bunch of bugs, shockwaves now maybe work?">
+    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="THERE ARE NOW SHOCKWAVES!!!">
+      <change afterPath="$PROJECT_DIR$/src/graphics/cameraBindGroupLayout.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Explosion.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Explosion.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Game.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Game.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Ship.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Ship.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/mover.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/mover.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/graphics/draw.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/draw.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/start.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/start.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/graphics/light/drawLighting.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/light/drawLighting.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/graphics/light/lightLine.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/light/lightLine.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/graphics/light/lightPoint.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/light/lightPoint.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/graphics/light/resetDistortion.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/light/resetDistortion.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/graphics/light/shockwave.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/light/shockwave.mjs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,7 +131,7 @@
       <workItem from="1720449326056" duration="3711000" />
       <workItem from="1720604073404" duration="11795000" />
       <workItem from="1720732786151" duration="4825000" />
-      <workItem from="1720819336244" duration="20247000" />
+      <workItem from="1720819336244" duration="24693000" />
     </task>
     <task id="LOCAL-00001" summary="New ships, players face each other to start, wall hit animation, basic blast">
       <option name="closed" value="true" />
@@ -228,7 +229,23 @@
       <option name="project" value="LOCAL" />
       <updated>1720900813975</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="THERE ARE NOW SHOCKWAVES!!!">
+      <option name="closed" value="true" />
+      <created>1720903137902</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1720903137902</updated>
+    </task>
+    <task id="LOCAL-00014" summary="THERE ARE NOW SHOCKWAVES!!!">
+      <option name="closed" value="true" />
+      <created>1720903208562</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1720903208563</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -256,6 +273,8 @@
     <MESSAGE value="Started work on shockwave program" />
     <MESSAGE value="wrote function to generate a shockwave" />
     <MESSAGE value="Fixed a bunch of bugs, shockwaves now maybe work?" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed a bunch of bugs, shockwaves now maybe work?" />
+    <MESSAGE value="Actually uploaded the shockwave file." />
+    <MESSAGE value="THERE ARE NOW SHOCKWAVES!!!" />
+    <option name="LAST_COMMIT_MESSAGE" value="THERE ARE NOW SHOCKWAVES!!!" />
   </component>
 </project>
