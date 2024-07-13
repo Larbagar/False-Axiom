@@ -31,8 +31,7 @@ struct FragIn {
 
 @fragment
 fn fragment(in: FragIn) -> @location(0) vec2f {
-    let mag = length(in.pos);
-    return in.pos*mag;
+    return in.pos;
 }
     `,
 })

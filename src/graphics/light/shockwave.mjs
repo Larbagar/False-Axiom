@@ -7,46 +7,53 @@ const shaderModule = device.createShaderModule({
     label: "shockwave shader module",
     code: `
 
-@group(0) @binding(0) camera;
+@group(0) @binding(0) var<uniform> camera: mat3x3f;
 
 struct VertIn {
     @location(0) geometry: vec2f,
     @location(1) pos: vec2f,
-    @location(2) size: f32,
-    @location(3) intensity: f32,
-    @location(4) progress: f32,
+    @location(2) width: f32,
+    @location(3) growDist: f32,
+    @location(4) intensity: f32,
+    @location(5) progress: f32,
 }
 struct VertOut {
     @builtin(position) screenPos: vec4f,
     @location(0) position: vec2f,
-    @location(1) progress: f32,
-    @location(2) intensity: f32,
+    @location(1) width: f32,
+    @location(2) growDist: f32,
+    @location(3) intensity: f32,
+    @location(4) progress: f32,
 }
 
 @vertex
 fn vertex(in: VertIn) -> VertOut {
     var out: VertOut;
-    out.screenPos = (camera*vec3f(in.geometry*in.size*(progress + 1) + in.pos, 0)).xy;
-    out.position = in.geometry*(progress + 1);
+    out.screenPos = vec4f((camera*vec3f(in.geometry*(in.progress + in.width) + in.pos, 1)).xy, 0, 1);
+    out.position = in.geometry*(in.progress + in.width);
+    out.width = in.width;
+    out.growDist = in.growDist;
+    out.intensity = in.width*in.intensity;
     out.progress = in.progress;
-    out.intensity = in.intensity*in.size;
     
     return out;
 }
 
-struct fragIn {
+struct FragIn {
     @location(0) position: vec2f,
-    @location(1) progress: f32,
-    @location(2) intensity: f32,
+    @location(1) width: f32,
+    @location(2) growDist: f32,
+    @location(3) intensity: f32,
+    @location(4) progress: f32,
 }
 
 @fragment
 fn fragment(in: FragIn) -> @location(0) vec2f {
-    let dist = len(in.position);
+    let dist = length(in.position);
     
-    let wave = progress*dist*(dist - (progress + 1))/(pow(progress, 2) + 1)/(pow(dist - progress, 2) + 1); 
+    let wave = step(dist, in.progress + in.width)*in.progress*dist*pow(dist - (in.progress + in.width), 2)/(pow(in.progress, 2) + pow(in.growDist, 2))/(pow(dist - in.progress, 2) + pow(in.width, 2)); 
     
-    return in.intensity*in.position/dist*wave;
+    return -in.intensity*in.position/dist*wave;
 }
 
     `
@@ -89,15 +96,15 @@ const descriptionVertexBufferLayout = {
             format: "float32",
             offset: 2*Float32Array.BYTES_PER_ELEMENT,
         },
-        // Scale
+        // Grow Distance
         {
-            shaderLocation: 2,
+            shaderLocation: 3,
             format: "float32",
             offset: 3*Float32Array.BYTES_PER_ELEMENT,
         },
         // Intensity
         {
-            shaderLocation: 3,
+            shaderLocation: 4,
             format: "float32",
             offset: 4*Float32Array.BYTES_PER_ELEMENT,
         },
@@ -110,7 +117,7 @@ const progressVertexBufferLayout = {
     stepMode: "instance",
     attributes: [
         {
-            shaderLocation: 4,
+            shaderLocation: 5,
             format: "float32",
             offset: 0*Float32Array.BYTES_PER_ELEMENT,
         },
@@ -148,7 +155,7 @@ const pipeline = device.createRenderPipeline({
         entryPoint: "fragment",
         targets: [
             {
-                format: "rgba16float",
+                format: "rg16float",
                 blend: blendState,
             },
         ]
@@ -158,10 +165,10 @@ const pipeline = device.createRenderPipeline({
 function shockwave(
     encoder,
     out,
+    cameraBindGroup,
     descriptionBuffer,
     progressBuffer,
-    cameraBindGroup,
-    count,
+    count = 1,
 ){
     const pass = encoder.beginRenderPass({
         label: "light point draw pass",

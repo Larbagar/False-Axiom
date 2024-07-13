@@ -6,6 +6,7 @@ import {drawLighting} from "./light/drawLighting.mjs"
 import {minBrightnessBindGroupLayout} from "./light/minBrightnessBindGroupLayout.mjs"
 import {transformMatrixBindGroupLayout} from "./transformMatrixBindGroupLayout.mjs"
 import {resetDistortion} from "./light/resetDistortion.mjs"
+import {shockwave} from "./light/shockwave.mjs"
 
 
 const minBrightness = new Float32Array([0.002]) // Max 0.002
@@ -31,12 +32,12 @@ const minBrightnessBindGroup = device.createBindGroup({
 
 
 const cameraBuffer = device.createBuffer({
-    label: "ship transform buffer",
+    label: "camera buffer",
     size: M3.BYTE_LENGTH,
     usage: GPUBufferUsage.COPY_DST | GPUBufferUsage.UNIFORM,
 })
 const cameraBindGroup = device.createBindGroup({
-    label: "ship transform bind group",
+    label: "camera bind group",
     layout: transformMatrixBindGroupLayout,
     entries: [
         {
@@ -49,12 +50,12 @@ const cameraBindGroup = device.createBindGroup({
 })
 
 const inverseCameraBuffer = device.createBuffer({
-    label: "ship transform buffer",
+    label: "inverse camera buffer",
     size: M3.BYTE_LENGTH,
     usage: GPUBufferUsage.COPY_DST | GPUBufferUsage.UNIFORM,
 })
 const inverseCameraBindGroup = device.createBindGroup({
-    label: "ship transform bind group",
+    label: "inverse camera bind group",
     layout: transformMatrixBindGroupLayout,
     entries: [
         {
@@ -65,6 +66,23 @@ const inverseCameraBindGroup = device.createBindGroup({
         },
     ],
 })
+
+// pos, width, growDist, intensity
+const shockwaveDescription = new Float32Array([0, 0, 0.2, 0.1, 1])
+const shockwaveDescriptionBuffer = device.createBuffer({
+    label: "shockwave description buffer",
+    size: shockwaveDescription.byteLength,
+    usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST,
+})
+
+device.queue.writeBuffer(shockwaveDescriptionBuffer, 0, shockwaveDescription)
+const shockwaveProgress = new Float32Array([0.8])
+const shockwaveProgressBuffer = device.createBuffer({
+    label: "shockwave progress buffer",
+    size: shockwaveProgress.byteLength,
+    usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST,
+})
+device.queue.writeBuffer(shockwaveProgressBuffer, 0, shockwaveProgress)
 
 /**
  * @param {Game} game
@@ -98,6 +116,7 @@ function draw(game){
         explosion.draw(encoder, lightTex.view, cameraBindGroup, minBrightnessBindGroup)
     }
     resetDistortion(encoder, distortionTex.view, inverseCameraBindGroup)
+    shockwave(encoder, distortionTex.view, cameraBindGroup, shockwaveDescriptionBuffer, shockwaveProgressBuffer)
     drawLighting(encoder, canvasView, lightTex.bindGroup, cameraBindGroup, distortionTex.bindGroup)
 
     const commandBuffer = encoder.finish()
