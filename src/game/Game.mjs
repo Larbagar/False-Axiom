@@ -12,6 +12,8 @@ class Game {
     rubbleClusters = new Set()
     /** @type {Set<Explosion>} */
     explosions = new Set()
+    /** @type {Set<Shockwave>} */
+    shockwaves = new Set()
 
 
     /** @type {TouchControllerHandler} */

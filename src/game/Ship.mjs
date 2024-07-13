@@ -8,6 +8,7 @@ import M3 from "../M3.mjs"
 import { Wall } from "./Wall.mjs"
 import { lightPoint } from "../graphics/light/lightPoint.mjs"
 import {Explosion} from "../Explosion.mjs"
+import {Shockwave} from "../Shockwave.mjs"
 
 export class Ship {
 
@@ -47,6 +48,7 @@ export class Ship {
   finalBrightness = 200
   deathExplosionCount = 100
   deathExplosionPow = 0.002
+  deathExplosionSpread= 0.0015
 
 
   /** @type {V2} */
@@ -251,7 +253,9 @@ export class Ship {
     }else if(this.deathProgress >= 1 && !this.exploded){
       /** @type {Array<number>} */
       const finalCol = this.col.map(x => {return x*this.finalBrightness*this.size})
-      game.explosions.add(new Explosion(this.deathExplosionCount, finalCol, this.pos, this.deathExplosionPow, this.vel, 0.0002))
+      game.explosions.add(new Explosion(this.deathExplosionCount, finalCol, this.pos, this.deathExplosionPow, this.deathExplosionSpread, this.vel, 0.0002))
+      game.shockwaves.add(new Shockwave(this.pos, 0.4, 0.1, 0.1, 0.002))
+
       this.exploded = true
       game.ships.splice(game.ships.indexOf(this), 1)
     }else{
