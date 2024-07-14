@@ -45,11 +45,12 @@ export class Ship {
 
   deathFriction = 0.998
   deathTurnFriction = 0.995
-  deathSpeed = 0.001
+  deathSpeed = 1/1000
   finalBrightness = 200
   deathExplosionCount = 100
   deathExplosionPow = 0.002
   deathExplosionSpread= 0.0015
+  deathVibrationFrequency = 1/6
 
 
   /** @type {V2} */
@@ -268,6 +269,8 @@ export class Ship {
 
       this.exploded = true
       game.ships.splice(game.ships.indexOf(this), 1)
+
+      navigator.vibrate(400)
     }else{
       this.vel.mult(this.deathFriction ** dt)
       this.angVel *= this.deathTurnFriction ** dt
@@ -279,7 +282,11 @@ export class Ship {
     this.dir += this.angVel * dt
 
     if(this.hp <= 0){
-      this.deathProgress += this.deathSpeed * dt
+      const dDeath = this.deathSpeed * dt
+      if(this.deathProgress % this.deathVibrationFrequency + dDeath >= this.deathVibrationFrequency){
+        navigator.vibrate(10)
+      }
+      this.deathProgress += dDeath
       this.deathProgress = Math.min(1, this.deathProgress)
       this.usedSize = this.size * (1 - this.deathProgress)
 

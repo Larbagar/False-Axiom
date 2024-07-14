@@ -12,8 +12,6 @@ import {Simulation} from "./game/Simulation.mjs"
 import {UpdateEvent} from "./game/UpdateEvent.mjs"
 import {Game} from "./game/Game.mjs"
 import {move} from "./game/mover.mjs"
-import {RubbleCluster} from "./RubbleCluster.mjs"
-import {Shockwave} from "./Shockwave.mjs"
 
 
 setupTexutres()
@@ -26,9 +24,7 @@ setupTexutres()
 //     deferredPrompt = e
 //     addEventListener("touchstart", _ => deferredPrompt.prompt())
 // })
-if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("./sw.js")
-}
+// setupServiceWorker()
 
 
 const game = new Game()
