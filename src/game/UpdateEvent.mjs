@@ -24,6 +24,9 @@ class UpdateEvent extends Event {
         for(const rubbleCluster of this.game.rubbleClusters){
             rubbleCluster.update(this.game.updateSpacing)
         }
+        for(const particleCluster of this.game.particleClusters){
+            particleCluster.update(this.game.updateSpacing)
+        }
         recalculateAllEvents(this.sim, this.game)
 
         this.sim.events.add(new UpdateEvent(

@@ -103,7 +103,7 @@ function draw(game){
     for(const rubbleCluster of game.rubbleClusters){
         rubbleCluster.draw(encoder, lightTex.view, cameraBindGroup, minBrightnessBindGroup)
     }
-    for(const explosion of game.explosions){
+    for(const explosion of game.particleClusters){
         explosion.draw(encoder, lightTex.view, cameraBindGroup, minBrightnessBindGroup)
     }
 

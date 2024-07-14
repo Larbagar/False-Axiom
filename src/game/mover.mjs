@@ -17,7 +17,7 @@ function move(game, newTime){
     for(const rubbleCluster of game.rubbleClusters){
         rubbleCluster.move(dt)
     }
-    for(const explosion of game.explosions){
+    for(const explosion of game.particleClusters){
         explosion.move(dt)
     }
     for(const shockwave of game.shockwaves){

@@ -4,10 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Fixed scaling issue with hexes">
+    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="No dashing after taking damage, tweaked knockback.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Explosion.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/ParticleCluster.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/V2.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/V2.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Game.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Game.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Ship.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Ship.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/UpdateEvent.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UpdateEvent.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/mover.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/mover.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/shipCollision.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/shipCollision.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/wallCollision.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/wallCollision.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/graphics/draw.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/draw.mjs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,7 +134,7 @@
       <workItem from="1720604073404" duration="11795000" />
       <workItem from="1720732786151" duration="4825000" />
       <workItem from="1720819336244" duration="25933000" />
-      <workItem from="1720969362107" duration="1273000" />
+      <workItem from="1720969362107" duration="6361000" />
     </task>
     <task id="LOCAL-00001" summary="New ships, players face each other to start, wall hit animation, basic blast">
       <option name="closed" value="true" />
@@ -257,7 +264,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720908036538</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="No dashing after taking damage, tweaked knockback.">
+      <option name="closed" value="true" />
+      <created>1720970935780</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1720970935780</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -289,6 +304,7 @@
     <MESSAGE value="THERE ARE NOW SHOCKWAVES!!!" />
     <MESSAGE value="Added a background!" />
     <MESSAGE value="Fixed scaling issue with hexes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed scaling issue with hexes" />
+    <MESSAGE value="No dashing after taking damage, tweaked knockback." />
+    <option name="LAST_COMMIT_MESSAGE" value="No dashing after taking damage, tweaked knockback." />
   </component>
 </project>

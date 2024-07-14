@@ -1,8 +1,9 @@
 import {device} from "./graphics/device.mjs"
 import {lightPoint} from "./graphics/light/lightPoint.mjs"
 import {identityBindGroup} from "./graphics/transformMatrixBindGroupLayout.mjs"
+import V2 from "./V2.mjs"
 
-class Explosion {
+class ParticleCluster {
     /** @type {number} */
     count
     /** @type {Float32Array} */
@@ -19,19 +20,37 @@ class Explosion {
     posBuffer
     /** @type {GPUBuffer} */
     colBuffer
+    /** @type {number} */
+    friction
 
     changed = true
     /**
-     * @param {number} count
-     * @param {Array<number>} col
-     * @param {V2} pos
-     * @param {number} outVel
-     * @param {number} spread
-     * @param {number} fadeSpeed
+     * @param {Object} descriptor
+     * @param {number} descriptor.count
+     * @param {Array<number>=} descriptor.col
+     * @param {V2} descriptor.pos
+     * @param {number} descriptor.outVel
+     * @param {number=} descriptor.spread
+     * @param {number} descriptor.fadeSpeed
+     * @param {V2=} descriptor.avgVel
+     * @param {number=} descriptor.avgAngle
+     * @param {number=} descriptor.angSpread
      */
-    constructor(count, col, pos, outVel, spread = outVel, avgVel = V2.fromVals(0, 0), fadeSpeed = 0) {
+    constructor({
+        count,
+        col = [1, 1, 1],
+        pos,
+        outVel,
+        spread = outVel,
+        fadeSpeed,
+        avgVel = V2.zero(),
+        avgAngle,
+        angSpread = 1,
+        friction = 1,
+    }){
         this.count = count
         this.col = col
+        this.friction = friction
         this.fadeSpeed = col.map(x => x*fadeSpeed/this.count)
         this.posArr = new Float32Array(2*count)
         this.velArr = new Float32Array(2*count)
@@ -45,7 +64,8 @@ class Explosion {
             this.posArr[2*i + 0] = pos.x
             this.posArr[2*i + 1] = pos.y
 
-            const angle = Math.random()*2*Math.PI
+
+            const angle = avgAngle ? avgAngle + angSpread*(2*Math.acos(1 - 2*Math.random())/Math.PI - 1) : Math.random()*2*Math.PI
             const vel = spread*(2*Math.acos(1 - 2*Math.random())/Math.PI - 1) + outVel
             this.velArr[2*i + 0] = avgVel.x + vel*Math.cos(angle)
             this.velArr[2*i + 1] = avgVel.y + vel*Math.sin(angle)
@@ -65,6 +85,17 @@ class Explosion {
             size: this.colArr.byteLength,
             usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST,
         })
+    }
+
+    /**
+     * @param {number} dt
+     */
+    update(dt) {
+        if(this.friction !== 1) {
+            for (let i = 0; i < this.velArr.length; i++) {
+                this.velArr[i] *= this.friction ** dt
+            }
+        }
     }
 
     /**
@@ -95,4 +126,4 @@ class Explosion {
     }
 }
 
-export {Explosion}
+export {ParticleCluster}

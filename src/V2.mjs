@@ -417,6 +417,7 @@ export default class V2 {
     negate() {
         this.arr[0] = -this.arr[0]
         this.arr[1] = -this.arr[1]
+        return this
     }
 
     /**

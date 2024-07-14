@@ -7,7 +7,7 @@ import { Trail } from "../graphics/Trail.mjs"
 import M3 from "../M3.mjs"
 import { Wall } from "./Wall.mjs"
 import { lightPoint } from "../graphics/light/lightPoint.mjs"
-import {Explosion} from "../Explosion.mjs"
+import {ParticleCluster} from "../ParticleCluster.mjs"
 import {Shockwave} from "../Shockwave.mjs"
 
 export class Ship {
@@ -43,7 +43,8 @@ export class Ship {
 
   size = 0.03
 
-  deathFriction = 0.99
+  deathFriction = 0.998
+  deathTurnFriction = 0.995
   deathSpeed = 0.001
   finalBrightness = 200
   deathExplosionCount = 100
@@ -53,6 +54,7 @@ export class Ship {
 
   /** @type {V2} */
   pos
+  /** @type {V2} */
   vel = V2.zero()
 
   /** @type {number} */
@@ -253,13 +255,22 @@ export class Ship {
     }else if(this.deathProgress >= 1 && !this.exploded){
       /** @type {Array<number>} */
       const finalCol = this.col.map(x => {return x*this.finalBrightness*this.size})
-      game.explosions.add(new Explosion(this.deathExplosionCount, finalCol, this.pos, this.deathExplosionPow, this.deathExplosionSpread, this.vel, 0.0002))
+      game.particleClusters.add(new ParticleCluster({
+        count: this.deathExplosionCount,
+        col: finalCol,
+        pos: this.pos,
+        outVel: this.deathExplosionPow,
+        spread: this.deathExplosionSpread,
+        fadeSpeed: 0.0002,
+        avgVel: this.vel,
+      }))
       game.shockwaves.add(new Shockwave(this.pos, 0.4, 0.1, 0.1, 0.002))
 
       this.exploded = true
       game.ships.splice(game.ships.indexOf(this), 1)
     }else{
-      this.vel.mult(this.deathFriction)
+      this.vel.mult(this.deathFriction ** dt)
+      this.angVel *= this.deathTurnFriction ** dt
     }
   }
 

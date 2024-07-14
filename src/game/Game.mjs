@@ -10,8 +10,8 @@ class Game {
 
     /** @type {Set<RubbleCluster>} */
     rubbleClusters = new Set()
-    /** @type {Set<Explosion>} */
-    explosions = new Set()
+    /** @type {Set<ParticleCluster>} */
+    particleClusters = new Set()
     /** @type {Set<Shockwave>} */
     shockwaves = new Set()
 

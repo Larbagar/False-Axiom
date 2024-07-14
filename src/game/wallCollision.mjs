@@ -4,6 +4,7 @@ import {move} from "./mover.mjs"
 import {recalculateShipEvents, removeWallEvents} from "./eventHelpers.mjs"
 import {Blast} from "./Blast.mjs"
 import {RubbleCluster} from "../RubbleCluster.mjs"
+import {ParticleCluster} from "../ParticleCluster.mjs"
 
 class WallCollision extends Event {
     /** @type {Simulation} */
@@ -86,7 +87,7 @@ class WallCollision extends Event {
         }
 
         if (this.wall.persists || !dashing) {
-            this.ship.vel.add(this.perp.mult(-this.ship.wallKnockback * Math.sign(this.perpVel) - this.perpVel))
+            this.ship.vel.add(this.perp.xy.mult(-this.ship.wallKnockback * Math.sign(this.perpVel) - this.perpVel))
             this.ship.lowTractionProgress = 0
         }
 
@@ -98,6 +99,16 @@ class WallCollision extends Event {
             this.ship.hp--
             this.ship.hpDisplayProgress = 0
             this.ship.dashProgress = this.ship.dashTime + this.ship.dashBuffer
+            this.game.particleClusters.add(new ParticleCluster({
+                count: 10,
+                col: this.ship.col.map(x => 0.2*x),
+                pos: this.ship.pos,
+                outVel: this.ship.wallKnockback*0.3,
+                fadeSpeed: 0.001,
+                avgAngle: this.perp.xy.mult(Math.sign(-this.perpVel)).dir,
+                friction: 0.998,
+                angSpread: Math.PI/2
+            }))
         }
 
         if (dashing && !this.wall.persists) {

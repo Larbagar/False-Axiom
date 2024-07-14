@@ -1,6 +1,7 @@
 import {Event} from "./Event.mjs"
 import {recalculateShipEvents} from "./eventHelpers.mjs"
 import {move} from "./mover.mjs"
+import {ParticleCluster} from "../ParticleCluster.mjs"
 
 class ShipCollision extends Event{
     /** @type {Ship} */
@@ -38,11 +39,31 @@ class ShipCollision extends Event{
             this.shipA.lowTractionProgress = 0
             this.game.walls.delete(this.shipB.dashWall)
             this.shipB.dashProgress = this.shipB.dashTime
+            // this.game.particleClusters.add(new ParticleCluster({
+            //     count: 20,
+            //     col: this.shipA.col.map(x => 0.4*x),
+            //     pos: this.shipA.pos,
+            //     outVel: this.shipA.wallKnockback*0.3,
+            //     fadeSpeed: 0.001,
+            //     avgAngle: diff.dir,
+            //     friction: 0.998,
+            //     angSpread: Math.PI/2
+            // }))
 
             this.shipB.vel.sub(diff.xy.mult(0.75)).sub(normalized.xy.mult(this.shipB.shipKnockback))
             this.shipB.lowTractionProgress = 0
             this.game.walls.delete(this.shipA.dashWall)
             this.shipA.dashProgress = this.shipA.dashTime
+            // this.game.particleClusters.add(new ParticleCluster({
+            //     count: 20,
+            //     col: this.shipB.col.map(x => 0.4*x),
+            //     pos: this.shipB.pos,
+            //     outVel: this.shipB.wallKnockback*0.3,
+            //     fadeSpeed: 0.001,
+            //     avgAngle: diff.dir + Math.PI,
+            //     friction: 0.998,
+            //     angSpread: Math.PI/2
+            // }))
         }else if(aDashing){
             this.shipB.vel.sub(diff.xy.mult(0.75)).sub(normalized.xy.mult(this.shipB.shipKnockback))
             this.shipB.lowTractionProgress = 0
@@ -54,6 +75,16 @@ class ShipCollision extends Event{
             this.shipB.hp --
             this.shipB.hpDisplayProgress = 0
             this.shipB.dashProgress = this.shipB.dashTime + this.shipB.dashBuffer
+            this.game.particleClusters.add(new ParticleCluster({
+                count: 10,
+                col: this.shipB.col.map(x => 0.2*x),
+                pos: this.shipB.pos,
+                outVel: this.shipB.wallKnockback*0.3,
+                fadeSpeed: 0.001,
+                avgAngle: diff.dir + Math.PI,
+                friction: 0.998,
+                angSpread: Math.PI/2
+            }))
         }else if(bDashing){
             this.shipA.vel.add(diff.xy.mult(0.75)).add(normalized.xy.mult(this.shipA.shipKnockback))
             this.shipA.lowTractionProgress = 0
@@ -64,11 +95,41 @@ class ShipCollision extends Event{
             this.shipA.hp --
             this.shipA.hpDisplayProgress = 0
             this.shipA.dashProgress = this.shipA.dashTime + this.shipA.dashBuffer
+            this.game.particleClusters.add(new ParticleCluster({
+                count: 10,
+                col: this.shipA.col.map(x => 0.2*x),
+                pos: this.shipA.pos,
+                outVel: this.shipA.wallKnockback*0.3,
+                fadeSpeed: 0.001,
+                avgAngle: diff.dir,
+                friction: 0.998,
+                angSpread: Math.PI/2
+            }))
         }else{
             this.shipA.vel.add(diff.xy.mult(0.5)).add(normalized.xy.mult(this.shipA.shipKnockback))
             this.shipA.lowTractionProgress = 0
+            // this.game.particleClusters.add(new ParticleCluster({
+            //     count: 2,
+            //     col: this.shipA.col.map(x => 0.04*x),
+            //     pos: this.shipA.pos,
+            //     outVel: this.shipA.wallKnockback*0.3,
+            //     fadeSpeed: 0.001,
+            //     avgAngle: diff.dir,
+            //     friction: 0.998,
+            //     angSpread: Math.PI/2
+            // }))
             this.shipB.vel.sub(diff.xy.mult(0.5)).sub(normalized.xy.mult(this.shipB.shipKnockback))
             this.shipB.lowTractionProgress = 0
+            // this.game.particleClusters.add(new ParticleCluster({
+            //     count: 2,
+            //     col: this.shipB.col.map(x => 0.04*x),
+            //     pos: this.shipB.pos,
+            //     outVel: this.shipB.wallKnockback*0.3,
+            //     fadeSpeed: 0.001,
+            //     avgAngle: diff.dir + Math.PI,
+            //     friction: 0.998,
+            //     angSpread: Math.PI/2
+            // }))
         }
 
         recalculateShipEvents(this.sim, this.game, this.shipA)
