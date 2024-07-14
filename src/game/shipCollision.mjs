@@ -34,38 +34,40 @@ class ShipCollision extends Event{
         const normalized = diff.xy.normalize()
 
         if(aDashing && bDashing){
-            this.shipA.vel.add(diff.xy.mult(1/2)).add(normalized.xy.mult(this.shipA.shipKnockback))
+            this.shipA.vel.add(diff.xy.mult(0.75)).add(normalized.xy.mult(this.shipA.shipKnockback))
             this.shipA.lowTractionProgress = 0
             this.game.walls.delete(this.shipB.dashWall)
             this.shipB.dashProgress = this.shipB.dashTime
 
-            this.shipB.vel.sub(diff.xy.mult(1/2)).sub(normalized.xy.mult(this.shipB.shipKnockback))
+            this.shipB.vel.sub(diff.xy.mult(0.75)).sub(normalized.xy.mult(this.shipB.shipKnockback))
             this.shipB.lowTractionProgress = 0
             this.game.walls.delete(this.shipA.dashWall)
             this.shipA.dashProgress = this.shipA.dashTime
         }else if(aDashing){
-            this.shipB.vel.sub(diff.xy.mult(1)).sub(normalized.xy.mult(this.shipB.shipKnockback))
+            this.shipB.vel.sub(diff.xy.mult(0.75)).sub(normalized.xy.mult(this.shipB.shipKnockback))
             this.shipB.lowTractionProgress = 0
             this.game.walls.delete(this.shipA.dashWall)
             this.shipA.dashProgress = this.shipA.dashTime
 
 
-            this.shipA.vel.add(diff.xy.mult(0)).add(normalized.xy.mult(this.shipA.shipKnockback))
+            this.shipA.vel.add(diff.xy.mult(0.25)).add(normalized.xy.mult(this.shipA.shipKnockback))
             this.shipB.hp --
             this.shipB.hpDisplayProgress = 0
+            this.shipB.dashProgress = this.shipB.dashTime + this.shipB.dashBuffer
         }else if(bDashing){
-            this.shipA.vel.add(diff.xy.mult(1)).add(normalized.xy.mult(this.shipA.shipKnockback))
+            this.shipA.vel.add(diff.xy.mult(0.75)).add(normalized.xy.mult(this.shipA.shipKnockback))
             this.shipA.lowTractionProgress = 0
             this.game.walls.delete(this.shipB.dashWall)
             this.shipB.dashProgress = this.shipB.dashTime
 
-            this.shipB.vel.sub(diff.xy.mult(0)).sub(normalized.xy.mult(this.shipB.shipKnockback))
+            this.shipB.vel.sub(diff.xy.mult(0.25)).sub(normalized.xy.mult(this.shipB.shipKnockback))
             this.shipA.hp --
             this.shipA.hpDisplayProgress = 0
+            this.shipA.dashProgress = this.shipA.dashTime + this.shipA.dashBuffer
         }else{
-            this.shipA.vel.add(diff.xy.mult(1/2)).add(normalized.xy.mult(this.shipA.shipKnockback))
+            this.shipA.vel.add(diff.xy.mult(0.5)).add(normalized.xy.mult(this.shipA.shipKnockback))
             this.shipA.lowTractionProgress = 0
-            this.shipB.vel.sub(diff.xy.mult(1/2)).sub(normalized.xy.mult(this.shipB.shipKnockback))
+            this.shipB.vel.sub(diff.xy.mult(0.5)).sub(normalized.xy.mult(this.shipB.shipKnockback))
             this.shipB.lowTractionProgress = 0
         }
 

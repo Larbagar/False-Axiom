@@ -97,6 +97,7 @@ class WallCollision extends Event {
         } else {
             this.ship.hp--
             this.ship.hpDisplayProgress = 0
+            this.ship.dashProgress = this.ship.dashTime + this.ship.dashBuffer
         }
 
         if (dashing && !this.wall.persists) {
