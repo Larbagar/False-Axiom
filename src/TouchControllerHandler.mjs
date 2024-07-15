@@ -12,18 +12,11 @@ class TouchControllerHandler {
         addEventListener("touchstart", e => {
             this.touchstart(e.changedTouches)
         })
-        canvas.addEventListener("touchstart", e => {
-            e.preventDefault()
-        })
         addEventListener("touchend", e => {
             this.touchend(e.changedTouches)
-            e.preventDefault()
         })
         addEventListener("touchcancel", e => {
             this.touchend(e.changedTouches)
-        })
-        addEventListener("contextmenu", e => {
-            e.preventDefault()
         })
         addEventListener("blur", _ => this.blur())
     }

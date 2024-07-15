@@ -4,9 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Added particles on damage.">
+    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Added vibrations on death">
+      <change afterPath="$PROJECT_DIR$/src/Player.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/noFullscreen.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/oldStart.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Ship.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Ship.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TouchControllerHandler.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/TouchControllerHandler.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/manifest.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/start.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/start.mjs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -127,7 +131,7 @@
       <workItem from="1720604073404" duration="11795000" />
       <workItem from="1720732786151" duration="4825000" />
       <workItem from="1720819336244" duration="25933000" />
-      <workItem from="1720969362107" duration="8238000" />
+      <workItem from="1720969362107" duration="14183000" />
     </task>
     <task id="LOCAL-00001" summary="New ships, players face each other to start, wall hit animation, basic blast">
       <option name="closed" value="true" />
@@ -273,7 +277,23 @@
       <option name="project" value="LOCAL" />
       <updated>1720976410631</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Added vibrations on death">
+      <option name="closed" value="true" />
+      <created>1720979877961</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1720979877961</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Added vibrations on death">
+      <option name="closed" value="true" />
+      <created>1720979990981</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1720979990981</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -307,6 +327,7 @@
     <MESSAGE value="Fixed scaling issue with hexes" />
     <MESSAGE value="No dashing after taking damage, tweaked knockback." />
     <MESSAGE value="Added particles on damage." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added particles on damage." />
+    <MESSAGE value="Added vibrations on death" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added vibrations on death" />
   </component>
 </project>
