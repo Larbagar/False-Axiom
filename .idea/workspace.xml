@@ -4,12 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Started work on control editor">
-      <change afterPath="$PROJECT_DIR$/src/minBrightness.mjs" afterDir="false" />
+    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Continued work on control editor">
+      <change afterPath="$PROJECT_DIR$/src/Camera.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/colors.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/M3.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/M3.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Player.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/graphics/draw.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/draw.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/oldStart.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/oldStart.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/start.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/start.mjs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -138,6 +139,7 @@
       <workItem from="1720969362107" duration="16361000" />
       <workItem from="1721437698879" duration="30000" />
       <workItem from="1721522025822" duration="46000" />
+      <workItem from="1721522089516" duration="5908000" />
     </task>
     <task id="LOCAL-00001" summary="New ships, players face each other to start, wall hit animation, basic blast">
       <option name="closed" value="true" />
@@ -307,7 +309,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721002865094</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Continued work on control editor">
+      <option name="closed" value="true" />
+      <created>1721577096362</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1721577096362</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -343,6 +353,7 @@
     <MESSAGE value="Added particles on damage." />
     <MESSAGE value="Added vibrations on death" />
     <MESSAGE value="Started work on control editor" />
-    <option name="LAST_COMMIT_MESSAGE" value="Started work on control editor" />
+    <MESSAGE value="Continued work on control editor" />
+    <option name="LAST_COMMIT_MESSAGE" value="Continued work on control editor" />
   </component>
 </project>

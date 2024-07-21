@@ -536,6 +536,7 @@ export default class M3 {
 
     /**
      * Returns new matrix
+     * @returns {M3}
      */
     inverse() {
         const

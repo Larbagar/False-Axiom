@@ -7,38 +7,12 @@ import {minBrightnessBindGroupLayout} from "./light/minBrightnessBindGroupLayout
 import {resetDistortion} from "./light/resetDistortion.mjs"
 import {cameraBindGroupLayout} from "./cameraBindGroupLayout.mjs"
 import {minBrightnessBindGroup} from "../minBrightness.mjs"
+import {Camera} from "../Camera.mjs"
 
 
 
 
-const cameraBuffer = device.createBuffer({
-    label: "camera buffer",
-    size: M3.BYTE_LENGTH,
-    usage: GPUBufferUsage.COPY_DST | GPUBufferUsage.UNIFORM,
-})
-const inverseCameraBuffer = device.createBuffer({
-    label: "inverse camera buffer",
-    size: M3.BYTE_LENGTH,
-    usage: GPUBufferUsage.COPY_DST | GPUBufferUsage.UNIFORM,
-})
-const cameraBindGroup = device.createBindGroup({
-    label: "camera bind group",
-    layout: cameraBindGroupLayout,
-    entries: [
-        {
-            binding: 0,
-            resource: {
-                buffer: cameraBuffer,
-            },
-        },
-        {
-            binding: 1,
-            resource: {
-                buffer: inverseCameraBuffer,
-            },
-        },
-    ],
-})
+const camera = new Camera()
 
 /**
  * @param {Game} game
@@ -49,34 +23,32 @@ function draw(game){
     const canvasView = context.getCurrentTexture().createView()
 
 
-    const camera = M3.scaleV(Math.min(1, innerHeight/innerWidth), Math.min(1, innerWidth/innerHeight))
-    device.queue.writeBuffer(cameraBuffer, 0, camera.arr)
-    const inverseCamera = camera.inverse()
-    device.queue.writeBuffer(inverseCameraBuffer, 0, inverseCamera.arr)
+    camera.set(M3.scaleV(Math.min(innerHeight/innerWidth, 1), Math.min(innerWidth/innerHeight, 1)))
+
 
     clear(encoder, lightTex.view, [0, 0, 0, 1])
     for(const ship of game.ships){
-        ship.draw(encoder, lightTex.view, cameraBindGroup, minBrightnessBindGroup)
+        ship.draw(encoder, lightTex.view, camera.bindGroup, minBrightnessBindGroup)
     }
     for(const wall of game.walls){
-        wall.draw(encoder, lightTex.view, cameraBindGroup, minBrightnessBindGroup)
+        wall.draw(encoder, lightTex.view, camera.bindGroup, minBrightnessBindGroup)
     }
     for(const blast of game.blasts){
-        blast.draw(encoder, lightTex.view, cameraBindGroup, minBrightnessBindGroup)
+        blast.draw(encoder, lightTex.view, camera.bindGroup, minBrightnessBindGroup)
     }
     for(const rubbleCluster of game.rubbleClusters){
-        rubbleCluster.draw(encoder, lightTex.view, cameraBindGroup, minBrightnessBindGroup)
+        rubbleCluster.draw(encoder, lightTex.view, camera.bindGroup, minBrightnessBindGroup)
     }
     for(const explosion of game.particleClusters){
-        explosion.draw(encoder, lightTex.view, cameraBindGroup, minBrightnessBindGroup)
+        explosion.draw(encoder, lightTex.view, camera.bindGroup, minBrightnessBindGroup)
     }
 
-    resetDistortion(encoder, distortionTex.view, cameraBindGroup)
+    resetDistortion(encoder, distortionTex.view, camera.bindGroup)
     for(const shockwave of game.shockwaves){
-        shockwave.draw(encoder, distortionTex.view, cameraBindGroup)
+        shockwave.draw(encoder, distortionTex.view, camera.bindGroup)
     }
 
-    drawLighting(encoder, canvasView, lightTex.bindGroup, cameraBindGroup, distortionTex.bindGroup)
+    drawLighting(encoder, canvasView, lightTex.bindGroup, camera.bindGroup, distortionTex.bindGroup)
 
     const commandBuffer = encoder.finish()
     device.queue.submit([commandBuffer])
