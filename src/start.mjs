@@ -9,6 +9,7 @@ import {resetDistortion} from "./graphics/light/resetDistortion.mjs"
 import {drawLighting} from "./graphics/light/drawLighting.mjs"
 import {minBrightnessBindGroup} from "./minBrightness.mjs"
 import {colors} from "./colors.mjs"
+import {EditorTouch} from "./EditorTouch.mjs"
 
 setupTexutres()
 
@@ -60,29 +61,30 @@ function setupControlEditorListeners(){
     addEventListener("touchend", touchEnd)
 }
 
-/** @type {Set<V2>} */
-const availableTouches = new Set()
-/** @type {Map<number, V2>} */
+/** @type {Map<number, EditorTouch>} */
 const touches = new Map()
 function touchStart(e){
     const smallerDimension = Math.min(innerWidth, innerHeight)
     for(const newTouchRaw of e.changedTouches){
-        const newTouch = V2.fromVals(2*newTouchRaw.clientX/innerWidth - 1, 1 - 2*newTouchRaw.clientY/innerHeight)
+        const newTouch = new EditorTouch(2*newTouchRaw.clientX/innerWidth - 1, 1 - 2*newTouchRaw.clientY/innerHeight)
 
         let closestDist = 0.5
         let closestAvailable = null
-        for(const touch of availableTouches){
-            const dist = Math.sqrt(((newTouch.x - touch.x)*innerWidth) ** 2 + ((newTouch.y - touch.y)*innerHeight) ** 2) / smallerDimension
-            if(dist < closestDist){
-                closestAvailable = touch
-                closestDist = dist
+        for(const [id, touch] of touches){
+            if(!touch.delegated){
+                const dist = Math.sqrt(((newTouch.pos.x - touch.pos.x)*innerWidth) ** 2 + ((newTouch.pos.y - touch.pos.y)*innerHeight) ** 2) / smallerDimension
+                if(dist < closestDist){
+                    closestAvailable = touch
+                    closestDist = dist
+                }
             }
         }
+        closestDist = Math.min(0.1, closestDist)
         let closestA = null
         let closestB = null
         for(const player of players){
             {
-                const dist = Math.sqrt(((newTouch.x - player.touchA.x) * innerWidth) ** 2 + ((newTouch.y - player.touchA.y) * innerHeight) ** 2) / smallerDimension
+                const dist = Math.sqrt(((newTouch.pos.x - player.posA.x) * innerWidth) ** 2 + ((newTouch.pos.y - player.posA.y) * innerHeight) ** 2) / smallerDimension
                 if (dist < closestDist) {
                     closestA = player
                     closestB = null
@@ -91,7 +93,7 @@ function touchStart(e){
                 }
             }
             {
-                const dist = Math.sqrt(((newTouch.x - player.touchB.x)*innerWidth) ** 2 + ((newTouch.y - player.touchB.y)*innerHeight) ** 2) / smallerDimension
+                const dist = Math.sqrt(((newTouch.pos.x - player.posB.x)*innerWidth) ** 2 + ((newTouch.pos.y - player.posB.y)*innerHeight) ** 2) / smallerDimension
                 if (dist < closestDist) {
                     closestB = player
                     closestA = null
@@ -101,17 +103,50 @@ function touchStart(e){
             }
         }
         if(closestAvailable){
-            availableTouches.delete(closestAvailable)
+            closestAvailable.delegated = true
+            newTouch.delegated = true
 
-            const player = new Player(newTouch, closestAvailable)
+            const player = new Player(newTouch.pos, closestAvailable.pos)
             player.setColIndex(Math.floor(Math.random()*colors.length))
             players.add(player)
         }else if(closestA) {
-            closestA.touchA = newTouch
+            newTouch.delegated = true
+            closestA.posA = newTouch.pos
         }else if(closestB){
-            closestB.touchB = newTouch
+            newTouch.delegated = true
+            closestB.posB = newTouch.pos
         }else{
-            availableTouches.add(newTouch)
+            let closestPlayer = null
+            let closestDist = Infinity
+            for(const player of players){
+                const dist = (
+                    Math.sqrt(
+                        ((newTouch.pos.x - player.posA.x)*innerWidth) ** 2 +
+                        ((newTouch.pos.y - player.posA.y)*innerHeight) ** 2
+                    ) + Math.sqrt(
+                        ((newTouch.pos.x - player.posB.x)*innerWidth) ** 2 +
+                        ((newTouch.pos.y - player.posB.y)*innerHeight) ** 2
+                    ) - Math.sqrt(
+                        ((player.posA.x - player.posB.x)*innerWidth) ** 2 +
+                        ((player.posA.y - player.posB.y)*innerHeight) ** 2
+                    )
+                ) / smallerDimension
+                if(dist < closestDist){
+                    closestPlayer = player
+                    closestDist = dist
+                }
+            }
+            if(closestPlayer) {
+                newTouch.player = closestPlayer
+                const diff = closestPlayer.posB.xy.sub(closestPlayer.posA)
+                const mag = diff.mag
+                newTouch.side = diff.normalize().dot(newTouch.pos.xy.sub(closestPlayer.posA)) / mag
+                if(newTouch.side < 0.5){
+                    newTouch.player.lefts.add(newTouch)
+                }else if(newTouch.side > 0.5){
+                    newTouch.player.rights.add(newTouch)
+                }
+            }
         }
 
         touches.set(newTouchRaw.identifier, newTouch)
@@ -119,15 +154,21 @@ function touchStart(e){
 }
 function touchMove(e) {
     for(const movedTouch of e.changedTouches){
-        touches.get(movedTouch.identifier).set(2*movedTouch.clientX/innerWidth - 1, 1 - 2*movedTouch.clientY/innerHeight)
+        touches.get(movedTouch.identifier).pos.set(2*movedTouch.clientX/innerWidth - 1, 1 - 2*movedTouch.clientY/innerHeight)
     }
 }
 function touchEnd(e) {
     for(const removedTouch of e.changedTouches){
         const touch = touches.get(removedTouch.identifier)
-        touch.set(2*removedTouch.clientX/innerWidth - 1, 1 - 2*removedTouch.clientY/innerHeight)
+        touch.pos.set(V2.fromVals(2*removedTouch.clientX/innerWidth - 1, 1 - 2*removedTouch.clientY/innerHeight))
         touches.delete(removedTouch.identifier)
-        availableTouches.delete(touch)
+        if(!touch.delegated && touch.player){
+            if(touch.side < 0.5){
+                touch.player.setColIndex((touch.player.colIndex + 1) % colors.length)
+            }else if(touch.side > 0.5){
+                touch.player.setColIndex((touch.player.colIndex + colors.length - 1) % colors.length)
+            }
+        }
     }
 }
 

@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Continued work on control editor">
-      <change afterPath="$PROJECT_DIR$/src/Camera.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/colors.mjs" afterDir="false" />
+    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Added graphics to the control editor">
+      <change afterPath="$PROJECT_DIR$/src/EditorTouch.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/M3.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/M3.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Player.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphics/draw.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/draw.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/V2.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/V2.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/start.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/start.mjs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -54,24 +52,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;JavaScript Debug.Chrome.executor&quot;: &quot;Run&quot;,
-    &quot;JavaScript Debug.Edge.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Menues&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/darcy/Programming/particle-life&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm 2024.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JavaScript Debug.Chrome.executor": "Run",
+    "JavaScript Debug.Edge.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Menues",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/darcy/Programming/particle-life",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "editor.preferences.completion",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2024.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\darcy\Programming\False-Axiom\src" />
@@ -139,7 +137,8 @@
       <workItem from="1720969362107" duration="16361000" />
       <workItem from="1721437698879" duration="30000" />
       <workItem from="1721522025822" duration="46000" />
-      <workItem from="1721522089516" duration="5908000" />
+      <workItem from="1721522089516" duration="6523000" />
+      <workItem from="1721582929165" duration="5315000" />
     </task>
     <task id="LOCAL-00001" summary="New ships, players face each other to start, wall hit animation, basic blast">
       <option name="closed" value="true" />
@@ -317,7 +316,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721577096362</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Added graphics to the control editor">
+      <option name="closed" value="true" />
+      <created>1721581036802</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1721581036802</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -354,6 +361,7 @@
     <MESSAGE value="Added vibrations on death" />
     <MESSAGE value="Started work on control editor" />
     <MESSAGE value="Continued work on control editor" />
-    <option name="LAST_COMMIT_MESSAGE" value="Continued work on control editor" />
+    <MESSAGE value="Added graphics to the control editor" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added graphics to the control editor" />
   </component>
 </project>

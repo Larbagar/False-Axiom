@@ -628,6 +628,47 @@ export default class V2 {
         return this.arr[0]*x + this.arr[1]*y
     }
 
+    /**
+     * @param {...(V2 | Iterable | number)} args
+     */
+    cross(...args){
+        /** @type{number} */
+        let x, y
+        if(args.length == 1){
+            const arg = args[0]
+            if(arg instanceof V2){
+                x = arg.arr[0]
+                y = arg.arr[1]
+            }else if(typeof arg == "object" && Symbol.iterator in arg){
+                const gen = arg[Symbol.iterator]()
+                x = gen.next().value ?? 0
+                y = gen.next().value ?? 0
+            }else {
+                x = arg
+                y = arg
+            }
+        }else if(args.length == 2){
+            x = args[0]
+            y = args[1]
+        }else {
+            throw new TypeError("Unsupported argument count")
+        }
+        return this.arr[0]*y - this.arr[1]*x
+    }
+    /**
+     * @param {V2} v2
+     */
+    crossVec(v2 = this) {
+        return this.arr[0]*v2.arr[1] - this.arr[1]*v2.arr[0]
+    }
+    /**
+     * @param {number} x
+     * @param {number} y
+     */
+    crossVals(x = this.arr[0], y = this.arr[1]) {
+        return this.arr[0]*y - this.arr[1]*x
+    }
+
     //#endregion
 
     /**
