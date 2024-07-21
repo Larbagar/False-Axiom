@@ -35,7 +35,7 @@ simulation.events.add(new UpdateEvent(game, simulation, 0))
 // game.shockwaves.add(new Shockwave(V2.zero(), 0.2, 0.1, 0.1, 0.002))
 
 const kc0 = new KeyboardController()
-kc0.dashKey = "ArrowDown"
+kc0.dashKey = "KeyM"
 
 const kc1 = new KeyboardController()
 kc1.forwardKey = "KeyW"

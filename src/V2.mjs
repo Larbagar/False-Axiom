@@ -42,7 +42,7 @@ export default class V2 {
     /**
      * Copies by reference
      * @param {ArrayBuffer} arrayBuffer
-     * @param {number} [byteOffset]
+     * @param {number=} byteOffset
      */
     static fromArrayBuffer(arrayBuffer = new ArrayBuffer(V2.BYTE_LENGTH), byteOffset = 0) {
         const v2 = new V2()
@@ -52,11 +52,15 @@ export default class V2 {
     /**
      * Copies by reference
      * @param {Float32Array} float32Array
-     * @param {number} [offset]
+     * @param {number=} offset
      */
     static fromFloat32Array(float32Array = new Float32Array(V2.ELEMENTS), offset = 0) {
         const v2 = new V2()
-        v2.arr = new Float32Array(float32Array.buffer, float32Array.byteOffset + offset*Float32Array.BYTES_PER_ELEMENT, V2.ELEMENTS)
+        v2.arr = new Float32Array(
+            float32Array.buffer,
+            float32Array.byteOffset + offset*Float32Array.BYTES_PER_ELEMENT,
+            V2.ELEMENTS
+        )
         return v2
     }
     /**
@@ -77,6 +81,32 @@ export default class V2 {
     }
 
     //#endregion
+
+    // #region changing array buffer
+
+    /**
+     * @param {ArrayBuffer} arrayBuffer
+     * @param {number} byteOffset
+     */
+    setArrayBuffer(arrayBuffer, byteOffset = 0){
+        this.arr = new Float32Array(arrayBuffer, byteOffset, V2.ELEMENTS)
+        return this
+    }
+
+    /**
+     * @param {Float32Array} float32Array
+     * @param {number} offset
+     */
+    setFloat32Array(float32Array, offset){
+        this.arr = new Float32Array(
+            float32Array.buffer,
+            float32Array.byteOffset + offset*Float32Array.BYTES_PER_ELEMENT,
+            V2.ELEMENTS
+        )
+        return this
+    }
+
+    // #endregion
 
     //#region getters
 

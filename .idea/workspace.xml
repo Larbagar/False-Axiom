@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Added vibrations on death">
-      <change afterPath="$PROJECT_DIR$/src/Player.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/noFullscreen.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/oldStart.mjs" afterDir="false" />
+    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Started work on control editor">
+      <change afterPath="$PROJECT_DIR$/src/minBrightness.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TouchControllerHandler.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/TouchControllerHandler.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Player.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/graphics/draw.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/draw.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/oldStart.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/oldStart.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/start.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/start.mjs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -26,6 +25,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -54,9 +58,9 @@
     &quot;JavaScript Debug.Chrome.executor&quot;: &quot;Run&quot;,
     &quot;JavaScript Debug.Edge.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Menues&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/darcy/Programming/False-Axiom&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/darcy/Programming/particle-life&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -131,7 +135,9 @@
       <workItem from="1720604073404" duration="11795000" />
       <workItem from="1720732786151" duration="4825000" />
       <workItem from="1720819336244" duration="25933000" />
-      <workItem from="1720969362107" duration="14183000" />
+      <workItem from="1720969362107" duration="16361000" />
+      <workItem from="1721437698879" duration="30000" />
+      <workItem from="1721522025822" duration="46000" />
     </task>
     <task id="LOCAL-00001" summary="New ships, players face each other to start, wall hit animation, basic blast">
       <option name="closed" value="true" />
@@ -293,7 +299,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720979990981</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Started work on control editor">
+      <option name="closed" value="true" />
+      <created>1721002865094</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1721002865094</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -328,6 +342,7 @@
     <MESSAGE value="No dashing after taking damage, tweaked knockback." />
     <MESSAGE value="Added particles on damage." />
     <MESSAGE value="Added vibrations on death" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added vibrations on death" />
+    <MESSAGE value="Started work on control editor" />
+    <option name="LAST_COMMIT_MESSAGE" value="Started work on control editor" />
   </component>
 </project>

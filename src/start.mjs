@@ -1,5 +1,6 @@
 import {canvas, setupTexutres} from "./graphics/textureHandler.mjs"
 import V2 from "./V2.mjs"
+import {Player} from "./Player.mjs"
 
 setupTexutres()
 
@@ -8,7 +9,7 @@ const players = new Set()
 
 function controlEditor(){
     for(const player of players){
-
+        player.draw()
     }
 
     requestAnimationFrame(controlEditor)
@@ -20,9 +21,9 @@ canvas.addEventListener("touchstart", e => {
 addEventListener("contextmenu", e => {
     e.preventDefault()
 })
-addEventListener("touchend", e => {
-    e.preventDefault()
-})
+// addEventListener("touchend", e => {
+//     e.preventDefault()
+// })
 
 function setupControlEditorListeners(){
     addEventListener("touchstart", touchStart)
@@ -40,7 +41,7 @@ function touchStart(e){
 
         let closestDist = 0.1
         let closest = null
-        for(const [id, touch] of availableTouches){
+        for(const touch of availableTouches){
             let dist = Math.sqrt(((newTouch.x - touch.x)*innerWidth) ** 2 + ((newTouch.y - touch.y)*innerHeight) ** 2) / smallerDimension
             if(dist < closestDist){
                 closest = touch
@@ -49,15 +50,10 @@ function touchStart(e){
         if(closest){
             availableTouches.delete(closest)
 
-            const player = new Player()
-            player.touchA = newTouch
-            player.touchB = closest
-            players.add(new Player())
-
-            console.log(availableTouches)
+            const player = new Player(newTouch, closest)
+            players.add(player)
         }else{
             availableTouches.add(newTouch)
-            console.log(availableTouches)
         }
 
         touches.set(newTouchRaw.identifier, newTouch)
@@ -70,8 +66,10 @@ function touchMove(e) {
 }
 function touchEnd(e) {
     for(const removedTouch of e.changedTouches){
-        touches.get(removedTouch.identifier).set(removedTouch.clientX/innerWidth, removedTouch.clientY/innerHeight)
+        const touch = touches.get(removedTouch.identifier)
+        touch.set(removedTouch.clientX/innerWidth, removedTouch.clientY/innerHeight)
         touches.delete(removedTouch.identifier)
+        availableTouches.delete(touch)
     }
 }
 

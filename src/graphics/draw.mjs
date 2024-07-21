@@ -6,28 +6,9 @@ import {drawLighting} from "./light/drawLighting.mjs"
 import {minBrightnessBindGroupLayout} from "./light/minBrightnessBindGroupLayout.mjs"
 import {resetDistortion} from "./light/resetDistortion.mjs"
 import {cameraBindGroupLayout} from "./cameraBindGroupLayout.mjs"
+import {minBrightnessBindGroup} from "../minBrightness.mjs"
 
 
-const minBrightness = new Float32Array([0.002]) // Max 0.002
-const minBrightnessBuffer = device.createBuffer({
-    label: "min brightness buffer",
-    size: minBrightness.byteLength,
-    usage: GPUBufferUsage.COPY_DST | GPUBufferUsage.UNIFORM,
-})
-device.queue.writeBuffer(minBrightnessBuffer, 0, minBrightness)
-
-const minBrightnessBindGroup = device.createBindGroup({
-    label: "min brightness bind group",
-    layout: minBrightnessBindGroupLayout,
-    entries: [
-        {
-            binding: 0,
-            resource: {
-                buffer: minBrightnessBuffer
-            },
-        },
-    ],
-})
 
 
 const cameraBuffer = device.createBuffer({
@@ -58,23 +39,6 @@ const cameraBindGroup = device.createBindGroup({
         },
     ],
 })
-
-// pos, width, growDist, intensity
-const shockwaveDescription = new Float32Array([0, 0, 0.2, 0.1, 0.1])
-const shockwaveDescriptionBuffer = device.createBuffer({
-    label: "shockwave description buffer",
-    size: shockwaveDescription.byteLength,
-    usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST,
-})
-
-device.queue.writeBuffer(shockwaveDescriptionBuffer, 0, shockwaveDescription)
-const shockwaveProgress = new Float32Array([0.8])
-const shockwaveProgressBuffer = device.createBuffer({
-    label: "shockwave progress buffer",
-    size: shockwaveProgress.byteLength,
-    usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST,
-})
-device.queue.writeBuffer(shockwaveProgressBuffer, 0, shockwaveProgress)
 
 /**
  * @param {Game} game
