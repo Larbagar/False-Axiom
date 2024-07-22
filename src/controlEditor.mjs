@@ -78,7 +78,8 @@ const touches = new Map()
 function touchStart(e){
     const smallerDimension = Math.min(innerWidth, innerHeight)
     for(const newTouchRaw of e.changedTouches){
-        const newTouch = new EditorTouch(2*newTouchRaw.clientX/innerWidth - 1, 1 - 2*newTouchRaw.clientY/innerHeight)
+        const newTouch = new EditorTouch()
+        newTouch.pos.set(2*newTouchRaw.clientX/innerWidth - 1, 1 - 2*newTouchRaw.clientY/innerHeight)
 
         let closestDist = 0.5
         let closestAvailable = null

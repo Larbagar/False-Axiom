@@ -30,11 +30,9 @@ class Player {
         this.lineGroup.pos.set([...this.posA.xy.mult(scale)], 0)
         this.lineGroup.pos.set([...this.posB.xy.mult(scale)], 2)
         this.lineGroup.posChanged = true
-        let brightness = 0
+        let brightness = 0.25
         if(this.lefts.size && this.rights.size){
-            brightness = 1
-        }else{
-            brightness = 0.25
+            brightness *= 4
         }
         this.lineGroup.col.set(colors[this.colIndex].map(x => x*brightness))
         this.lineGroup.colChanged = true

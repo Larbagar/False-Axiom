@@ -6,9 +6,6 @@ class EditorTouch {
     delegated = false
     player = null
     side = 0.5
-    constructor(x, y) {
-        this.pos.set(x, y)
-    }
 }
 
 export {EditorTouch}
