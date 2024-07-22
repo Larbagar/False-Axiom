@@ -650,7 +650,7 @@ export default class V2 {
         }else if(args.length == 2){
             x = args[0]
             y = args[1]
-        }else {
+        }else{
             throw new TypeError("Unsupported argument count")
         }
         return this.arr[0]*y - this.arr[1]*x

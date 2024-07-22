@@ -21,8 +21,6 @@ class Player {
     }
     setColIndex(i){
         this.colIndex = i
-        this.lineGroup.col.set(colors[i])
-        this.lineGroup.colChanged = true
     }
     draw(encoder, lightTex, cameraBindGroup, minBrightnessBindGroup){
         const scale = V2.fromVals(
@@ -32,6 +30,14 @@ class Player {
         this.lineGroup.pos.set([...this.posA.xy.mult(scale)], 0)
         this.lineGroup.pos.set([...this.posB.xy.mult(scale)], 2)
         this.lineGroup.posChanged = true
+        let brightness = 0
+        if(this.lefts.size && this.rights.size){
+            brightness = 1
+        }else{
+            brightness = 0.25
+        }
+        this.lineGroup.col.set(colors[this.colIndex].map(x => x*brightness))
+        this.lineGroup.colChanged = true
         this.lineGroup.draw(encoder, lightTex, cameraBindGroup, minBrightnessBindGroup)
     }
 }
