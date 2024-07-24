@@ -1,5 +1,6 @@
 import {setupTexutres} from "./graphics/textureHandler.mjs"
 import {controlEditor} from "./controlEditor.mjs"
+import {mainMenu} from "./mainMenu.mjs"
 
 setupTexutres()
 
@@ -11,4 +12,4 @@ setupTexutres()
 // })
 // setupServiceWorker()
 
-controlEditor()
+mainMenu()

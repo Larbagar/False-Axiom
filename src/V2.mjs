@@ -18,6 +18,26 @@ export default class V2 {
     //#region constructors
 
     /**
+     * @param {...(V2 | Iterable | number | ArrayBuffer | Float32Array)} args
+     * @returns {V2}
+     */
+    static new(...args){
+        if(args[0] instanceof Object){
+            if(args[0] instanceof V2){
+                return V2.fromVals(args[0].arr[0], args[0].arr[1])
+            }else if(Symbol.iterator in args[0]){
+                const gen = args[0][Symbol.iterator]()
+                return V2.fromVals(gen.next().value ?? 0, gen.next().value ?? 0)
+            }else if(args[0] instanceof ArrayBuffer){
+                return V2.fromArrayBuffer(args[0], args[1])
+            }else if(args[0] instanceof Float32Array){
+                return V2.fromFloat32Array(args[0], args[1])
+            }
+        }else{
+            return V2.fromVals(args[0], args[1] ?? args[0])
+        }
+    }
+    /**
      * @param {number} x
      * @param {number} y
      */
@@ -304,31 +324,12 @@ export default class V2 {
     //#region operations
 
     /**
-     * @param {...(V2 | Iterable | number)} args
+     * @param {...(V2 | Iterable | number | ArrayBuffer | Float32Array)} args
      */
     add(...args){
-        let x, y
-        if(args.length == 1){
-            const arg = args[0]
-            if(arg instanceof V2){
-                x = arg.arr[0]
-                y = arg.arr[1]
-            }else if(typeof arg == "object" && Symbol.iterator in arg){
-                const gen = arg[Symbol.iterator]()
-                x = gen.next().value ?? 0
-                y = gen.next().value ?? 0
-            }else {
-                x = arg
-                y = arg
-            }
-        }else if(args.length == 2){
-            x = args[0]
-            y = args[1]
-        }else {
-            throw new TypeError("Unsupported argument count")
-        }
-        this.arr[0] += x
-        this.arr[1] += y
+        const vec = V2.new(...args)
+        this.arr[0] += vec.arr[0]
+        this.arr[1] += vec.arr[1]
         return this
     }
     /**
@@ -380,31 +381,12 @@ export default class V2 {
     }
 
     /**
-     * @param {...(V2 | Iterable | number)} args
+     * @param {...(V2 | Iterable | number | ArrayBuffer | Float32Array)} args
      */
     sub(...args){
-        let x, y
-        if(args.length == 1){
-            const arg = args[0]
-            if(arg instanceof V2){
-                x = arg.arr[0]
-                y = arg.arr[1]
-            }else if(typeof arg == "object" && Symbol.iterator in arg){
-                const gen = arg[Symbol.iterator]()
-                x = gen.next().value ?? 0
-                y = gen.next().value ?? 0
-            }else {
-                x = arg
-                y = arg
-            }
-        }else if(args.length == 2){
-            x = args[0]
-            y = args[1]
-        }else {
-            throw new TypeError("Unsupported argument count")
-        }
-        this.arr[0] -= x
-        this.arr[1] -= y
+        const vec = V2.new(...args)
+        this.arr[0] -= vec.arr[0]
+        this.arr[1] -= vec.arr[1]
         return this
     }
     /**
@@ -451,31 +433,12 @@ export default class V2 {
     }
 
     /**
-     * @param {...(V2 | Iterable | number)} args
+     * @param {...(V2 | Iterable | number | ArrayBuffer | Float32Array)} args
      */
     mult(...args){
-        let x, y
-        if(args.length == 1){
-            const arg = args[0]
-            if(arg instanceof V2){
-                x = arg.arr[0]
-                y = arg.arr[1]
-            }else if(typeof arg == "object" && Symbol.iterator in arg){
-                const gen = arg[Symbol.iterator]()
-                x = gen.next().value ?? 0
-                y = gen.next().value ?? 0
-            }else {
-                x = arg
-                y = arg
-            }
-        }else if(args.length == 2){
-            x = args[0]
-            y = args[1]
-        }else {
-            throw new TypeError("Unsupported argument count")
-        }
-        this.arr[0] *= x
-        this.arr[1] *= y
+        const vec = V2.new(...args)
+        this.arr[0] *= vec.arr[0]
+        this.arr[1] *= vec.arr[1]
         return this
     }
     /**
@@ -527,31 +490,12 @@ export default class V2 {
     }
 
     /**
-     * @param {...(V2 | Iterable | number)} args
+     * @param {...(V2 | Iterable | number | ArrayBuffer | Float32Array)} args
      */
     div(...args){
-        let x, y
-        if(args.length == 1){
-            const arg = args[0]
-            if(arg instanceof V2){
-                x = arg.arr[0]
-                y = arg.arr[1]
-            }else if(typeof arg == "object" && Symbol.iterator in arg){
-                const gen = arg[Symbol.iterator]()
-                x = gen.next().value ?? 0
-                y = gen.next().value ?? 0
-            }else {
-                x = arg
-                y = arg
-            }
-        }else if(args.length == 2){
-            x = args[0]
-            y = args[1]
-        }else {
-            throw new TypeError("Unsupported argument count")
-        }
-        this.arr[0] /= x
-        this.arr[1] /= y
+        const vec = V2.new(...args)
+        this.arr[0] /= vec.arr[0]
+        this.arr[1] /= vec.arr[1]
         return this
     }
     /**
@@ -588,31 +532,11 @@ export default class V2 {
     }
 
     /**
-     * @param {...(V2 | Iterable | number)} args
+     * @param {...(V2 | Iterable | number | ArrayBuffer | Float32Array)} args
      */
     dot(...args){
-        /** @type{number} */
-        let x, y
-        if(args.length == 1){
-            const arg = args[0]
-            if(arg instanceof V2){
-                x = arg.arr[0]
-                y = arg.arr[1]
-            }else if(typeof arg == "object" && Symbol.iterator in arg){
-                const gen = arg[Symbol.iterator]()
-                x = gen.next().value ?? 0
-                y = gen.next().value ?? 0
-            }else {
-                x = arg
-                y = arg
-            }
-        }else if(args.length == 2){
-            x = args[0]
-            y = args[1]
-        }else {
-            throw new TypeError("Unsupported argument count")
-        }
-        return this.arr[0]*x + this.arr[1]*y
+        const vec = V2.new(...args)
+        return this.arr[0]*vec.arr[0] + this.arr[1]*vec.arr[1]
     }
     /**
      * @param {V2} v2
@@ -629,31 +553,11 @@ export default class V2 {
     }
 
     /**
-     * @param {...(V2 | Iterable | number)} args
+     * @param {...(V2 | Iterable | number | ArrayBuffer | Float32Array)} args
      */
     cross(...args){
-        /** @type{number} */
-        let x, y
-        if(args.length == 1){
-            const arg = args[0]
-            if(arg instanceof V2){
-                x = arg.arr[0]
-                y = arg.arr[1]
-            }else if(typeof arg == "object" && Symbol.iterator in arg){
-                const gen = arg[Symbol.iterator]()
-                x = gen.next().value ?? 0
-                y = gen.next().value ?? 0
-            }else {
-                x = arg
-                y = arg
-            }
-        }else if(args.length == 2){
-            x = args[0]
-            y = args[1]
-        }else{
-            throw new TypeError("Unsupported argument count")
-        }
-        return this.arr[0]*y - this.arr[1]*x
+        const vec = V2.new(...args)
+        return this.arr[0]*vec.arr[1] - this.arr[1]*vec.arr[0]
     }
     /**
      * @param {V2} v2
