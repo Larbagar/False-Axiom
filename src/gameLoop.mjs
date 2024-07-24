@@ -34,7 +34,7 @@ function startGame(players){
         const controller = new TouchController()
         const scale = V2.fromVals(innerWidth, innerHeight)
         let a, b
-        if(player.posB.xy.sub(player.posA).mult(scale).cross(player.posA.xy.mult(-scale)) < 0){
+        if(player.posB.xy.sub(player.posA).mult(scale).cross(player.posA.xy.mult(scale).mult(-1)) < 0){
             a = player.posB
             b = player.posA
         }else{

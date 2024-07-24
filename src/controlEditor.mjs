@@ -49,7 +49,7 @@ function controlEditorLoop(){
     device.queue.submit([commandBuffer])
 
 
-    if(ready && players.size >= 2){
+    if(ready && players.size >= 1){
         startGame(players)
     }else {
         requestAnimationFrame(controlEditorLoop)
