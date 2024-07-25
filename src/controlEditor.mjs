@@ -9,12 +9,24 @@ import {resetDistortion} from "./graphics/light/resetDistortion.mjs"
 import {drawLighting} from "./graphics/light/drawLighting.mjs"
 import {minBrightnessBindGroup} from "./minBrightness.mjs"
 import {colors} from "./colors.mjs"
-import {EditorTouch} from "./EditorTouch.mjs"
 import {setupGame, startGame} from "./gameLoop.mjs"
 import {currentState, setCurrentState} from "./appState.mjs"
 import {states} from "./states.mjs"
 
-setupTexutres()
+
+class EditorTouch {
+    /** @type {V2} */
+    pos = V2.zero()
+    delegated = false
+    /** @type {"drag" | "click"} */
+    usage
+    player = null
+    /** @type {number} */
+    side
+    static DRAG = "drag"
+    static CLICK = "click"
+}
+
 
 
 /** @type {Set<Player>} */
@@ -81,6 +93,10 @@ function removeControlEditorListeners(){
     removeEventListener("blur", blurControlEditor)
 }
 
+const createRange = 0.5
+const modifyRange = 0.2
+const deleteRange = 0.3
+
 /** @type {Map<number, EditorTouch>} */
 const touches = new Map()
 function touchStart(e){
@@ -89,10 +105,10 @@ function touchStart(e){
         const newTouch = new EditorTouch()
         newTouch.pos.set(2*newTouchRaw.clientX/innerWidth - 1, 1 - 2*newTouchRaw.clientY/innerHeight)
 
-        let closestDist = 0.5
+        let closestDist = createRange
         let closestAvailable = null
         for(const [id, touch] of touches){
-            if(!touch.delegated){
+            if(touch.usage == EditorTouch.CLICK){
                 const dist = Math.sqrt(((newTouch.pos.x - touch.pos.x)*innerWidth) ** 2 + ((newTouch.pos.y - touch.pos.y)*innerHeight) ** 2) / smallerDimension
                 if(dist < closestDist){
                     closestAvailable = touch
@@ -100,7 +116,7 @@ function touchStart(e){
                 }
             }
         }
-        closestDist = Math.min(0.1, closestDist)
+        closestDist = Math.min(modifyRange, closestDist)
         let closestA = null
         let closestB = null
         for(const player of players){
@@ -124,24 +140,38 @@ function touchStart(e){
             }
         }
         if(closestAvailable){
-            closestAvailable.delegated = true
             if(closestAvailable.player && closestAvailable.side < 0){
                 closestAvailable.player.lefts.delete(closestAvailable)
             }else if(closestAvailable.player && closestAvailable.side > 0){
                 closestAvailable.player.rights.delete(closestAvailable)
             }
-            newTouch.delegated = true
 
             const player = new Player(newTouch.pos, closestAvailable.pos)
             player.setColIndex(Math.floor(Math.random()*colors.length))
             players.add(player)
+
+            newTouch.usage = EditorTouch.DRAG
+            newTouch.side = -1
+            newTouch.player = player
+            player.dragA = newTouch
+            closestAvailable.usage = EditorTouch.DRAG
+            closestAvailable.side = 1
+            closestAvailable.player = player
+            player.dragB = closestAvailable
         }else if(closestA) {
-            newTouch.delegated = true
+            newTouch.side = -1
+            newTouch.usage = EditorTouch.DRAG
+            newTouch.player = closestA
             closestA.posA = newTouch.pos
+            closestA.dragA = newTouch
         }else if(closestB){
-            newTouch.delegated = true
+            newTouch.side = 1
+            newTouch.usage = EditorTouch.DRAG
+            newTouch.player = closestB
             closestB.posB = newTouch.pos
+            closestB.dragB = newTouch
         }else{
+            newTouch.usage = EditorTouch.CLICK
             let closestPlayer = null
             let closestDist = Infinity
             for(const player of players){
@@ -186,6 +216,7 @@ function touchMove(e) {
     }
 }
 function touchEnd(e) {
+    const smallerDimension = Math.min(innerWidth, innerHeight)
     for(const removedTouch of e.changedTouches){
         const touch = touches.get(removedTouch.identifier)
         if(!touch){
@@ -198,11 +229,24 @@ function touchEnd(e) {
         }else if(touch.player && touch.side > 0){
             touch.player.rights.delete(touch)
         }
-        if(!touch.delegated && touch.player){
+        if(touch.usage == EditorTouch.CLICK && touch.player){
             if(touch.side < 0){
-                touch.player.setColIndex((touch.player.colIndex + 1) % colors.length)
-            }else if(touch.side > 0){
                 touch.player.setColIndex((touch.player.colIndex + colors.length - 1) % colors.length)
+            }else if(touch.side > 0){
+                touch.player.setColIndex((touch.player.colIndex + 1) % colors.length)
+            }
+        }
+        if(touch.usage == EditorTouch.DRAG){
+            if(touch.side < 0 && touch.player.dragA == touch){
+                if(!touch.player.dragB && touch.player.posB.xy.sub(touch.player.posA).mult(V2.fromVals(innerWidth, innerHeight)).mag/smallerDimension < deleteRange){
+                    players.delete(touch.player)
+                }
+                touch.player.dragA = null
+            }else if(touch.side > 0 && touch.player.dragB == touch){
+                if(!touch.player.dragA && touch.player.posB.xy.sub(touch.player.posA).mult(V2.fromVals(innerWidth, innerHeight)).mag/smallerDimension < deleteRange){
+                    players.delete(touch.player)
+                }
+                touch.player.dragB = null
             }
         }
     }
@@ -226,6 +270,8 @@ function blurControlEditor(){
     for(const player of players){
         player.lefts.clear()
         player.rights.clear()
+        player.dragA = null
+        player.dragB = null
     }
     touches.clear()
 }

@@ -1,6 +1,5 @@
 import V2 from "./V2.mjs"
 import { Ship } from "./game/Ship.mjs"
-import { KeyboardController } from "./KeyboardController.mjs"
 import { KeyboardControllerHandler } from "./KeyboardControllerHandler.mjs"
 import { Wall } from "./game/Wall.mjs"
 import { TouchController } from "./TouchController.mjs"
@@ -71,6 +70,7 @@ function startGame(){
 }
 
 function removeGameEventListeners(){
+    oldTime = undefined
     removeEventListener("resize", updateBoundary)
     keyboardControllerHandler.stopListening()
 }
@@ -117,7 +117,6 @@ window.gameSpeed = 1
 
 let oldTime
 const maxSimTime = 500
-let doGameLoop = false
 function loop(t) {
     if(!oldTime || t - oldTime > maxSimTime){
         oldTime = t
@@ -138,4 +137,4 @@ function loop(t) {
     }
 }
 
-export {setupGame, startGame, doGameLoop, removeGameEventListeners}
+export {setupGame, startGame, removeGameEventListeners}

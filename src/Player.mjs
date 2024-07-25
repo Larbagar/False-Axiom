@@ -15,6 +15,10 @@ class Player {
     lefts = new Set()
     /** @type {Set<EditorTouch>} */
     rights = new Set()
+    /** @type {EditorTouch} */
+    dragA = null
+    /** @type {EditorTouch} */
+    dragB = null
     constructor(posA, posB) {
         this.posA = posA
         this.posB = posB
