@@ -4,12 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Fixed swapping bug">
-      <change afterPath="$PROJECT_DIR$/src/mainMenu.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Started working on main menu, refactors to 2-dimensional vector class">
+      <change afterPath="$PROJECT_DIR$/src/disableTouchBehavior.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/states.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/LineGroup.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/LineGroup.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/V2.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/V2.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controlEditor.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/controlEditor.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameLoop.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mainMenu.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mainMenu.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/start.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/start.mjs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -95,7 +96,7 @@
     <configuration name="Chrome" type="JavascriptDebugType" uri="http://localhost:8080/False-Axiom/src/index.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
-    <configuration name="Edge" type="JavascriptDebugType" engineId="37cae5b9-e8b2-4949-9172-aafa37fbc09c" uri="http://localhost:8080/False-Axiom/src/index.html" useBuiltInWebServerPort="true">
+    <configuration name="Edge" type="JavascriptDebugType" engineId="37cae5b9-e8b2-4949-9172-aafa37fbc09c" uri="http://localhost:8080/False-Axiom/src/index.html?no-fullscreen" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
     <list>
@@ -141,7 +142,7 @@
       <workItem from="1721522089516" duration="6523000" />
       <workItem from="1721582929165" duration="11463000" />
       <workItem from="1721666217515" duration="1604000" />
-      <workItem from="1721848556165" duration="4736000" />
+      <workItem from="1721848556165" duration="7866000" />
     </task>
     <task id="LOCAL-00001" summary="New ships, players face each other to start, wall hit animation, basic blast">
       <option name="closed" value="true" />
@@ -359,7 +360,23 @@
       <option name="project" value="LOCAL" />
       <updated>1721849103756</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Started working on main menu, refactors to 2-dimensional vector class">
+      <option name="closed" value="true" />
+      <created>1721860340290</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1721860340290</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Started working on main menu, refactors to 2-dimensional vector class">
+      <option name="closed" value="true" />
+      <created>1721860351840</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1721860351840</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -401,6 +418,7 @@
     <MESSAGE value="The editor can now lead to the game" />
     <MESSAGE value="Refactored a couple things" />
     <MESSAGE value="Fixed swapping bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed swapping bug" />
+    <MESSAGE value="Started working on main menu, refactors to 2-dimensional vector class" />
+    <option name="LAST_COMMIT_MESSAGE" value="Started working on main menu, refactors to 2-dimensional vector class" />
   </component>
 </project>

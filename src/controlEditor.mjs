@@ -57,15 +57,6 @@ function controlEditorLoop(){
 }
 
 
-canvas.addEventListener("touchstart", e => {
-    e.preventDefault()
-})
-addEventListener("contextmenu", e => {
-    e.preventDefault()
-})
-addEventListener("touchend", e => {
-    e.preventDefault()
-})
 
 function setupControlEditorListeners(){
     addEventListener("touchstart", touchStart)
@@ -174,12 +165,15 @@ function touchStart(e){
 }
 function touchMove(e) {
     for(const movedTouch of e.changedTouches){
-        touches.get(movedTouch.identifier).pos.set(2*movedTouch.clientX/innerWidth - 1, 1 - 2*movedTouch.clientY/innerHeight)
+        touches.get(movedTouch.identifier)?.pos?.set(2*movedTouch.clientX/innerWidth - 1, 1 - 2*movedTouch.clientY/innerHeight)
     }
 }
 function touchEnd(e) {
     for(const removedTouch of e.changedTouches){
         const touch = touches.get(removedTouch.identifier)
+        if(!touch){
+            continue
+        }
         touch.pos.set(V2.fromVals(2*removedTouch.clientX/innerWidth - 1, 1 - 2*removedTouch.clientY/innerHeight))
         touches.delete(removedTouch.identifier)
         if(touch.player && touch.side < 0){

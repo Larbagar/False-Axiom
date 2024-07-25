@@ -7,6 +7,9 @@ import {drawLighting} from "./graphics/light/drawLighting.mjs"
 import {LineGroup} from "./LineGroup.mjs"
 import {minBrightnessBindGroup} from "./minBrightness.mjs"
 import {Camera} from "./Camera.mjs"
+import {controlEditor} from "./controlEditor.mjs"
+import {noFullscreen} from "./noFullscreen.mjs"
+import {states} from "./states.mjs"
 
 const lightGroup = new LineGroup(2, true)
 lightGroup.pos.set([
@@ -26,7 +29,9 @@ lightGroup.updateTransformBuffer()
 
 const camera = new Camera()
 
-function mainMenu(){
+let doLoop = false
+
+function mainMenuLoop(){
     const encoder = device.createCommandEncoder()
 
     const canvasView = context.getCurrentTexture().createView()
@@ -44,7 +49,38 @@ function mainMenu(){
     const commandBuffer = encoder.finish()
     device.queue.submit([commandBuffer])
 
-    requestAnimationFrame(mainMenu)
+    if(doLoop) {
+        requestAnimationFrame(mainMenuLoop)
+    }
+}
+
+function touchStart(){
+}
+
+function touchEnd(){
+    if(!noFullscreen){
+        document.body.requestFullscreen()
+    }
+    history.pushState(states.CONFIG, "",)
+    document.title = "False Axiom - Config"
+    doLoop = false
+    removeMainMenuListeners()
+    controlEditor()
+}
+
+function addMainMenuListeners(){
+    addEventListener("touchstart", touchStart)
+    addEventListener("touchend", touchEnd)
+}
+function removeMainMenuListeners(){
+    removeEventListener("touchstart", touchStart)
+    removeEventListener("touchend", touchEnd)
+}
+
+function mainMenu(){
+    doLoop = true
+    addMainMenuListeners()
+    requestAnimationFrame(mainMenuLoop)
 }
 
 export {mainMenu}

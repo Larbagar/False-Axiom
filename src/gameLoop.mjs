@@ -11,7 +11,6 @@ import {Simulation} from "./game/Simulation.mjs"
 import {UpdateEvent} from "./game/UpdateEvent.mjs"
 import {Game} from "./game/Game.mjs"
 import {move} from "./game/mover.mjs"
-import {noFullscreen} from "./noFullscreen.mjs"
 import {colors} from "./colors.mjs"
 
 let game
