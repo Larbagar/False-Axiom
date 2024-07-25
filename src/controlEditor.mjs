@@ -10,7 +10,9 @@ import {drawLighting} from "./graphics/light/drawLighting.mjs"
 import {minBrightnessBindGroup} from "./minBrightness.mjs"
 import {colors} from "./colors.mjs"
 import {EditorTouch} from "./EditorTouch.mjs"
-import {startGame} from "./gameLoop.mjs"
+import {setupGame, startGame} from "./gameLoop.mjs"
+import {currentState, setCurrentState} from "./appState.mjs"
+import {states} from "./states.mjs"
 
 setupTexutres()
 
@@ -49,9 +51,13 @@ function controlEditorLoop(){
     device.queue.submit([commandBuffer])
 
 
-    if(ready && players.size >= 1){
-        startGame(players)
-    }else {
+    if(ready && players.size >= 1) {
+        history.pushState(states.GAME, "",)
+        document.title = "False Axiom - Play"
+        setupGame(players)
+        startGame()
+    }
+    if(currentState == states.CONFIG){
         requestAnimationFrame(controlEditorLoop)
     }
 }
@@ -62,6 +68,11 @@ function setupControlEditorListeners(){
     addEventListener("touchstart", touchStart)
     addEventListener("touchmove", touchMove)
     addEventListener("touchend", touchEnd)
+}
+function removeControlEditorListeners(){
+    removeEventListener("touchstart", touchStart)
+    removeEventListener("touchmove", touchMove)
+    removeEventListener("touchend", touchEnd)
 }
 
 /** @type {Map<number, EditorTouch>} */
@@ -192,8 +203,9 @@ function touchEnd(e) {
 }
 
 function controlEditor(){
+    setCurrentState(states.CONFIG)
     setupControlEditorListeners()
     requestAnimationFrame(controlEditorLoop)
 }
 
-export {controlEditor}
+export {controlEditor, removeControlEditorListeners}

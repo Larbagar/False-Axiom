@@ -4,8 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Accounting for devicePixelRatio">
+    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Started working on handling back and forward buttons">
+      <change afterPath="$PROJECT_DIR$/src/appState.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/KeyboardControllerHandler.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/KeyboardControllerHandler.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controlEditor.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/controlEditor.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gameLoop.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/historyHandler.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/historyHandler.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mainMenu.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/title.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/start.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/start.mjs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,7 +143,7 @@
       <workItem from="1721522089516" duration="6523000" />
       <workItem from="1721582929165" duration="11463000" />
       <workItem from="1721666217515" duration="1604000" />
-      <workItem from="1721848556165" duration="9387000" />
+      <workItem from="1721848556165" duration="13669000" />
     </task>
     <task id="LOCAL-00001" summary="New ships, players face each other to start, wall hit animation, basic blast">
       <option name="closed" value="true" />
@@ -386,7 +393,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721925199313</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Started working on handling back and forward buttons">
+      <option name="closed" value="true" />
+      <created>1721925558347</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1721925558347</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -404,7 +419,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed the death hack" />
     <MESSAGE value="Actually fixed the death hack" />
     <MESSAGE value="Improved blast animation" />
     <MESSAGE value="Added explosion class, minor modification to how repeating color arrays are generated." />
@@ -429,6 +443,7 @@
     <MESSAGE value="Started working on main menu, refactors to 2-dimensional vector class" />
     <MESSAGE value="Connected main menu to the controls editor, and started working on history states" />
     <MESSAGE value="Accounting for devicePixelRatio" />
-    <option name="LAST_COMMIT_MESSAGE" value="Accounting for devicePixelRatio" />
+    <MESSAGE value="Started working on handling back and forward buttons" />
+    <option name="LAST_COMMIT_MESSAGE" value="Started working on handling back and forward buttons" />
   </component>
 </project>

@@ -12,6 +12,8 @@ import {UpdateEvent} from "./game/UpdateEvent.mjs"
 import {Game} from "./game/Game.mjs"
 import {move} from "./game/mover.mjs"
 import {colors} from "./colors.mjs"
+import {currentState, setCurrentState} from "./appState.mjs"
+import {states} from "./states.mjs"
 
 let game
 let simulation
@@ -21,7 +23,10 @@ let touchControllerHandler
 /**
  * @param {Set<Player>} players
  */
-function startGame(players){
+function setupGame(players){
+    setCurrentState(states.GAME)
+
+
     game = new Game()
     simulation = new Simulation()
     simulation.events.add(new UpdateEvent(game, simulation, 0))
@@ -34,11 +39,11 @@ function startGame(players){
         const scale = V2.fromVals(innerWidth, innerHeight)
         let a, b
         if(player.posB.xy.sub(player.posA).mult(scale).cross(player.posA.xy.mult(scale).mult(-1)) < 0){
-            a = player.posB
-            b = player.posA
+            a = player.posB.xy
+            b = player.posA.xy
         }else{
-            a = player.posA
-            b = player.posB
+            a = player.posA.xy
+            b = player.posB.xy
         }
         controller.a = a.add(1, -1).mult(1/2, -1/2)
         controller.b = b.add(1, -1).mult(1/2, -1/2)
@@ -48,18 +53,26 @@ function startGame(players){
         game.ships.push(ship)
     }
 
-    keyboardControllerHandler.listen()
-    touchControllerHandler.listen()
 
     game.touchControllerHandler = touchControllerHandler
 
-    doGameLoop = true
 
+
+
+}
+
+function startGame(){
+    setCurrentState(states.GAME)
     addEventListener("resize", updateBoundary)
     updateBoundary()
-
+    keyboardControllerHandler.listen()
+    touchControllerHandler.listen()
     requestAnimationFrame(loop)
+}
 
+function removeGameEventListeners(){
+    removeEventListener("resize", updateBoundary)
+    keyboardControllerHandler.stopListening()
 }
 
 
@@ -120,9 +133,9 @@ function loop(t) {
 
     draw(game)
 
-    if(doGameLoop) {
+    if(currentState == states.GAME) {
         requestAnimationFrame(loop)
     }
 }
 
-export {startGame, doGameLoop}
+export {setupGame, startGame, doGameLoop}

@@ -10,6 +10,7 @@ import {Camera} from "./Camera.mjs"
 import {controlEditor} from "./controlEditor.mjs"
 import {noFullscreen} from "./noFullscreen.mjs"
 import {states} from "./states.mjs"
+import {currentState, setCurrentState} from "./appState.mjs"
 
 const lightGroup = new LineGroup(2, true)
 lightGroup.pos.set([
@@ -31,7 +32,7 @@ const camera = new Camera()
 
 let doLoop = false
 
-function mainMenuLoop(){
+function titleLoop(){
     const encoder = device.createCommandEncoder()
 
     const canvasView = context.getCurrentTexture().createView()
@@ -49,8 +50,8 @@ function mainMenuLoop(){
     const commandBuffer = encoder.finish()
     device.queue.submit([commandBuffer])
 
-    if(doLoop) {
-        requestAnimationFrame(mainMenuLoop)
+    if(currentState == states.TITLE) {
+        requestAnimationFrame(titleLoop)
     }
 }
 
@@ -63,24 +64,23 @@ function touchEnd(){
     }
     history.pushState(states.CONFIG, "",)
     document.title = "False Axiom - Config"
-    doLoop = false
-    removeMainMenuListeners()
+    removeTitleListeners()
     controlEditor()
 }
 
-function addMainMenuListeners(){
+function addTitleListeners(){
     addEventListener("touchstart", touchStart)
     addEventListener("touchend", touchEnd)
 }
-function removeMainMenuListeners(){
+function removeTitleListeners(){
     removeEventListener("touchstart", touchStart)
     removeEventListener("touchend", touchEnd)
 }
 
-function mainMenu(){
-    doLoop = true
-    addMainMenuListeners()
-    requestAnimationFrame(mainMenuLoop)
+function title(){
+    setCurrentState(states.TITLE)
+    addTitleListeners()
+    requestAnimationFrame(titleLoop)
 }
 
-export {mainMenu}
+export {title, removeTitleListeners}

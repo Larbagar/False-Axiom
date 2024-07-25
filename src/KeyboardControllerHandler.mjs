@@ -9,6 +9,11 @@ class KeyboardControllerHandler {
         addEventListener("keyup", e => this.keyup(e.code))
         addEventListener("blur", e => this.blur())
     }
+    stopListening(){
+        removeEventListener("keydown", e => this.keydown(e.code))
+        removeEventListener("keyup", e => this.keyup(e.code))
+        removeEventListener("blur", e => this.blur())
+    }
     keydown(key){
         for(const controller of this.controllers){
             controller.keydown(key)

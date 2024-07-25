@@ -1,12 +1,17 @@
 import {setupTexutres} from "./graphics/textureHandler.mjs"
 import {controlEditor} from "./controlEditor.mjs"
-import {mainMenu} from "./mainMenu.mjs"
+import {title} from "./title.mjs"
 import {disableTouchBehavior} from "./disableTouchBehavior.mjs"
 import {states} from "./states.mjs"
+import {handleHistory} from "./historyHandler.mjs"
 
 setupTexutres()
 
 disableTouchBehavior()
+
+handleHistory()
+
+addEventListener("touchcancel", _ => alert('asdf'))
 
 history.replaceState(states.TITLE, "",)
 document.title = "False Axiom - Title"
@@ -19,4 +24,10 @@ document.title = "False Axiom - Title"
 // })
 // setupServiceWorker()
 
-mainMenu()
+navigator.serviceWorker.getRegistrations().then(registrations => {
+    for (const registration of registrations) {
+        registration.unregister();
+    }
+})
+
+title()
