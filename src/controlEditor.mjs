@@ -52,6 +52,7 @@ function controlEditorLoop(){
 
 
     if(ready && players.size >= 1) {
+        removeControlEditorListeners()
         history.pushState(states.GAME, "",)
         document.title = "False Axiom - Play"
         setupGame(players)
@@ -68,11 +69,16 @@ function setupControlEditorListeners(){
     addEventListener("touchstart", touchStart)
     addEventListener("touchmove", touchMove)
     addEventListener("touchend", touchEnd)
+    addEventListener("touchcancel", touchCancel)
+    addEventListener("blur", blurControlEditor)
 }
 function removeControlEditorListeners(){
+    blurControlEditor()
     removeEventListener("touchstart", touchStart)
     removeEventListener("touchmove", touchMove)
     removeEventListener("touchend", touchEnd)
+    removeEventListener("touchcancel", touchCancel)
+    removeEventListener("blur", blurControlEditor)
 }
 
 /** @type {Map<number, EditorTouch>} */
@@ -201,6 +207,28 @@ function touchEnd(e) {
         }
     }
 }
+function touchCancel(e) {
+    for(const removedTouch of e.changedTouches){
+        const touch = touches.get(removedTouch.identifier)
+        if(!touch){
+            continue
+        }
+        touch.pos.set(V2.fromVals(2*removedTouch.clientX/innerWidth - 1, 1 - 2*removedTouch.clientY/innerHeight))
+        touches.delete(removedTouch.identifier)
+        if(touch.player && touch.side < 0){
+            touch.player.lefts.delete(touch)
+        }else if(touch.player && touch.side > 0){
+            touch.player.rights.delete(touch)
+        }
+    }
+}
+function blurControlEditor(){
+    for(const player of players){
+        player.lefts.clear()
+        player.rights.clear()
+    }
+    touches.clear()
+}
 
 function controlEditor(){
     setCurrentState(states.CONFIG)
@@ -208,4 +236,4 @@ function controlEditor(){
     requestAnimationFrame(controlEditorLoop)
 }
 
-export {controlEditor, removeControlEditorListeners}
+export {controlEditor, removeControlEditorListeners, blurControlEditor}

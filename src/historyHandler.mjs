@@ -1,8 +1,8 @@
 import {states} from "./states.mjs"
 import {currentState, setCurrentState} from "./appState.mjs"
 import {removeTitleListeners, title} from "./title.mjs"
-import {controlEditor, removeControlEditorListeners} from "./controlEditor.mjs"
-import {startGame} from "./gameLoop.mjs"
+import {blurControlEditor, controlEditor, removeControlEditorListeners} from "./controlEditor.mjs"
+import {removeGameEventListeners, startGame} from "./gameLoop.mjs"
 
 function onPopState(e){
     switch (currentState) {
@@ -15,7 +15,7 @@ function onPopState(e){
         case states.PAUSE:
             break
         case states.GAME:
-
+            removeGameEventListeners()
             break
     }
     switch (e.state) {

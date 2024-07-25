@@ -11,7 +11,6 @@ disableTouchBehavior()
 
 handleHistory()
 
-addEventListener("touchcancel", _ => alert('asdf'))
 
 history.replaceState(states.TITLE, "",)
 document.title = "False Axiom - Title"

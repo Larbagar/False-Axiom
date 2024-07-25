@@ -138,4 +138,4 @@ function loop(t) {
     }
 }
 
-export {setupGame, startGame, doGameLoop}
+export {setupGame, startGame, doGameLoop, removeGameEventListeners}
