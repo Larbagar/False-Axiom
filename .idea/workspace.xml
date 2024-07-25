@@ -4,14 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Started working on main menu, refactors to 2-dimensional vector class">
-      <change afterPath="$PROJECT_DIR$/src/disableTouchBehavior.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/states.mjs" afterDir="false" />
+    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Connected main menu to the controls editor, and started working on history states">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controlEditor.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/controlEditor.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameLoop.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mainMenu.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mainMenu.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/start.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/start.mjs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,7 +136,7 @@
       <workItem from="1721522089516" duration="6523000" />
       <workItem from="1721582929165" duration="11463000" />
       <workItem from="1721666217515" duration="1604000" />
-      <workItem from="1721848556165" duration="7866000" />
+      <workItem from="1721848556165" duration="9014000" />
     </task>
     <task id="LOCAL-00001" summary="New ships, players face each other to start, wall hit animation, basic blast">
       <option name="closed" value="true" />
@@ -376,7 +370,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721860351840</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Connected main menu to the controls editor, and started working on history states">
+      <option name="closed" value="true" />
+      <created>1721868305921</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1721868305921</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -394,7 +396,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="New ships, players face each other to start, wall hit animation, basic blast" />
     <MESSAGE value="Hacked in death" />
     <MESSAGE value="Fixed the death hack" />
     <MESSAGE value="Actually fixed the death hack" />
@@ -419,6 +420,7 @@
     <MESSAGE value="Refactored a couple things" />
     <MESSAGE value="Fixed swapping bug" />
     <MESSAGE value="Started working on main menu, refactors to 2-dimensional vector class" />
-    <option name="LAST_COMMIT_MESSAGE" value="Started working on main menu, refactors to 2-dimensional vector class" />
+    <MESSAGE value="Connected main menu to the controls editor, and started working on history states" />
+    <option name="LAST_COMMIT_MESSAGE" value="Connected main menu to the controls editor, and started working on history states" />
   </component>
 </project>
