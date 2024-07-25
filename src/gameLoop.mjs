@@ -53,6 +53,8 @@ function startGame(players){
 
     game.touchControllerHandler = touchControllerHandler
 
+    doGameLoop = true
+
     addEventListener("resize", updateBoundary)
     updateBoundary()
 
@@ -102,6 +104,7 @@ window.gameSpeed = 1
 
 let oldTime
 const maxSimTime = 500
+let doGameLoop = false
 function loop(t) {
     if(!oldTime || t - oldTime > maxSimTime){
         oldTime = t
@@ -117,7 +120,9 @@ function loop(t) {
 
     draw(game)
 
-    requestAnimationFrame(loop)
+    if(doGameLoop) {
+        requestAnimationFrame(loop)
+    }
 }
 
-export {startGame}
+export {startGame, doGameLoop}
