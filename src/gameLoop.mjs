@@ -19,6 +19,8 @@ let simulation
 let keyboardControllerHandler
 let touchControllerHandler
 
+let gameLoaded = false
+
 /**
  * @param {Set<Player>} players
  */
@@ -55,9 +57,11 @@ function setupGame(players){
 
     game.touchControllerHandler = touchControllerHandler
 
+    timeToExit = 3000
 
+    singlePlayerMode = game.ships.length == 1
 
-
+    gameLoaded = true
 }
 
 function startGame(){
@@ -117,6 +121,8 @@ window.gameSpeed = 1
 
 let oldTime
 const maxSimTime = 500
+let timeToExit = 0
+let singlePlayerMode
 function loop(t) {
     if(!oldTime || t - oldTime > maxSimTime){
         oldTime = t
@@ -132,9 +138,17 @@ function loop(t) {
 
     draw(game)
 
+    if(game.ships.length <= 1 - singlePlayerMode){
+        timeToExit -= dt
+    }
+    if(timeToExit <= 0){
+        history.go(-1)
+        setCurrentState(states.CONFIG)
+    }
+
     if(currentState == states.GAME) {
         requestAnimationFrame(loop)
     }
 }
 
-export {setupGame, startGame, removeGameEventListeners}
+export {setupGame, startGame, removeGameEventListeners, gameLoaded}

@@ -2,7 +2,7 @@ import {states} from "./states.mjs"
 import {currentState, setCurrentState} from "./appState.mjs"
 import {removeTitleListeners, title} from "./title.mjs"
 import {blurControlEditor, controlEditor, removeControlEditorListeners} from "./controlEditor.mjs"
-import {removeGameEventListeners, startGame} from "./gameLoop.mjs"
+import {gameLoaded, removeGameEventListeners, startGame} from "./gameLoop.mjs"
 
 function onPopState(e){
     switch (currentState) {
@@ -29,7 +29,13 @@ function onPopState(e){
             console.log('go to pause')
             break
         case states.GAME:
-            startGame()
+            if(gameLoaded){
+                startGame()
+            }else{
+                history.replaceState(states.CONFIG, "",)
+                document.title = "False Axiom - Config"
+                controlEditor()
+            }
             break
     }
 
