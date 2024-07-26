@@ -1,7 +1,7 @@
 {
   "name": "False Axiom",
   "short_name": "False Axiom",
-  "start_url": "./index.html?no-fullscreen",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "fullscreen",
   "orientation": "portrait-primary",
