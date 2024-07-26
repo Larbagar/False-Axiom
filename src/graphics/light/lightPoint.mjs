@@ -3,6 +3,7 @@ import { rectGeometry, rectGeometryBuffer, rectIndexBuffer } from "../rectBuffer
 import { transformMatrixBindGroupLayout } from "../transformMatrixBindGroupLayout.mjs"
 import { minBrightnessBindGroupLayout } from "./minBrightnessBindGroupLayout.mjs"
 import {cameraBindGroupLayout} from "../cameraBindGroupLayout.mjs"
+import {profileView} from "../../noFullscreen.mjs"
 
 const shaderModule = device.createShaderModule({
     label: "light point shader module",
@@ -49,8 +50,8 @@ struct FragIn {
 @fragment
 fn fragment(in: FragIn) -> @location(0) vec4f {
     let brightness = 1/pow(length(in.pos), 2) - in.minBrightnessCoeff;
-    //return vec4f(brightness*max(max(in.col.r, in.col.g), in.col.b), step(max(0, brightness), 0), 1, 1);
-    return vec4f(max(0, brightness)*in.col, 1);
+    ${profileView ? "" : "//"}return vec4f(brightness*max(max(in.col.r, in.col.g), in.col.b), step(max(0, brightness), 0), 1, 1);
+    ${profileView ? "//" : ""}return vec4f(max(0, brightness)*in.col, 1);
 }
     `,
 })

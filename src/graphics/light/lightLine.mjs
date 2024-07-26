@@ -3,6 +3,7 @@ import { device } from '../device.mjs'
 import { transformMatrixBindGroupLayout } from "../transformMatrixBindGroupLayout.mjs"
 import { minBrightnessBindGroupLayout } from "./minBrightnessBindGroupLayout.mjs"
 import {cameraBindGroupLayout} from "../cameraBindGroupLayout.mjs"
+import {profileView} from "../../noFullscreen.mjs"
 
 
 const shaderModule = device.createShaderModule({
@@ -65,8 +66,8 @@ fn fragment(in: FragIn) -> @location(0) vec4f {
     let x = in.pos.x;
     let y = in.pos.y;
     let brightness = (atan((in.len - x) / y) + atan(x / y))/y - in.minBrightnessCoeff;
-    //return vec4f(brightness*max(max(in.col.r, in.col.g), in.col.b), step(max(0, brightness), 0), 1, 1);
-    return vec4f(brightness*in.col, 1);
+    ${profileView ? "" : "//"}return vec4f(brightness*max(max(in.col.r, in.col.g), in.col.b), step(max(0, brightness), 0), 1, 1);
+    ${profileView ? "//" : ""}return vec4f(brightness*in.col, 1);
 }
 
   `,

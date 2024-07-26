@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Lowered default resolution and light quality">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Added a flag for increased resolution">
       <change beforePath="$PROJECT_DIR$/src/graphics/light/lightLine.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/light/lightLine.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphics/textureHandler.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/textureHandler.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/minBrightness.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/minBrightness.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/noFullscreen.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/noFullscreen.mjs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -141,7 +138,7 @@
       <workItem from="1721582929165" duration="11463000" />
       <workItem from="1721666217515" duration="1604000" />
       <workItem from="1721848556165" duration="14015000" />
-      <workItem from="1721942529575" duration="7589000" />
+      <workItem from="1721942529575" duration="7975000" />
     </task>
     <task id="LOCAL-00001" summary="New ships, players face each other to start, wall hit animation, basic blast">
       <option name="closed" value="true" />
@@ -439,7 +436,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721953384354</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="Added a flag for increased resolution">
+      <option name="closed" value="true" />
+      <created>1721954371395</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1721954371395</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -457,7 +462,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="wrote function to generate a shockwave" />
     <MESSAGE value="Fixed a bunch of bugs, shockwaves now maybe work?" />
     <MESSAGE value="Actually uploaded the shockwave file." />
     <MESSAGE value="THERE ARE NOW SHOCKWAVES!!!" />
@@ -482,6 +486,7 @@
     <MESSAGE value="Controllers can now be deleted!" />
     <MESSAGE value="Game now loops back to config after players die" />
     <MESSAGE value="Lowered default resolution and light quality" />
-    <option name="LAST_COMMIT_MESSAGE" value="Lowered default resolution and light quality" />
+    <MESSAGE value="Added a flag for increased resolution" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added a flag for increased resolution" />
   </component>
 </project>
