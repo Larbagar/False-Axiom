@@ -2,7 +2,7 @@ import {LightTex} from "./light/LightTex.mjs"
 import V2 from "../V2.mjs"
 import {device} from "./device.mjs"
 import {DistortionTex} from "./light/DistortionTex.mjs"
-import {highGraphics} from "../noFullscreen.mjs"
+import {highGraphics} from "../flags.mjs"
 
 let
     /** @type {HTMLCanvasElement} */

@@ -3,7 +3,7 @@ import { rectGeometry, rectGeometryBuffer, rectIndexBuffer } from "../rectBuffer
 import { transformMatrixBindGroupLayout } from "../transformMatrixBindGroupLayout.mjs"
 import { minBrightnessBindGroupLayout } from "./minBrightnessBindGroupLayout.mjs"
 import {cameraBindGroupLayout} from "../cameraBindGroupLayout.mjs"
-import {profileView} from "../../noFullscreen.mjs"
+import {profileView} from "../../flags.mjs"
 
 const shaderModule = device.createShaderModule({
     label: "light point shader module",

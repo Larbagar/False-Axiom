@@ -3,7 +3,7 @@ import { device } from '../device.mjs'
 import { transformMatrixBindGroupLayout } from "../transformMatrixBindGroupLayout.mjs"
 import { minBrightnessBindGroupLayout } from "./minBrightnessBindGroupLayout.mjs"
 import {cameraBindGroupLayout} from "../cameraBindGroupLayout.mjs"
-import {profileView} from "../../noFullscreen.mjs"
+import {profileView} from "../../flags.mjs"
 
 
 const shaderModule = device.createShaderModule({
