@@ -1,3 +1,5 @@
-const noFullscreen = new URLSearchParams(location.search).has("no-fullscreen")
+const params = new URLSearchParams(location.search)
+const noFullscreen = params.has("no-fullscreen")
+const highGraphics = params.has("high-graphics")
 
-export {noFullscreen}
+export {noFullscreen, highGraphics}
