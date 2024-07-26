@@ -14,9 +14,10 @@ let
     distortionTex
 
 const canvasFormat = navigator.gpu.getPreferredCanvasFormat()
+let resolution = 0.8
 
 function resize() {
-    const res = V2.fromVals(innerWidth*devicePixelRatio, innerHeight*devicePixelRatio)
+    const res = V2.fromVals(innerWidth*devicePixelRatio*resolution, innerHeight*devicePixelRatio*resolution)
     lightTex = new LightTex(res)
     distortionTex = new DistortionTex(res);
     [canvas.width, canvas.height] = res

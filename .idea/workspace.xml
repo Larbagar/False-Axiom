@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Controllers can now be deleted!">
+    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Game now loops back to config after players die">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameLoop.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/historyHandler.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/historyHandler.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controlEditor.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/controlEditor.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/title.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/title.mjs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,7 +139,7 @@
       <workItem from="1721582929165" duration="11463000" />
       <workItem from="1721666217515" duration="1604000" />
       <workItem from="1721848556165" duration="14015000" />
-      <workItem from="1721942529575" duration="5939000" />
+      <workItem from="1721942529575" duration="6630000" />
     </task>
     <task id="LOCAL-00001" summary="New ships, players face each other to start, wall hit animation, basic blast">
       <option name="closed" value="true" />
@@ -421,7 +421,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721951325605</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="Game now loops back to config after players die">
+      <option name="closed" value="true" />
+      <created>1721952763757</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1721952763757</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -439,7 +447,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Players now explode upon death, players are deader after dying." />
     <MESSAGE value="Started work on shockwave program" />
     <MESSAGE value="wrote function to generate a shockwave" />
     <MESSAGE value="Fixed a bunch of bugs, shockwaves now maybe work?" />
@@ -464,6 +471,7 @@
     <MESSAGE value="Browser buttons mostly complete" />
     <MESSAGE value="Fixed bugs" />
     <MESSAGE value="Controllers can now be deleted!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Controllers can now be deleted!" />
+    <MESSAGE value="Game now loops back to config after players die" />
+    <option name="LAST_COMMIT_MESSAGE" value="Game now loops back to config after players die" />
   </component>
 </project>
