@@ -8,7 +8,7 @@ import {LineGroup} from "./LineGroup.mjs"
 import {minBrightnessBindGroup} from "./minBrightness.mjs"
 import {Camera} from "./Camera.mjs"
 import {controlEditor} from "./controlEditor.mjs"
-import {noFullscreen} from "./noFullscreen.mjs"
+import {noFullscreen} from "./flags.mjs"
 import {states} from "./states.mjs"
 import {currentState, setCurrentState} from "./appState.mjs"
 
@@ -29,8 +29,6 @@ lightGroup.updateTransformBuffer()
 
 
 const camera = new Camera()
-
-let doLoop = false
 
 function titleLoop(){
     const encoder = device.createCommandEncoder()
