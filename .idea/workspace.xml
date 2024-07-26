@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Added a flag for increased resolution">
-      <change beforePath="$PROJECT_DIR$/src/graphics/light/lightLine.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/light/lightLine.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/noFullscreen.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/noFullscreen.mjs" afterDir="false" />
-    </list>
+    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Added a flag to get more info on rendering&#10;Shows what pixels are rendered, and which are wasted" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -138,7 +135,7 @@
       <workItem from="1721582929165" duration="11463000" />
       <workItem from="1721666217515" duration="1604000" />
       <workItem from="1721848556165" duration="14015000" />
-      <workItem from="1721942529575" duration="7975000" />
+      <workItem from="1721942529575" duration="8303000" />
     </task>
     <task id="LOCAL-00001" summary="New ships, players face each other to start, wall hit animation, basic blast">
       <option name="closed" value="true" />
@@ -444,7 +441,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721954371395</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="Added a flag to get more info on rendering&#10;Shows what pixels are rendered, and which are wasted">
+      <option name="closed" value="true" />
+      <created>1721954828433</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1721954828433</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -462,7 +467,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed a bunch of bugs, shockwaves now maybe work?" />
     <MESSAGE value="Actually uploaded the shockwave file." />
     <MESSAGE value="THERE ARE NOW SHOCKWAVES!!!" />
     <MESSAGE value="Added a background!" />
@@ -487,6 +491,7 @@
     <MESSAGE value="Game now loops back to config after players die" />
     <MESSAGE value="Lowered default resolution and light quality" />
     <MESSAGE value="Added a flag for increased resolution" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added a flag for increased resolution" />
+    <MESSAGE value="Added a flag to get more info on rendering&#10;Shows what pixels are rendered, and which are wasted" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added a flag to get more info on rendering&#10;Shows what pixels are rendered, and which are wasted" />
   </component>
 </project>
