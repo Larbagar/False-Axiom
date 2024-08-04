@@ -71,6 +71,25 @@ export default class V2 {
     }
     /**
      * Copies by reference
+     * @param {ArrayBuffer} arrayBuffer
+     * @param {number=} count
+     * @param {number=} byteOffset
+     */
+    static multipleFromArrayBuffer(
+        arrayBuffer = new ArrayBuffer(V2.BYTE_LENGTH),
+        count = Math.floor(arrayBuffer.byteLength/V2.BYTE_LENGTH),
+        byteOffset = 0,
+    ) {
+        const arr = new Array(count)
+        for(let i = 0; i < count; i++){
+            const v2 = new V2()
+            v2.arr = new Float32Array(arrayBuffer, byteOffset + i*V2.BYTES_PER_ELEMENT, V2.ELEMENTS)
+            arr[i] = v2
+        }
+        return arr
+    }
+    /**
+     * Copies by reference
      * @param {Float32Array} float32Array
      * @param {number=} offset
      */
@@ -82,6 +101,108 @@ export default class V2 {
             V2.ELEMENTS
         )
         return v2
+    }
+    /**
+     * Copies by reference
+     * @param {Float32Array} float32Array
+     * @param {number=} count
+     * @param {number=} offset
+     */
+    static multipleFromFloat32Array(
+        float32Array = new Float32Array(V2.ELEMENTS),
+        count = Math.floor(float32Array.length/V2.ELEMENTS),
+        offset = 0,
+    ) {
+        const arr = new Array(count)
+        for(let i = 0; i < count; i++){
+            const v2 = new V2()
+            v2.arr = new Float32Array(
+                float32Array.buffer,
+                float32Array.byteOffset + (offset + i)*Float32Array.BYTES_PER_ELEMENT,
+                V2.ELEMENTS
+            )
+            arr[i] = v2
+        }
+        return arr
+    }
+    /**
+     * @param {Array<number>} arr
+     * @param {number} offset
+     */
+    static fromArray(
+        arr = [0, 0,],
+        offset = 0,
+    ){
+        const v2 = new V2()
+        v2.arr = new Float32Array(V2.ELEMENTS)
+        v2.arr[0] = arr[offset]
+        v2.arr[1] = arr[offset + 1]
+        return v2
+    }
+    /**
+     * Copies by value
+     * @param {Array<number>} srcArray
+     * @param {number} count
+     * @param {number=} offset
+     */
+    static multipleFromArray(
+        srcArray = [],
+        count = 0,
+        offset = 0,
+    ){
+        const arr = new Array(count)
+        for(let i = 0; i < count; i++){
+            const v2 = new V2()
+            v2.arr = new Float32Array(V2.ELEMENTS)
+            v2.arr[0] = srcArray[offset + 2*i]
+            v2.arr[1] = srcArray[offset + 2*i + 1]
+            arr[i] = v2
+        }
+        return arr
+    }
+    /**
+     * Copies by value
+     * @param {Iterable} iterable
+     * @param {number=} offset
+     */
+    static fromIterable(
+        iterable = [],
+        offset = 0,
+    ){
+        const gen = iterable[Symbol.iterator]()
+        for(let i = 0; i < offset; i++){
+            gen.next()
+        }
+        const v2 = new V2()
+        v2.arr = new Float32Array(V2.ELEMENTS)
+        v2.arr[0] = gen.next().value
+        v2.arr[1] = gen.next().value
+        return v2
+    }
+    /**
+     * Copies by value
+     * @param {Iterable} iterable
+     * @param {number} count
+     * @param {number=} offset
+     */
+    static multipleFromIterable(
+        iterable = [],
+        count = 0,
+        offset = 0,
+    ){
+        const gen = iterable[Symbol.iterator]()
+        for(let i = 0; i < offset; i++){
+            gen.next()
+        }
+        const arr = new Array(count)
+        for(let i = 0; i < count; i++){
+            const v2 = new V2()
+            v2.arr = new Float32Array(V2.ELEMENTS)
+            v2.arr[0] = gen.next().value
+            v2.arr[1] = gen.next().value
+            arr[i] = v2
+        }
+        return arr
     }
     /**
      */

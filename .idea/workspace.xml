@@ -4,17 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Added light mode">
-      <change afterPath="$PROJECT_DIR$/name ideas.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/audio.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/audio/config soundtrack.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/audio/soundtrack.mp3" afterDir="false" />
+    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Added audio">
+      <change afterPath="$PROJECT_DIR$/src/graphics/PointGroup.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LineGroup.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/LineGroup.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/M3.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/M3.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Player.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/V2.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/V2.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controlEditor.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/controlEditor.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/flags.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/flags.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameLoop.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphics/light/drawLighting.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/light/drawLighting.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/start.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/start.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/title.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/title.mjs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,8 +78,8 @@
       <recent name="C:\Users\darcy\Programming\False-Axiom\src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\darcy\Programming\False-Axiom\src\music" />
       <recent name="C:\Users\darcy\Programming\False-Axiom\src\graphics" />
+      <recent name="C:\Users\darcy\Programming\False-Axiom\src\music" />
       <recent name="C:\Users\darcy\Programming\False-Axiom\src\physics" />
     </key>
     <key name="es6.move.members.recent.items">
@@ -152,6 +150,7 @@
       <workItem from="1722201561518" duration="2315000" />
       <workItem from="1722209442787" duration="607000" />
       <workItem from="1722422882646" duration="13385000" />
+      <workItem from="1722735306282" duration="12189000" />
     </task>
     <task id="LOCAL-00001" summary="New ships, players face each other to start, wall hit animation, basic blast">
       <option name="closed" value="true" />
@@ -497,7 +496,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721955131032</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="Added audio">
+      <option name="closed" value="true" />
+      <created>1722735600452</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1722735600452</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -515,7 +522,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="No dashing after taking damage, tweaked knockback." />
     <MESSAGE value="Added particles on damage." />
     <MESSAGE value="Added vibrations on death" />
     <MESSAGE value="Started work on control editor" />
@@ -540,6 +546,7 @@
     <MESSAGE value="Fixed the bugs that came with unrenmaing the file" />
     <MESSAGE value="Fixed the other bug that came with unrenmaing the file" />
     <MESSAGE value="Removed the no-fullscreen flag from the manifest" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed the no-fullscreen flag from the manifest" />
+    <MESSAGE value="Added audio" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added audio" />
   </component>
 </project>
