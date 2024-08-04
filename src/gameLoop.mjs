@@ -27,6 +27,7 @@ let gameLoaded = false
  */
 function setupGame(players){
     setCurrentState(states.GAME)
+    const smallerDimension = Math.min(innerWidth, innerHeight)
 
 
     game = new Game()
@@ -41,17 +42,20 @@ function setupGame(players){
         const scale = V2.fromVals(innerWidth, innerHeight)
         let a, b
         if(player.posB.xy.sub(player.posA).mult(scale).cross(player.posA.xy.mult(scale).mult(-1)) < 0){
-            a = player.posB.xy
-            b = player.posA.xy
+            a = player.posB
+            b = player.posA
         }else{
-            a = player.posA.xy
-            b = player.posB.xy
+            a = player.posA
+            b = player.posB
         }
-        controller.a = a.add(1, -1).mult(1/2, -1/2)
-        controller.b = b.add(1, -1).mult(1/2, -1/2)
+        controller.a = a.xy.add(1, -1).mult(1/2, -1/2)
+        controller.b = b.xy.add(1, -1).mult(1/2, -1/2)
         touchControllerHandler.controllers.add(controller)
 
-        const ship = new Ship(V2.zero(), 0, controller, colors[player.colIndex], shipGeometries[0])
+        const ship = new Ship(
+            a.xy.add(b).div(2).mult(innerWidth, innerHeight).div(smallerDimension),
+            b.xy.sub(a).mult(innerWidth, innerHeight).dir + Math.PI/2, controller, colors[player.colIndex], shipGeometries[0]
+        )
         game.ships.push(ship)
     }
 
