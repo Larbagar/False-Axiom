@@ -12,6 +12,7 @@ import {colors} from "./colors.mjs"
 import {setupGame, startGame} from "./gameLoop.mjs"
 import {currentState, setCurrentState} from "./appState.mjs"
 import {states} from "./states.mjs"
+import {playSoundtrack, soundtracks} from "./audio.mjs"
 
 
 class EditorTouch {
@@ -278,6 +279,7 @@ function blurControlEditor(){
 
 function controlEditor(){
     setCurrentState(states.CONFIG)
+    playSoundtrack(soundtracks.CONFIG)
     setupControlEditorListeners()
     requestAnimationFrame(controlEditorLoop)
 }

@@ -4,6 +4,7 @@ import { textureBindGroupLayout } from "../textureBindGroupLayout.mjs"
 import { device } from "../device.mjs"
 import { canvasFormat } from "../textureHandler.mjs"
 import {cameraBindGroupLayout} from "../cameraBindGroupLayout.mjs"
+import {lightMode} from "../../flags.mjs"
 
 const geometry = new Float32Array([
     -1, -1,
@@ -104,7 +105,7 @@ fn fragment(in: fragIn) -> @location(0) vec4f {
     
     let brightness = max(vec3(0, 0, 0), textureSample(lighting, linearSampler, ((camera*vec3(pos, 1)).xy*vec2f(1, -1) + 1)/2).rgb);
     //return vec4f(step(vec3f(0.9), background*brightness), 1);
-    return vec4f(map(background*brightness), 1);
+    return vec4f(${lightMode ? "1 - " : ""}map(1/background*brightness), 1);
 }
     `
 })

@@ -13,6 +13,7 @@ import {move} from "./game/mover.mjs"
 import {colors} from "./colors.mjs"
 import {currentState, setCurrentState} from "./appState.mjs"
 import {states} from "./states.mjs"
+import {playSoundtrack, soundtracks} from "./audio.mjs"
 
 let game
 let simulation
@@ -66,6 +67,7 @@ function setupGame(players){
 
 function startGame(){
     setCurrentState(states.GAME)
+    playSoundtrack(soundtracks.GAME)
     addEventListener("resize", updateBoundary)
     updateBoundary()
     keyboardControllerHandler.listen()

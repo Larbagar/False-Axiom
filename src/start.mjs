@@ -4,6 +4,7 @@ import {title} from "./title.mjs"
 import {disableTouchBehavior} from "./disableTouchBehavior.mjs"
 import {states} from "./states.mjs"
 import {handleHistory} from "./historyHandler.mjs"
+import {} from "./audio.mjs"
 
 setupTexutres()
 
@@ -11,6 +12,7 @@ disableTouchBehavior()
 
 handleHistory()
 
+// playConfigSoundtrack()
 
 history.replaceState(states.TITLE, "",)
 document.title = "False Axiom - Title"
