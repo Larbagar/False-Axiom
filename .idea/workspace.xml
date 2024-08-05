@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Added light mode">
+    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Players now start at the position of the controller.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gameLoop.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shipGeometries.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/shipGeometries.mjs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -488,7 +490,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721955131032</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="Players now start at the position of the controller.">
+      <option name="closed" value="true" />
+      <created>1722797965373</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1722797965373</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -506,7 +516,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="No dashing after taking damage, tweaked knockback." />
     <MESSAGE value="Added particles on damage." />
     <MESSAGE value="Added vibrations on death" />
     <MESSAGE value="Started work on control editor" />
@@ -531,6 +540,7 @@
     <MESSAGE value="Fixed the bugs that came with unrenmaing the file" />
     <MESSAGE value="Fixed the other bug that came with unrenmaing the file" />
     <MESSAGE value="Removed the no-fullscreen flag from the manifest" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed the no-fullscreen flag from the manifest" />
+    <MESSAGE value="Players now start at the position of the controller." />
+    <option name="LAST_COMMIT_MESSAGE" value="Players now start at the position of the controller." />
   </component>
 </project>

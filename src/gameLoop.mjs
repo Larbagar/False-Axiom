@@ -14,6 +14,8 @@ import {colors} from "./colors.mjs"
 import {currentState, setCurrentState} from "./appState.mjs"
 import {states} from "./states.mjs"
 import {playSoundtrack, soundtracks} from "./audio.mjs"
+import {KeyboardController} from "./KeyboardController.mjs"
+import {Controller} from "./Controller.mjs"
 
 let game
 let simulation
@@ -54,10 +56,20 @@ function setupGame(players){
 
         const ship = new Ship(
             a.xy.add(b).div(2).mult(innerWidth, innerHeight).div(smallerDimension),
-            b.xy.sub(a).mult(innerWidth, innerHeight).dir + Math.PI/2, controller, colors[player.colIndex], shipGeometries[0]
+            b.xy.sub(a).mult(innerWidth, innerHeight).dir + Math.PI/2, controller, colors[player.colIndex], shipGeometries[player.colIndex]
         )
         game.ships.push(ship)
     }
+
+    const kc0 = new KeyboardController()
+    keyboardControllerHandler.add(kc0)
+
+    // const j = 5
+    // // for(let j = 0; j < 10; j++) {
+    //     for (let i = 0; i < 10; i++) {
+    //         game.ships.push(new Ship(V2.fromPolar(j/10*1, 0.1*j + i / 10 * (2 * Math.PI)), 0 / 10 * (2 * Math.PI), kc0, colors[i], shipGeometries[i]))
+    //     }
+    // // }
 
 
     game.touchControllerHandler = touchControllerHandler

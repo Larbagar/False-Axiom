@@ -83,126 +83,144 @@ class TrailDescription {
 
 // Initial velocity of 0.02 and friction of 0.8 looks kinda good
 
+const bat = new ShipGeometry([
+    1, 0,
+    2, 2,
+    -2, 4,
+    -1, 0,
+    -2, -4,
+    2, -2,
+    1, 0,
+], [
+    new TrailDescription(V2.fromVals(-2, 4), [0.0005, 0.00025, 0.002], 0.01),
+    new TrailDescription(V2.fromVals(-2, -4), [0.0005, 0.00025, 0.002], 0.01),
+], 1/2)
+
+const butterfly = new ShipGeometry([
+    2, 0,
+    -1, 3,
+    -2, 1,
+    0, 0,
+    -2, -1,
+    -1, -3,
+    2, 0,
+], [
+    new TrailDescription(V2.fromVals(-1, 3), [0.0005, 0.00025, 0.002], 0.01),
+    new TrailDescription(V2.fromVals(-1, -3), [0.0005, 0.00025, 0.002], 0.01),
+], 1/2)
+
+const doubleTip = new ShipGeometry([
+    0, 0,
+    2, 1,
+    -1, 2,
+    -2, 0,
+    -1, -2,
+    2, -1,
+    0, 0,
+], [
+    new TrailDescription(V2.fromVals(-2, 0), [0.0005, 0.00025, 0.002], 0.01),
+], 1/2)
+
+const bomber = new ShipGeometry([
+    1, 2,
+    -2, 4,
+    -1, 1,
+    -1, -1,
+    -2, -4,
+    1, -2,
+    1, 2,
+], [
+    new TrailDescription(V2.fromVals(-2, 4), [0.0005, 0.00025, 0.002], 0.01),
+    new TrailDescription(V2.fromVals(-2, -4), [0.0005, 0.00025, 0.002], 0.01),
+], 1/2)
+
+const hammer = new ShipGeometry([
+    2, 0,
+    0, 3,
+    -1, 1,
+    -3, 0,
+    -1, -1,
+    0, -3,
+    2, 0,
+], [
+    new TrailDescription(V2.fromVals(-3, 0), [0.0005, 0.00025, 0.002], 0.01),
+], 1/2)
+const triple = new ShipGeometry([
+    3, 0,
+    -1, 3,
+    0, 1,
+    -2, 0,
+    0, -1,
+    -1, -3,
+    3, 0,
+], [
+    new TrailDescription(V2.fromVals(-2, 0), [0.0005, 0.00025, 0.002], 0.01),
+    new TrailDescription(V2.fromVals(-1, 3), [0.0005, 0.00025, 0.002], 0.01),
+    new TrailDescription(V2.fromVals(-1, -3), [0.0005, 0.00025, 0.002], 0.01),
+], 1/2)
+const narrow = new ShipGeometry([
+    2, 0,
+    1, 1,
+    -2, 2,
+    0, 0,
+    -2, -2,
+    1, -1,
+    2, 0,
+], [
+    new TrailDescription(V2.fromVals(-2, 2), [0.0005, 0.00025, 0.002], 0.01),
+    new TrailDescription(V2.fromVals(-2, -2), [0.0005, 0.00025, 0.002], 0.01),
+], 1/2)
+
+const archLinux = new ShipGeometry([
+    3, 0,
+    -2, 3,
+    -1, 1,
+    1, 0,
+    -1, -1,
+    -2, -3,
+    3, 0,
+], [
+    new TrailDescription(V2.fromVals(-1, 1), [0.0005, 0.00025, 0.002], 0.01),
+    new TrailDescription(V2.fromVals(-1, -1), [0.0005, 0.00025, 0.002], 0.01),
+], 1/2)
+
+const original = new ShipGeometry([
+    3, 0,
+    -1, 3,
+    -3, 2,
+    -1, 0,
+    -3, -2,
+    -1, -3,
+    3, 0,
+], [
+    new TrailDescription(V2.fromVals(-3, 2), [0.0005, 0.00025, 0.002], 0.01),
+    new TrailDescription(V2.fromVals(-3, -2), [0.0005, 0.00025, 0.002], 0.01),
+], 1/2)
+
+const jules = new ShipGeometry([
+    -1, 0,
+    -2, 3,
+    0, 1,
+    2, 0,
+    0, -1,
+    -2, -3,
+    -1, 0,
+], [
+    new TrailDescription(V2.fromVals(-2, 3), [0.0005, 0.00025, 0.002], 0.01),
+    new TrailDescription(V2.fromVals(-2, -3), [0.0005, 0.00025, 0.002], 0.01),
+], 1/2)
+
 const shipGeometries = [
-    new ShipGeometry([
-        3, 0,
-        -1, 3,
-        -3, 2,
-        -1, 0,
-        -3, -2,
-        -1, -3,
-        3, 0,
-    ], [
-        new TrailDescription(V2.fromVals(-3, 2), [0.0005, 0.00025, 0.002], 0.01),
-        new TrailDescription(V2.fromVals(-3, -2), [0.0005, 0.00025, 0.002], 0.01),
-    ], 1/2),
-    new ShipGeometry([
-        3, 0,
-        -2, 3,
-        -1, 1,
-        1, 0,
-        -1, -1,
-        -2, -3,
-        3, 0,
-    ], [
-        new TrailDescription(V2.fromVals(-1, 1), [0.0005, 0.00025, 0.002], 0.01),
-        new TrailDescription(V2.fromVals(-1, -1), [0.0005, 0.00025, 0.002], 0.01),
-    ], 1/2),
-    new ShipGeometry([
-        2, 0,
-        -1, 3,
-        -2, 1,
-        0, 0,
-        -2, -1,
-        -1, -3,
-        2, 0,
-    ], [
-        new TrailDescription(V2.fromVals(-1, 3), [0.0005, 0.00025, 0.002], 0.01),
-        new TrailDescription(V2.fromVals(-1, -3), [0.0005, 0.00025, 0.002], 0.01),
-    ], 1/2),
-    new ShipGeometry([
-        1, 2,
-        -2, 4,
-        -1, 1,
-        -1, -1,
-        -2, -4,
-        1, -2,
-        1, 2,
-    ], [
-        new TrailDescription(V2.fromVals(-2, 4), [0.0005, 0.00025, 0.002], 0.01),
-        new TrailDescription(V2.fromVals(-2, -4), [0.0005, 0.00025, 0.002], 0.01),
-    ], 1/2),
-    new ShipGeometry([
-        1, 0,
-        2, 2,
-        -2, 4,
-        -1, 0,
-        -2, -4,
-        2, -2,
-        1, 0,
-    ], [
-        new TrailDescription(V2.fromVals(-2, 4), [0.0005, 0.00025, 0.002], 0.01),
-        new TrailDescription(V2.fromVals(-2, -4), [0.0005, 0.00025, 0.002], 0.01),
-    ], 1/2),
-    new ShipGeometry([
-        3, 0,
-        -1, 3,
-        0, 1,
-        -2, 0,
-        0, -1,
-        -1, -3,
-        3, 0,
-    ], [
-        new TrailDescription(V2.fromVals(-2, 0), [0.0005, 0.00025, 0.002], 0.01),
-        new TrailDescription(V2.fromVals(-1, 3), [0.0005, 0.00025, 0.002], 0.01),
-        new TrailDescription(V2.fromVals(-1, -3), [0.0005, 0.00025, 0.002], 0.01),
-    ], 1/2),
-    new ShipGeometry([
-        2, 0,
-        1, 1,
-        -2, 2,
-        0, 0,
-        -2, -2,
-        1, -1,
-        2, 0,
-    ], [
-        new TrailDescription(V2.fromVals(-2, 2), [0.0005, 0.00025, 0.002], 0.01),
-        new TrailDescription(V2.fromVals(-2, -2), [0.0005, 0.00025, 0.002], 0.01),
-    ], 1/2),
-    new ShipGeometry([
-        0, 0,
-        2, 1,
-        -1, 2,
-        -2, 0,
-        -1, -2,
-        2, -1,
-        0, 0,
-    ], [
-        new TrailDescription(V2.fromVals(-2, 0), [0.0005, 0.00025, 0.002], 0.01),
-    ], 1/2),
-    new ShipGeometry([
-        2, 0,
-        0, 3,
-        -1, 1,
-        -3, 0,
-        -1, -1,
-        0, -3,
-        2, 0,
-    ], [
-        new TrailDescription(V2.fromVals(-3, 0), [0.0005, 0.00025, 0.002], 0.01),
-    ], 1/2),
-    new ShipGeometry([
-        -1, 0,
-        -2, 3,
-        0, 1,
-        2, 0,
-        0, -1,
-        -2, -3,
-        -1, 0,
-    ], [
-        new TrailDescription(V2.fromVals(-2, 3), [0.0005, 0.00025, 0.002], 0.01),
-        new TrailDescription(V2.fromVals(-2, -3), [0.0005, 0.00025, 0.002], 0.01),
-    ], 1/2),
+    doubleTip,
+    butterfly,
+    jules,
+    triple,
+    bomber,
+    narrow,
+    bat,
+    archLinux,
+    original,
+    hammer,
 ]
 
 export {shipGeometries}
