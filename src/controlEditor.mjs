@@ -75,9 +75,12 @@ const players = new Set()
 const camera = new Camera()
 
 
+let uselessTouches = 0
+const uselessTouchThresh = 3
+let createHintTime = 3000
+let createHintTimer = createHintTime
+
 let maxSimTime = 500
-let timer = 0
-let animationTime = 3000
 let oldTime
 function controlEditorLoop(t){
     if(!oldTime || t - oldTime > maxSimTime){
@@ -86,10 +89,6 @@ function controlEditorLoop(t){
     const dt = t - oldTime
     oldTime = t
 
-    timer += dt
-    if(timer > 0 && !touches.size){
-        timer %= animationTime
-    }
 
     const encoder = device.createCommandEncoder()
 
@@ -109,7 +108,14 @@ function controlEditorLoop(t){
 
     const smallerDimension = Math.min(innerWidth, innerHeight)
 
-    {
+    if(uselessTouches >= uselessTouchThresh || createHintTimer < createHintTime){
+        createHintTimer += dt
+        if(!touches.size && uselessTouches >= uselessTouchThresh){
+            createHintTimer %= createHintTime
+        }else{
+            createHintTimer = Math.min(createHintTime, createHintTimer)
+        }
+
         const start = 2/3 * createRange / 2
         const end = 0.6 * innerWidth / smallerDimension
         let x
@@ -117,7 +123,7 @@ function controlEditorLoop(t){
         let size
 
         const rotSpeed = 3 / Suggestion.LINE_COUNT
-        const rot = rotSpeed * 2 * Math.PI * timer / animationTime
+        const rot = rotSpeed * 2 * Math.PI * createHintTimer / createHintTime
 
 
         const createTime = 1
@@ -127,33 +133,33 @@ function controlEditorLoop(t){
         const releaseTime = 1
         const idleTime = 2
         const totTime = createTime + hold1Time + moveTime + hold2Time + releaseTime + idleTime
-        if(timer / animationTime < (
+        if(createHintTimer / createHintTime < (
             createTime
         ) / totTime){
-            const progress = (timer / animationTime) / (createTime / totTime)
+            const progress = (createHintTimer / createHintTime) / (createTime / totTime)
             x = start
             size = 0.1*(1 - (1 - progress)**2)
-        }else if(timer / animationTime < (
+        }else if(createHintTimer / createHintTime < (
             createTime + hold1Time
         ) / totTime){
             x = start
             size = 0.1
-        }else if(timer / animationTime < (
+        }else if(createHintTimer / createHintTime < (
             createTime + hold1Time + moveTime
         ) / totTime){
-            const progress = (timer / animationTime - (createTime + hold1Time)/totTime) / (moveTime / totTime)
+            const progress = (createHintTimer / createHintTime - (createTime + hold1Time)/totTime) / (moveTime / totTime)
             const weight = 3*progress**2 - 2*progress**3
             x = start*(1 - weight) + end*weight
             size = 0.1
-        }else if(timer / animationTime < (
+        }else if(createHintTimer / createHintTime < (
             createTime + hold1Time + moveTime + hold2Time
         ) / totTime){
             x = end
             size = 0.1
-        }else if(timer / animationTime < (
+        }else if(createHintTimer / createHintTime < (
             createTime + hold1Time + moveTime + hold2Time + releaseTime
         ) / totTime){
-            const progress = (timer / animationTime - (createTime + hold1Time + moveTime + hold2Time)/totTime) / (releaseTime / totTime)
+            const progress = (createHintTimer / createHintTime - (createTime + hold1Time + moveTime + hold2Time)/totTime) / (releaseTime / totTime)
             x = end
             size = 0.1*(1 - (progress)**2)
         }else{
@@ -345,22 +351,30 @@ function touchEnd(e) {
         }else if(touch.player && touch.side > 0){
             touch.player.rights.delete(touch)
         }
-        if(touch.usage == EditorTouch.CLICK && touch.player){
-            if(touch.side < 0){
-                touch.player.setColIndex((touch.player.colIndex + colors.length - 1) % colors.length)
-            }else if(touch.side > 0){
-                touch.player.setColIndex((touch.player.colIndex + 1) % colors.length)
+        if(touch.usage == EditorTouch.CLICK){
+            if(touch.player) {
+                if(touch.side < 0) {
+                    touch.player.setColIndex((touch.player.colIndex + colors.length - 1) % colors.length)
+                } else if (touch.side > 0) {
+                    touch.player.setColIndex((touch.player.colIndex + 1) % colors.length)
+                }
+            }else{
+                uselessTouches ++
             }
         }
         if(touch.usage == EditorTouch.DRAG){
             if(touch.side < 0 && touch.player.dragA == touch){
                 if(!touch.player.dragB && touch.player.posB.xy.sub(touch.player.posA).mult(V2.fromVals(innerWidth, innerHeight)).mag/smallerDimension < deleteRange){
                     players.delete(touch.player)
+                }else if(touch.player.dragB == null){
+                    uselessTouches = 0
                 }
                 touch.player.dragA = null
             }else if(touch.side > 0 && touch.player.dragB == touch){
                 if(!touch.player.dragA && touch.player.posB.xy.sub(touch.player.posA).mult(V2.fromVals(innerWidth, innerHeight)).mag/smallerDimension < deleteRange){
                     players.delete(touch.player)
+                }else if(touch.player.dragA == null){
+                    uselessTouches = 0
                 }
                 touch.player.dragB = null
             }
@@ -368,19 +382,20 @@ function touchEnd(e) {
     }
 }
 function touchCancel(e) {
-    for(const removedTouch of e.changedTouches){
-        const touch = touches.get(removedTouch.identifier)
-        if(!touch){
-            continue
-        }
-        touch.pos.set(V2.fromVals(2*removedTouch.clientX/innerWidth - 1, 1 - 2*removedTouch.clientY/innerHeight))
-        touches.delete(removedTouch.identifier)
-        if(touch.player && touch.side < 0){
-            touch.player.lefts.delete(touch)
-        }else if(touch.player && touch.side > 0){
-            touch.player.rights.delete(touch)
-        }
-    }
+    // #TODO
+    // for(const removedTouch of e.changedTouches){
+    //     const touch = touches.get(removedTouch.identifier)
+    //     if(!touch){
+    //         continue
+    //     }
+    //     touch.pos.set(V2.fromVals(2*removedTouch.clientX/innerWidth - 1, 1 - 2*removedTouch.clientY/innerHeight))
+    //     touches.delete(removedTouch.identifier)
+    //     if(touch.player && touch.side < 0){
+    //         touch.player.lefts.delete(touch)
+    //     }else if(touch.player && touch.side > 0){
+    //         touch.player.rights.delete(touch)
+    //     }
+    // }
 }
 function blurControlEditor(){
     for(const player of players){
