@@ -85,7 +85,7 @@ export default class M3 {
     /**
      * @param {V2} v2
      */
-    static translation(v2 = V2.zero()) {
+    static translate(v2 = V2.zero()) {
         const m3 = new M3()
         m3.arr = new Float32Array(M3.ELEMENTS)
         m3.arr[0] = 1
@@ -99,7 +99,7 @@ export default class M3 {
      * @param {number} x
      * @param {number} y
      */
-    static translationV(x = 0, y = 0) {
+    static translateV(x = 0, y = 0) {
         const m3 = new M3()
         m3.arr = new Float32Array(M3.ELEMENTS)
         m3.arr[0] = 1
@@ -148,7 +148,7 @@ export default class M3 {
     /**
      * @param {number} angle
      */
-    static rotation(angle = 0) {
+    static rotate(angle = 0) {
         const s = Math.sin(angle)
         const c = Math.cos(angle)
         const m3 = new M3()
@@ -311,6 +311,24 @@ export default class M3 {
         const m3 = new M3()
         m3.arr = new Float32Array(this.arr)
         return m3
+    }
+
+    /**
+     */
+    identity(){
+        this.arr[0] = 1
+        this.arr[1] = 0
+        this.arr[2] = 0
+
+        this.arr[4] = 0
+        this.arr[5] = 1
+        this.arr[6] = 0
+
+        this.arr[8] = 0
+        this.arr[9] = 0
+        this.arr[10] = 1
+
+        return this
     }
 
     //#region adding and subtracting

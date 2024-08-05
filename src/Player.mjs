@@ -1,4 +1,4 @@
-import {LineGroup} from "./LineGroup.mjs"
+import {LineGroup} from "./graphics/LineGroup.mjs"
 import V2 from "./V2.mjs"
 import {colors} from "./colors.mjs"
 

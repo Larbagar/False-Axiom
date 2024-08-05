@@ -1,9 +1,10 @@
-import {device} from "./graphics/device.mjs"
-import {lightLine} from "./graphics/light/lightLine.mjs"
-import {identityBindGroup, transformMatrixBindGroupLayout} from "./graphics/transformMatrixBindGroupLayout.mjs"
-import M3 from "./M3.mjs"
+import {device} from "./device.mjs"
+import {lightLine} from "./light/lightLine.mjs"
+import {identityBindGroup, transformMatrixBindGroupLayout} from "./transformMatrixBindGroupLayout.mjs"
+import M3 from "../M3.mjs"
+import {lightPoint} from "./light/lightPoint.mjs"
 
-class LineGroup {
+class PointGroup {
     /** @type {number} */
     count
     /** @type {Float32Array} */
@@ -30,7 +31,7 @@ class LineGroup {
 
     constructor(count, useTransform = false) {
         this.count = count
-        this.pos = new Float32Array(4*this.count)
+        this.pos = new Float32Array(2*this.count)
         this.posBuffer = device.createBuffer({
             label: "line group position buffer",
             size: this.pos.byteLength,
@@ -87,8 +88,8 @@ class LineGroup {
             this.updateTransformBuffer()
             this.transformChanged = false
         }
-        lightLine(encoder, lightTex, cameraBindGroup, this.transformBindGroup, this.posBuffer, this.colBuffer, minBrightnessBindGroup, this.count)
+        lightPoint(encoder, lightTex, cameraBindGroup, this.transformBindGroup, this.posBuffer, this.colBuffer, minBrightnessBindGroup, this.count)
     }
 }
 
-export {LineGroup}
+export {PointGroup}
