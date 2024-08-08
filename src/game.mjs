@@ -11,11 +11,12 @@ import {UpdateEvent} from "./game/UpdateEvent.mjs"
 import {Game} from "./game/Game.mjs"
 import {move} from "./game/mover.mjs"
 import {colors} from "./colors.mjs"
-import {currentState, setCurrentState} from "./appState.mjs"
+import {setCurrentState} from "./appState.mjs"
 import {states} from "./states.mjs"
 import {playSoundtrack, soundtracks} from "./audio.mjs"
 import {KeyboardController} from "./KeyboardController.mjs"
-import {Controller} from "./Controller.mjs"
+import {setLoopFn} from "./loop.mjs"
+import {Gate, gateTypes} from "./Gate.mjs"
 
 let game
 let simulation
@@ -28,7 +29,6 @@ let gameLoaded = false
  * @param {Set<Player>} players
  */
 function setupGame(players){
-    setCurrentState(states.GAME)
     const smallerDimension = Math.min(innerWidth, innerHeight)
 
 
@@ -64,6 +64,10 @@ function setupGame(players){
     const kc0 = new KeyboardController()
     keyboardControllerHandler.add(kc0)
 
+    // game.gates.add(new Gate(V2.new(-0.2, 0), V2.new(0.2, 0.05), [...game.ships][0], gateTypes.open))
+    // game.gates.add(new Gate(V2.new(-0.3, 0.3), V2.new(-0.25, 0.7), [...game.ships][0], gateTypes.smash))
+    // game.gates.add(new Gate(V2.new(-0.5, 0.2), V2.new(-0.9, 0.15), [...game.ships][0], gateTypes.bounce))
+
     // const j = 5
     // // for(let j = 0; j < 10; j++) {
     //     for (let i = 0; i < 10; i++) {
@@ -85,14 +89,13 @@ function startGame(){
     setCurrentState(states.GAME)
     playSoundtrack(soundtracks.GAME)
     addEventListener("resize", updateBoundary)
+    setLoopFn(gameLoopFn)
     updateBoundary()
     keyboardControllerHandler.listen()
     touchControllerHandler.listen()
-    requestAnimationFrame(loop)
 }
 
 function removeGameEventListeners(){
-    oldTime = undefined
     removeEventListener("resize", updateBoundary)
     keyboardControllerHandler.stopListening()
 }
@@ -133,40 +136,58 @@ function updateBoundary(){
     game.walls.add(leftWall)
 }
 
+const maxSimTime = 500
+let timeToExit = 0
+let singlePlayerMode
+function gameLoopFn(dt){
+    if(dt < maxSimTime){
+        const targetTime = simulation.time + dt*gameSpeed
+        simulation.simulate(targetTime)
+        move(game, targetTime)
+        simulation.time = targetTime
+
+        if(game.ships.length <= 1 - singlePlayerMode){
+            timeToExit -= dt
+        }
+        if(timeToExit <= 0){
+            history.go(-1)
+            setCurrentState(states.CONFIG)
+        }
+    }
+
+    draw(game)
+}
 
 
 window.gameSpeed = 1
 
-let oldTime
-const maxSimTime = 500
-let timeToExit = 0
-let singlePlayerMode
-function loop(t) {
-    if(!oldTime || t - oldTime > maxSimTime){
-        oldTime = t
-    }
-    const dt = t - oldTime
-    oldTime = t
-
-    const targetTime = simulation.time + dt*gameSpeed
-    simulation.simulate(targetTime)
-    move(game, targetTime)
-    simulation.time = targetTime
-
-
-    draw(game)
-
-    if(game.ships.length <= 1 - singlePlayerMode){
-        timeToExit -= dt
-    }
-    if(timeToExit <= 0){
-        history.go(-1)
-        setCurrentState(states.CONFIG)
-    }
-
-    if(currentState == states.GAME) {
-        requestAnimationFrame(loop)
-    }
-}
+// let oldTime
+// function loop(t) {
+//     if(!oldTime || t - oldTime > maxSimTime){
+//         oldTime = t
+//     }
+//     const dt = t - oldTime
+//     oldTime = t
+//
+//     const targetTime = simulation.time + dt*gameSpeed
+//     simulation.simulate(targetTime)
+//     move(game, targetTime)
+//     simulation.time = targetTime
+//
+//
+//     draw(game)
+//
+//     if(game.ships.length <= 1 - singlePlayerMode){
+//         timeToExit -= dt
+//     }
+//     if(timeToExit <= 0){
+//         history.go(-1)
+//         setCurrentState(states.CONFIG)
+//     }
+//
+//     if(currentState == states.GAME) {
+//         requestAnimationFrame(loop)
+//     }
+// }
 
 export {setupGame, startGame, removeGameEventListeners, gameLoaded}

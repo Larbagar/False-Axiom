@@ -11,6 +11,7 @@ import {controlEditor} from "./controlEditor.mjs"
 import {noFullscreen} from "./flags.mjs"
 import {states} from "./states.mjs"
 import {currentState, setCurrentState} from "./appState.mjs"
+import {setLoopFn} from "./loop.mjs"
 
 const lightGroup = new LineGroup(2, true)
 lightGroup.pos.set([
@@ -30,7 +31,7 @@ lightGroup.updateTransformBuffer()
 
 const camera = new Camera()
 
-function titleLoop(){
+function titleLoopFn(){
     const encoder = device.createCommandEncoder()
 
     const canvasView = context.getCurrentTexture().createView()
@@ -47,10 +48,6 @@ function titleLoop(){
 
     const commandBuffer = encoder.finish()
     device.queue.submit([commandBuffer])
-
-    if(currentState == states.TITLE) {
-        requestAnimationFrame(titleLoop)
-    }
 }
 
 function touchStart(){
@@ -77,8 +74,8 @@ function removeTitleListeners(){
 
 function title(){
     setCurrentState(states.TITLE)
+    setLoopFn(titleLoopFn)
     addTitleListeners()
-    requestAnimationFrame(titleLoop)
 }
 
 export {title, removeTitleListeners}

@@ -1,6 +1,7 @@
 import {Event} from "./Event.mjs"
 import {move} from "./mover.mjs"
 import {recalculateShipEvents} from "./eventHelpers.mjs"
+import {ParticleCluster} from "../ParticleCluster.mjs"
 
 class BlastCollision extends Event {
     /** @type {Simulation} */
@@ -35,6 +36,16 @@ class BlastCollision extends Event {
         this.ship.hp--
         this.ship.hpDisplayProgress = 0
         this.blast.shipsHit.add(this.ship)
+        this.game.particleClusters.add(new ParticleCluster({
+            count: 10,
+            col: this.ship.col.map(x => 0.2*x),
+            pos: this.ship.pos,
+            outVel: this.ship.blastKnockback*0.3,
+            fadeSpeed: 0.001,
+            avgAngle: this.blast.vel.dir,
+            friction: 0.998,
+            angSpread: Math.PI/2
+        }))
         recalculateShipEvents(this.sim, this.game, this.ship)
     }
 }

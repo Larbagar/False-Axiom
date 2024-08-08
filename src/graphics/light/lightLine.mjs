@@ -67,7 +67,7 @@ fn fragment(in: FragIn) -> @location(0) vec4f {
     let y = in.pos.y;
     let brightness = (atan((in.len - x) / y) + atan(x / y))/y - in.minBrightnessCoeff;
     ${profileView ? "" : "//"}return vec4f(brightness*max(max(in.col.r, in.col.g), in.col.b), step(max(0, brightness), 0), 1, 1);
-    ${profileView ? "//" : ""}return vec4f(brightness*in.col, 1);
+    ${profileView ? "//" : ""}return vec4f(max(0, brightness)*in.col, 1);
 }
 
   `,

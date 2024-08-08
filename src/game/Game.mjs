@@ -7,6 +7,8 @@ class Game {
     walls = new Set()
     /** @type {Set<Blast>} */
     blasts = new Set()
+    /** @type {Set<Gate>} */
+    gates = new Set()
 
     /** @type {Set<RubbleCluster>} */
     rubbleClusters = new Set()

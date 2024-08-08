@@ -2,7 +2,7 @@ import {states} from "./states.mjs"
 import {currentState, setCurrentState} from "./appState.mjs"
 import {removeTitleListeners, title} from "./title.mjs"
 import {blurControlEditor, controlEditor, removeControlEditorListeners} from "./controlEditor.mjs"
-import {gameLoaded, removeGameEventListeners, startGame} from "./gameLoop.mjs"
+import {gameLoaded, removeGameEventListeners, startGame} from "./game.mjs"
 
 function onPopState(e){
     switch (currentState) {

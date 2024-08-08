@@ -103,9 +103,14 @@ fn fragment(in: fragIn) -> @location(0) vec4f {
     let background = 0.5 + max(hex, cen);
     
     
-    let brightness = max(vec3(0, 0, 0), textureSample(lighting, linearSampler, ((camera*vec3(pos, 1)).xy*vec2f(1, -1) + 1)/2).rgb);
+    let brightness = 1/background*max(vec3(0, 0, 0), textureSample(lighting, linearSampler, ((camera*vec3(pos, 1)).xy*vec2f(1, -1) + 1)/2).rgb);
     //return vec4f(step(vec3f(0.9), background*brightness), 1);
-    return vec4f(${lightMode ? "1 - " : ""}map(1/background*brightness), 1);
+    
+    return vec4f(${
+        lightMode ?
+        "1 - map(vec3(brightness.g + brightness.b, brightness.b + brightness.r, brightness.r + brightness.g)/2)"
+        : "map(brightness)"
+    }, 1);
 }
     `
 })

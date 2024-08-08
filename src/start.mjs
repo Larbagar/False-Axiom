@@ -1,10 +1,9 @@
 import {setupTexutres} from "./graphics/textureHandler.mjs"
-import {controlEditor} from "./controlEditor.mjs"
 import {title} from "./title.mjs"
 import {disableTouchBehavior} from "./disableTouchBehavior.mjs"
 import {states} from "./states.mjs"
 import {handleHistory} from "./historyHandler.mjs"
-import {} from "./audio.mjs"
+import {loop} from "./loop.mjs"
 
 setupTexutres()
 
@@ -32,3 +31,5 @@ navigator.serviceWorker.getRegistrations().then(registrations => {
 })
 
 title()
+
+loop()

@@ -7,10 +7,6 @@ export default class V2 {
     /** @type {Float32Array} */
     arr
 
-    /**
-     */
-    constructor() {}
-
     static ELEMENTS = 2
     static BYTES_PER_ELEMENT = Float32Array.BYTES_PER_ELEMENT
     static BYTE_LENGTH = V2.ELEMENTS*V2.BYTES_PER_ELEMENT
@@ -57,6 +53,18 @@ export default class V2 {
         v2.arr = new Float32Array(V2.ELEMENTS)
         v2.arr[0] = r*Math.cos(angle)
         v2.arr[1] = r*Math.sin(angle)
+        return v2
+    }
+    /**
+     * @param {V2} a
+     * @param {V2} b
+     * @param {number} t
+     */
+    static lerp(a, b, t){
+        const v2 = new V2()
+        v2.arr = new Float32Array(V2.ELEMENTS)
+        v2.arr[0] = a.arr[0] * (1 - t) + b.arr[0] * t
+        v2.arr[1] = a.arr[1] * (1 - t) + b.arr[1] * t
         return v2
     }
     /**

@@ -9,12 +9,13 @@ import {resetDistortion} from "./graphics/light/resetDistortion.mjs"
 import {drawLighting} from "./graphics/light/drawLighting.mjs"
 import {minBrightnessBindGroup} from "./minBrightness.mjs"
 import {colors} from "./colors.mjs"
-import {setupGame, startGame} from "./gameLoop.mjs"
+import {setupGame, startGame} from "./game.mjs"
 import {currentState, setCurrentState} from "./appState.mjs"
 import {states} from "./states.mjs"
 import {playSoundtrack, soundtracks} from "./audio.mjs"
 import {LineGroup} from "./graphics/LineGroup.mjs"
 import {PointGroup} from "./graphics/PointGroup.mjs"
+import {setLoopFn} from "./loop.mjs"
 
 const newPlayerIcon = new LineGroup(2, true)
 newPlayerIcon.col.set(new Array(2).fill([0.01, 0.01, 0.01]).flat())
@@ -71,7 +72,6 @@ const players = new Set()
 
 
 
-
 const camera = new Camera()
 
 
@@ -80,16 +80,7 @@ const uselessTouchThresh = 3
 let createHintTime = 3000
 let createHintTimer = createHintTime
 
-let maxSimTime = 500
-let oldTime
-function controlEditorLoop(t){
-    if(!oldTime || t - oldTime > maxSimTime){
-        oldTime = t
-    }
-    const dt = t - oldTime
-    oldTime = t
-
-
+function controlEditorLoopFn(dt){
     const encoder = device.createCommandEncoder()
 
     const canvasView = context.getCurrentTexture().createView()
@@ -98,12 +89,8 @@ function controlEditorLoop(t){
 
     clear(encoder, lightTex.view, [0, 0, 0, 1])
 
-    let ready = true
     for(const player of players){
         player.draw(encoder, lightTex.view, camera.bindGroup, minBrightnessBindGroup)
-        if(!player.lefts.size || !player.rights.size){
-            ready = false
-        }
     }
 
     const smallerDimension = Math.min(innerWidth, innerHeight)
@@ -183,18 +170,6 @@ function controlEditorLoop(t){
 
     const commandBuffer = encoder.finish()
     device.queue.submit([commandBuffer])
-
-
-    if(ready && players.size >= 1) {
-        removeControlEditorListeners()
-        history.pushState(states.GAME, "",)
-        document.title = "False Axiom - Play"
-        setupGame(players)
-        startGame()
-    }
-    if(currentState == states.CONFIG){
-        requestAnimationFrame(controlEditorLoop)
-    }
 }
 
 
@@ -326,6 +301,22 @@ function touchStart(e){
                 }else if(newTouch.side > 0){
                     newTouch.player.rights.add(newTouch)
                 }
+
+                let ready = true
+                for(const player of players){
+                    if(!player.lefts.size || !player.rights.size){
+                        ready = false
+                    }
+                }
+
+                if(ready && players.size >= 1){
+
+                    removeControlEditorListeners()
+                    history.pushState(states.GAME, "",)
+                    document.title = "False Axiom - Play"
+                    setupGame(players)
+                    startGame()
+                }
             }
         }
 
@@ -409,9 +400,10 @@ function blurControlEditor(){
 
 function controlEditor(){
     setCurrentState(states.CONFIG)
+    setLoopFn(controlEditorLoopFn)
     playSoundtrack(soundtracks.CONFIG)
     setupControlEditorListeners()
-    requestAnimationFrame(controlEditorLoop)
+    // requestAnimationFrame(controlEditorLoopFn)
 }
 
 export {controlEditor, removeControlEditorListeners, blurControlEditor}

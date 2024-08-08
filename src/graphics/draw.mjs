@@ -8,12 +8,15 @@ import {resetDistortion} from "./light/resetDistortion.mjs"
 import {cameraBindGroupLayout} from "./cameraBindGroupLayout.mjs"
 import {minBrightnessBindGroup} from "../minBrightness.mjs"
 import {Camera} from "../Camera.mjs"
+import {PointGroup} from "./PointGroup.mjs"
+import V2 from "../V2.mjs"
 
 
 
 
 const camera = new Camera()
 
+const newPointGroup = new PointGroup(2)
 /**
  * @param {Game} game
  */
@@ -41,6 +44,9 @@ function draw(game){
     }
     for(const explosion of game.particleClusters){
         explosion.draw(encoder, lightTex.view, camera.bindGroup, minBrightnessBindGroup)
+    }
+    for(const gate of game.gates){
+        gate.draw(encoder, lightTex.view, camera.bindGroup, minBrightnessBindGroup)
     }
 
     resetDistortion(encoder, distortionTex.view, camera.bindGroup)

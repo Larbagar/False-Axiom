@@ -79,7 +79,7 @@ class ShipCollision extends Event{
                 count: 10,
                 col: this.shipB.col.map(x => 0.2*x),
                 pos: this.shipB.pos,
-                outVel: this.shipB.wallKnockback*0.3,
+                outVel: this.shipB.shipKnockback*0.3,
                 fadeSpeed: 0.001,
                 avgAngle: diff.dir + Math.PI,
                 friction: 0.998,

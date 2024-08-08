@@ -2,6 +2,7 @@ import {device} from "./graphics/device.mjs"
 import {lightPoint} from "./graphics/light/lightPoint.mjs"
 import {identityBindGroup} from "./graphics/transformMatrixBindGroupLayout.mjs"
 import V2 from "./V2.mjs"
+import {PointGroup} from "./graphics/PointGroup.mjs"
 
 class ParticleCluster {
     /** @type {number} */
@@ -12,18 +13,15 @@ class ParticleCluster {
     fadeSpeed
     /** @type {Array<number>} */
     col
+    /** @type {PointGroup} */
+    pointGroup
     /** @type {Float32Array} */
     velArr
     /** @type {Float32Array} */
     colArr
-    /** @type {GPUBuffer} */
-    posBuffer
-    /** @type {GPUBuffer} */
-    colBuffer
     /** @type {number} */
     friction
 
-    changed = true
     /**
      * @param {Object} descriptor
      * @param {number} descriptor.count
@@ -52,9 +50,10 @@ class ParticleCluster {
         this.col = col
         this.friction = friction
         this.fadeSpeed = col.map(x => x*fadeSpeed/this.count)
-        this.posArr = new Float32Array(2*count)
+        this.pointGroup = new PointGroup(count)
+        this.posArr = this.pointGroup.pos
         this.velArr = new Float32Array(2*count)
-        this.colArr = new Float32Array(3*count)
+        this.colArr = this.pointGroup.col
         let tot = 0
         for(let i = 0; i < count; i++){
             const brightness = 2*Math.acos(1 - 2*Math.random())/Math.PI
@@ -75,16 +74,8 @@ class ParticleCluster {
             this.colArr[i] /= tot
         }
 
-        this.posBuffer = device.createBuffer({
-            label: "Explosion position buffer",
-            size: this.posArr.byteLength,
-            usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST,
-        })
-        this.colBuffer = device.createBuffer({
-            label: "Explosion color buffer",
-            size: this.colArr.byteLength,
-            usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST,
-        })
+        this.pointGroup.posChanged = true
+        this.pointGroup.colChanged = true
     }
 
     /**
@@ -109,6 +100,8 @@ class ParticleCluster {
             this.colArr[3*i + 1] -= this.fadeSpeed[1] * dt
             this.colArr[3*i + 2] -= this.fadeSpeed[2] * dt
         }
+        this.pointGroup.posChanged = true
+        this.pointGroup.colChanged = true
     }
 
     /**
@@ -118,11 +111,7 @@ class ParticleCluster {
      * @param {GPUBindGroup} minBrightnessBindGroup
      */
     draw(encoder, lightTex, cameraBindGroup, minBrightnessBindGroup){
-        if(this.changed){
-            device.queue.writeBuffer(this.posBuffer, 0, this.posArr)
-            device.queue.writeBuffer(this.colBuffer, 0, this.colArr)
-        }
-        lightPoint(encoder, lightTex, cameraBindGroup, identityBindGroup, this.posBuffer, this.colBuffer, minBrightnessBindGroup, this.count)
+        this.pointGroup.draw(encoder, lightTex, cameraBindGroup, minBrightnessBindGroup)
     }
 }
 
