@@ -4,24 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Added light mode">
-      <change afterPath="$PROJECT_DIR$/src/Gate.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/loop.mjs" afterDir="false" />
+    <list default="true" id="76051ecf-eea2-4f77-90ab-5438d007b537" name="Changes" comment="Various changes, started working on gates">
+      <change afterPath="$PROJECT_DIR$/src/config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ParticleCluster.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/ParticleCluster.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/V2.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/V2.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controlEditor.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/controlEditor.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Game.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Game.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/blastCollision.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/blastCollision.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/shipCollision.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/shipCollision.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameLoop.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/game.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphics/draw.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/draw.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphics/light/drawLighting.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/light/drawLighting.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphics/light/lightLine.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/light/lightLine.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphics/textureHandler.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/textureHandler.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/historyHandler.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/historyHandler.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/start.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/start.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/title.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/src/title.mjs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +56,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/darcy/Programming/particle-life",
+    "last_opened_file_path": "C:/Users/darcy/Programming/False-Axiom",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -80,6 +65,11 @@
     "settings.editor.selected.configurable": "Errors",
     "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2024.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "JavaScript"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
@@ -164,6 +154,7 @@
       <workItem from="1722905323667" duration="8301000" />
       <workItem from="1722995841049" duration="5108000" />
       <workItem from="1723003890260" duration="7846000" />
+      <workItem from="1723144392138" duration="11938000" />
     </task>
     <task id="LOCAL-00001" summary="New ships, players face each other to start, wall hit animation, basic blast">
       <option name="closed" value="true" />
@@ -509,7 +500,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721955131032</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="Various changes, started working on gates">
+      <option name="closed" value="true" />
+      <created>1723144695291</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1723144695291</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -527,7 +526,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="No dashing after taking damage, tweaked knockback." />
     <MESSAGE value="Added particles on damage." />
     <MESSAGE value="Added vibrations on death" />
     <MESSAGE value="Started work on control editor" />
@@ -552,6 +550,7 @@
     <MESSAGE value="Fixed the bugs that came with unrenmaing the file" />
     <MESSAGE value="Fixed the other bug that came with unrenmaing the file" />
     <MESSAGE value="Removed the no-fullscreen flag from the manifest" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed the no-fullscreen flag from the manifest" />
+    <MESSAGE value="Various changes, started working on gates" />
+    <option name="LAST_COMMIT_MESSAGE" value="Various changes, started working on gates" />
   </component>
 </project>

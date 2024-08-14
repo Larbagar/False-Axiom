@@ -1,8 +1,8 @@
 import {device} from "./graphics/device.mjs"
 import {minBrightnessBindGroupLayout} from "./graphics/light/minBrightnessBindGroupLayout.mjs"
-import {highGraphics} from "./flags.mjs"
+import {minBrightnessVal} from "./flags.mjs"
 
-const minBrightness = new Float32Array([highGraphics ? 0.002 : 0.005]) // Max 0.002
+const minBrightness = new Float32Array([minBrightnessVal]) // Max 0.002
 const minBrightnessBuffer = device.createBuffer({
     label: "min brightness buffer",
     size: minBrightness.byteLength,

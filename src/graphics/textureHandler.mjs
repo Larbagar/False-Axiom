@@ -2,7 +2,7 @@ import {LightTex} from "./light/LightTex.mjs"
 import V2 from "../V2.mjs"
 import {device} from "./device.mjs"
 import {DistortionTex} from "./light/DistortionTex.mjs"
-import {highGraphics} from "../flags.mjs"
+import {resolution} from "../flags.mjs"
 
 let
     /** @type {HTMLCanvasElement} */
@@ -15,7 +15,6 @@ let
     distortionTex
 
 const canvasFormat = navigator.gpu.getPreferredCanvasFormat()
-let resolution = highGraphics ? 1 : 1/devicePixelRatio
 
 function resize() {
     const res = V2.fromVals(innerWidth*devicePixelRatio*resolution, innerHeight*devicePixelRatio*resolution)
