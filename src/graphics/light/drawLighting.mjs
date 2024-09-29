@@ -99,7 +99,7 @@ fn fragment(in: fragIn) -> @location(0) vec4f {
     
     let freq = 16.;
     let hex = smoothstep(0.9, 0.95, hexDist(freq*pos));
-    let cen = smoothstep(2, 0, cenDist(freq*pos));
+    let cen = smoothstep(0, 2, 2 - cenDist(freq*pos));
     let background = 0.5 + max(hex, cen);
     
     
